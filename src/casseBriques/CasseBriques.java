@@ -1,3 +1,4 @@
+// TODO (fix) package name is not as expected (should be fr.iutvalence.java.mp.<projectName>)
 package casseBriques;
 
 // TODO (fix) comments should be written in english
