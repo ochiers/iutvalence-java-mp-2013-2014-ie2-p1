@@ -11,5 +11,14 @@ package fr.iutvalence.java.mp.BrickBreaker;
 // TODO (fixed) the class must be renamed (english) 
 public class BrickBreaker
 {
-    
+    public static void main(String[]args)
+    {
+        // tests 
+        
+        Game newGame = new Game();
+        for(int i = 0; i<10; i++)
+        {
+            System.out.println(newGame.tabBrick[i].toString());
+        }
+    }
 }
