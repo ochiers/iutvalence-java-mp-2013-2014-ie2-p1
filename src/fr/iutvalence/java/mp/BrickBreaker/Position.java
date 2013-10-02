@@ -6,12 +6,13 @@ public class Position
     /**
      * Position on horizontal axis
      */
-    private static int posX;
+    private int posX;
     
     /**
      * Position on vertical axis
      */
-    private static int posY;
+    private int posY;
+
     
     Position(int x, int y)
     {
@@ -23,7 +24,7 @@ public class Position
     /**
      * @return x position
      */
-    public static int getPosX()
+    public int getPosX()
     {
         return posX;
     }
@@ -31,7 +32,7 @@ public class Position
     /**
      * @return y position
      */
-    public static int getPosY()
+    public int getPosY()
     {
         return posY;
     }

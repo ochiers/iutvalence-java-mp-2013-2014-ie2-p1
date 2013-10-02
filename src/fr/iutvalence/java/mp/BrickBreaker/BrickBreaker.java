@@ -19,7 +19,7 @@ public class BrickBreaker
         // tests 
         
         Game newGame = new Game();
-        for(int i = 0; i<10; i++)
+        for(int i = 0; i< newGame.NUMBER_OF_BRICKS; i++)
         {
             System.out.println(newGame.tabBrick[i].toString());
         }

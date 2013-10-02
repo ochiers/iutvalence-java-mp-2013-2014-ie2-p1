@@ -7,16 +7,12 @@ package fr.iutvalence.java.mp.BrickBreaker;
  **/
 public class Ball
 {
-    // TODO (fix) move this couple of int in a class named Position
+    // TODO (FIXED) move this couple of int in a class named Position
+
     /**
-     * Ball's horizontal position
+     * It is the future position of the ball
      */
-    private int x;
-    
-    /**
-     * Ball's vertical position
-     */
-    private int y;
+    private Position positionBall;
     
     /**
      * a is the director coefficient of the ball's trajectory (y=ax+b)
@@ -27,5 +23,53 @@ public class Ball
      * b from (y=ax+b)
      */
     private int b;
+    
+    /**
+     * It create a ball at position (x,y)
+     */
+
+    public Ball(int x, int y)
+    {
+        super();
+        this.positionBall = new Position(x,y);
+        this.a=1;
+        this.b=1;
+    }
+    
+    public void setPositionBall(int x, int y)
+    {
+        
+        this.positionBall = new Position(x,y);
+        
+    }
+    
+    public Position getPositionBall()
+    {
+        
+        return this.positionBall;
+        
+    }
+
+    public int getA()
+    {
+        return a;
+    }
+
+    public void setA(int a)
+    {
+        this.a = a;
+    }
+
+    public int getB()
+    {
+        return b;
+    }
+
+    public void setB(int b)
+    {
+        this.b = b;
+    }
+    
+    
     
 }

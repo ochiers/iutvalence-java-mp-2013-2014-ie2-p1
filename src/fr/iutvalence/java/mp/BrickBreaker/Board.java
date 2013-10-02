@@ -18,12 +18,22 @@ public class Board
     private final static int initialYPosition = 396;
     
     /**
-     *  Width size of the plate (in pixels)
+     *  Width size of the board (in pixels)
      */
     private int size;
     
-    // TODO (fix) write a comment
+    /**
+     * Width size of the board (in pixels)
+     */
+    public final static int BOARD_SIZE = 30;
     
+    
+    // TODO (fixed) write a comment
+    /**
+     * That create a board with that we can play, X position can be specified
+     * @param posX horizontal position of the board, vertical is constant
+     * @param size  width of the board
+     */
     public Board(int posX, int size)
     {
         super();
@@ -31,13 +41,16 @@ public class Board
         this.size = size;
     }
 
-    // TODO (fix) write a comment
+    /**
+     * That create a board with that we can play
+     */
+    // TODO (fixed) write a comment
     public Board()
     {
         super();
         this.boardPosition = new Position(0,this.initialYPosition);
-        // TODO (fix) declare hard-coded value as a constant
-        this.size = 30;
+        // TODO (fixed) declare hard-coded value as a constant
+        this.size = this.BOARD_SIZE;
     }
 
     public Position getBoardPosition()

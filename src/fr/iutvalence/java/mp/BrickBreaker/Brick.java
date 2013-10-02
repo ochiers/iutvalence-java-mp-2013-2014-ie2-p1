@@ -4,7 +4,8 @@ package fr.iutvalence.java.mp.BrickBreaker;
 /**
  * 
  * Define what is a brick
- * 
+ * That fix the position of a brick,
+ * and this state
  * @author ochiers soulierc
  *
  */
@@ -16,39 +17,59 @@ public class Brick
      */
     public final static int WIDTH_BRICK = 50;
 
-    // TODO (fix) this intends to be a constant but it is not
+    // TODO (fixed) this intends to be a constant but it is not
     /**
      * Height size of the brick (in pixels)
      */
     public final static int HEIGHT_BRICK = 44;
     
-    // TODO (fix) move this couple of int in a class named Position
-    /**
-     * Horizontal Position of the top left corner (in pixels)
-     */
-    private int posX;
+    
     
     /**
-     * Vertical Position of the top left corner (in pixels)
+     * That is the normal state of a brick
      */
-    private int posY;
+    private final int STATE_NORMAL = 3;
     
-    // TODO (fix) declare constants for brick states
+    /**
+     * That is the second state of a brick
+     * That is when the brick was hit 
+     */
+    private final int STATE_LITTLE_BROCKEN = 2;
+    
+    /**
+     * That is the third state of a brick
+     * That is when the brick was hit 
+     */
+    private final int STATE_LOT_BROCKEN = 1;
+    
+    /**
+     * That is the laster state of a brick
+     * That is when the brick was hit for the last time
+     * And then, it is delete of the screen
+     */
+    private final int STATE_DESTROYED = 0;
+    
+    // TODO (fixed) move this couple of int in a class named Position
+    /**
+     * Position of the top left corner (in pixels)
+     */
+    private Position brickPosition;
+    
+    // TODO (FIXED) declare constants for brick states
     /**
      * State of the brick (normal, a bit broken, really broken, destroyed)
      */
     private int state;
     
-    // TODO (fix) write a "real" comment (how is the resulting brick)
+    // TODO (FIXED) write a "real" comment (how is the resulting brick)
     /**
-     * This is a constructor of a brick
+     * This is the initialization of a brick who ask the position of the brick
      */
     public Brick(int posX, int posY)
     {
         super();
-        this.posX = posX;
-        this.posY = posY;
-        this.state = 0;
+        this.brickPosition = new Position(posX,posY);
+        this.state = this.STATE_NORMAL;
     }
     
     /**
@@ -56,40 +77,33 @@ public class Brick
      */
     public String toString()
     {
-        return"{x : " + this.posX +", y : " + this.posY + ", state :"+ this.state +"}";
+        return"{x : " + this.brickPosition.getPosX() +", y : " + this.brickPosition.getPosY() + ", state :"+ this.state +"}";
     }
 
-    // TODO (fix) write comment
-    public int getPosX()
+    // TODO (FIXED) write comment
+    /**
+     * 
+     * @return the position of the brick
+     */
+    public Position getBrickPosition()
     {
-        return posX;
+        return this.brickPosition;
     }
 
-    // TODO (fix) write comment
-    public void setPosX(int posX)
-    {
-        this.posX = posX;
-    }
-
-    // TODO (fix) write comment
-    public int getPosY()
-    {
-        return posY;
-    }
-
-    // TODO (fix) write comment
-    public void setPosY(int posY)
-    {
-        this.posY = posY;
-    }
-
-    // TODO (fix) write comment
+    /**
+     * @return the state of the brick
+     */
+    // TODO (FIXED) write comment
     public int getState()
     {
-        return state;
+        return this.state;
     }
 
-    // TODO (fix) write comment
+    // TODO (FIXED) write comment
+    /**
+     * set the current state of the brick
+     * @param state 
+     */
     public void setState(int state)
     {
         this.state = state;
