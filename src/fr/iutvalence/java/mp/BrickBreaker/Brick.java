@@ -10,17 +10,17 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class Brick
 {
-    // TODO (fix) this intends to be a constant but it is not
+    // TODO (fixed) this intends to be a constant but it is not
     /**
      * Width size of the brick (in pixels)
      */
-    static final int widthBrick = 50;
+    public final static int WIDTH_BRICK = 50;
 
     // TODO (fix) this intends to be a constant but it is not
     /**
      * Height size of the brick (in pixels)
      */
-    static final int heightBrick = 44;
+    public final static int HEIGHT_BRICK = 44;
     
     // TODO (fix) move this couple of int in a class named Position
     /**

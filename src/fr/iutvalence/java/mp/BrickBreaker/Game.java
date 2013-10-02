@@ -7,18 +7,18 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * */
 public class Game
 {
-    // TODO (fix) declare field visibility
+    // TODO (fixed) declare field visibility
     // TODO (fix) rename field (there is more than one life)
     /**
      * Number of life
      */
-    int nbBalls; 
+    public int nbBalls; 
 
-    // TODO (fix) rename field 
+    // TODO (fixed) rename field 
    /**
     * The ball that shoots the bricks
     */
-    private Ball balle;
+    private Ball theBall;
     
     // TODO (fix) declare field visibility
     // TODO (fix) write a comment that really describe what this field is
@@ -51,7 +51,7 @@ public class Game
         this.widthOfGame = 500;
         // TODO declare hard-coded value as constant
         this.heightOfGame = 440;
-        this.balle = new Ball();
+        this.theBall = new Ball();
         // TODO declare hard-coded value as constant
         this.tabBrick = new Brick[10];
 
@@ -60,7 +60,7 @@ public class Game
         {
             // TODO declare hard-coded value as constant
             // TODO qualifiy field access
-            tabBrick[i] = new Brick(i*Brick.widthBrick,44);
+            tabBrick[i] = new Brick(i*Brick.WIDTH_BRICK,44);
         }
         
     }

@@ -1,15 +1,19 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) write a "real" comment
+// TODO (fixed) write a "real" comment
 /**
- * Main class
+ * Main class, the program start here and use the other classes
  * @author ochiers
  * 
  */
 
 public class BrickBreaker
 {
-    // TODO (fix) write a comment
+    /**
+     * The program start here
+     * @param args
+     */
+    // TODO (fixed) write a comment
     public static void main(String[]args)
     {
         // tests 
