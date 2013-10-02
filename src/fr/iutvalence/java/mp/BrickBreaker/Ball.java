@@ -1,12 +1,13 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 /**
- * This class define the ball who is use to destroy bricks
+ * This class defines the ball used to destroy bricks
  * 
  * @author ochiers soulierc
  **/
 public class Ball
 {
+    // TODO (fix) move this couple of int in a class named Position
     /**
      * Ball's horizontal position
      */
