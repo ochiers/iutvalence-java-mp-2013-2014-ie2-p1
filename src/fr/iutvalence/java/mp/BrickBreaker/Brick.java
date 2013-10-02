@@ -7,7 +7,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * That fix the position of a brick,
  * and this state
  * @author ochiers soulierc
- *
+ * 
  */
 public class Brick
 {

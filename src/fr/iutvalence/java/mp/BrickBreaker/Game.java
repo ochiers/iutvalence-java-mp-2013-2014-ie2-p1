@@ -78,7 +78,7 @@ public class Game
     private void go()
     {
         /**
-         * It is the test to know if the ball arrive at the outline
+         * It is the test to know if the ball arrive at the outline 
          */
         for(int i=0; i<1000; i++)
         {

@@ -2,7 +2,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 // TODO (fixed) write a "real" comment
 /**
- * Main class, the program start here and use the other classes
+ * Main class, the program start here and use the other classes 
  * @author ochiers
  * 
  */

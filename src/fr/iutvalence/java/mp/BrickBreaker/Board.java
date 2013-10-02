@@ -50,7 +50,7 @@ public class Board
         super();
         this.boardPosition = new Position(0,this.initialYPosition);
         // TODO (fixed) declare hard-coded value as a constant
-        this.size = this.BOARD_SIZE;
+        this.size = this.BOARD_SIZE; 
     }
 
     public Position getBoardPosition()
