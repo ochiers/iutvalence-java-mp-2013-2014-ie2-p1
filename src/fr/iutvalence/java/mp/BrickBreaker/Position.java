@@ -2,19 +2,19 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 public class Position
 {
-
+ 
     /**
      * Position on horizontal axis
      */
-    private int posX;
+    private float posX;
     
     /**
      * Position on vertical axis
      */
-    private int posY;
+    private float posY;
 
     
-    Position(int x, int y)
+    Position(float x, float y)
     {
         this.posX = x;
         this.posY = y;
@@ -24,7 +24,7 @@ public class Position
     /**
      * @return x position
      */
-    public int getPosX()
+    public float getPosX()
     {
         return posX;
     }
@@ -32,7 +32,7 @@ public class Position
     /**
      * @return y position
      */
-    public int getPosY()
+    public float getPosY()
     {
         return posY;
     }

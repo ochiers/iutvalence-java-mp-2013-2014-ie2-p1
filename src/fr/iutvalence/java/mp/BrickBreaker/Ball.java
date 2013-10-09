@@ -17,18 +17,23 @@ public class Ball
     /**
      * a is the director coefficient of the ball's trajectory (y=ax+b)
      */
-    private int a;
+    private float a;
     
     /**
      * b from (y=ax+b)
      */
-    private int b;
+    private float b;
+    
+    /**
+     *  This is the size of a ball
+     */
+    public final static int BALL_SIZE = 10;
     
     /**
      * It create a ball at position (x,y)
      */
 
-    public Ball(int x, int y)
+    public Ball(float x, float y)
     {
         super();
         this.positionBall = new Position(x,y);
@@ -36,7 +41,7 @@ public class Ball
         this.b=1;
     }
     
-    public void setPositionBall(int x, int y)
+    public void setPositionBall(float x, float y)
     {
         
         this.positionBall = new Position(x,y);
@@ -50,22 +55,22 @@ public class Ball
         
     }
 
-    public int getA()
+    public float getA()
     {
         return a;
     }
 
-    public void setA(int a)
+    public void setA(float a)
     {
         this.a = a;
     }
 
-    public int getB()
+    public float getB()
     {
         return b;
     }
 
-    public void setB(int b)
+    public void setB(float b)
     {
         this.b = b;
     }
