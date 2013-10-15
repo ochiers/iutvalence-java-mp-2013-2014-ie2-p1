@@ -10,45 +10,46 @@ import java.util.Random;
 
 public class Game
 {
-    // TODO (FIXED) declare field visibility
+    // TODO (fix) this field should not be declared as public
     /**
      * Number of life
      */
     public int nbBalls; 
 
-    // TODO (fixed) rename field 
    /**
     * The ball that shoots the bricks
     */
     private Ball theBall;
     
+    // TODO (fix) fix comment
     /**
      * The ball that shoots the bricks
      */
      private Paddle thePaddle;
     
-    // TODO (fixed) declare field visibility
-    // TODO (FIXED) write a comment that really describe what this field is
+     // TODO (fix) this field should not be declared as public
     /**
      * This tab contains all bricks of the game
      * That save their position, their state
      *
      */
     //TODO next time : create Get and Set methods
-    public Brick tabBrick[];
+    public Brick[] bricks;
     
-    // TODO (FIXED) rename field (game has no width)
+    // TODO (fix) declare constants before fields
+    // TODO (fix) declare constant as a constant
     /**
      * Width size of the container where we play
      */
     private final int WIDTH_OF_GAME_PANEL = 500;
 
-    // TODO (FIXED) rename field (game has no height)
+    // TODO (fix) declare constant as a constant
     /**
      * Height size of the container where we play
      */
     private final int HEIGHT_OF_GAME_PANEL = 440;
     
+    // TODO (fix) declare constant as a constant
     /**
      * This number is the number of bricks in the level,
      * But it's a temp constant because this number can change depending 
@@ -56,6 +57,7 @@ public class Game
      */
     public final int NUMBER_OF_BRICKS = 10;
     
+    // TODO (fix) declare constant as a constant
     /**
      * this is a test to create a line of bricks with y position who equals to 44
      * 
@@ -69,23 +71,29 @@ public class Game
     private Random rand;
     
     
+    // TODO (fix) detail comment (how is the game created)
     /**
      * This is the procedure where the game find his start
      * It's the initialization of the game
      */
-    // TODO (FIXED) write a comment
+
     public Game()
     {
         super();
+        // TODO (fix) declare hard-coded values as constants
         this.nbBalls = 3;
+        // TODO (fix) declare hard-coded values as constants
         this.theBall = new Ball(50,50);
+        // TODO (fix) declare hard-coded values as constants
         this.thePaddle = new Paddle(380F,Paddle.PADDLE_SIZE);
-        this.tabBrick = new Brick[this.NUMBER_OF_BRICKS];
+        this.bricks = new Brick[this.NUMBER_OF_BRICKS];
         for(int i = 0; i<this.NUMBER_OF_BRICKS; i++)
         {
-            this.tabBrick[i] = new Brick(i*Brick.WIDTH_BRICK,this.Y_POSITION_BRICKS);
+            this.bricks[i] = new Brick(i*Brick.DEFAULT_WIDTH,this.Y_POSITION_BRICKS);
         }
         this.rand = new Random();
+        
+        // TODO (fix) remove this call. The constructor is intended to return instantly
         go();
     }
     
@@ -97,6 +105,7 @@ public class Game
         /**
          * It is the test to know if the ball arrive at the outline 
          */
+        // TODO (fix) declare hard-coded values as constants
         for(int i=0; i<1000; i++)
         {
             /**

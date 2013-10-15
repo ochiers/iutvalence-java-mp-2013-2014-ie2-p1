@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+// TODO (fix) write comment
 public class Position
 {
  
@@ -13,14 +14,14 @@ public class Position
      */
     private float posY;
 
-    
+ // TODO (fix) write comment
     Position(float x, float y)
     {
         this.posX = x;
         this.posY = y;
     }
 
-    
+ // TODO (fix) finish writing comment
     /**
      * @return x position
      */
@@ -29,6 +30,7 @@ public class Position
         return posX;
     }
 
+    // TODO (fix) finish writing comment
     /**
      * @return y position
      */
