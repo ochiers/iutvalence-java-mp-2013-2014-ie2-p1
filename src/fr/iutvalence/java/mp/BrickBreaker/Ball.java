@@ -7,6 +7,13 @@ package fr.iutvalence.java.mp.BrickBreaker;
  **/
 public class Ball
 {
+    
+    // TODO (fixed) declare constants before fields
+    /**
+     *  This is the size of a ball
+     */
+    public final static int BALL_SIZE = 10;
+    
     /**
      * It is the future position of the ball
      */
@@ -23,16 +30,10 @@ public class Ball
      */
     private float b;
     
-    // TODO (fix) declare constants before fields
-    /**
-     *  This is the size of a ball
-     */
-    public final static int BALL_SIZE = 10;
     
-    
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * It create a ball at position (x,y)
+     * Create a new ball at new position (x,y) and set fields a and b to 1
      */
     public Ball(float x, float y)
     {
@@ -42,39 +43,65 @@ public class Ball
         this.b=1;
     }
     
-    // TODO (fix) write comment
-    // TODO (fix) rename method
-    public void setPositionBall(float x, float y)
+    // TODO (fixed) write comment
+    // TODO (fixed) rename method
+    /**
+     * Set a new position according to x and y
+     * @param x
+     * @param y
+     */
+    public void setPosition(float x, float y)
     {
         this.position = new Position(x,y);   
     }
     
-    // TODO (fix) write comment
-    // TODO (fix) rename method
-    public Position getPositionBall()
+    // TODO (fixed) write comment
+    // TODO (fixed) rename method
+    /**
+     * Return the ball's position
+     * @return position
+     */
+    public Position getPosition()
     {     
         return this.position;    
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Return a field
+     * @return a 
+     */
     public float getA()
     {
         return a;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Set a field
+     * @param a
+     */
     public void setA(float a)
     {
         this.a = a;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    
+    /**
+     * return b field
+     * @return b
+     */
     public float getB()
     {
         return b;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Set b field
+     * @param b
+     */
     public void setB(float b)
     {
         this.b = b;

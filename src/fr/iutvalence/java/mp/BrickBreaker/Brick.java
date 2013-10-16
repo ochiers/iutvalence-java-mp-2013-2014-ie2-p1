@@ -21,33 +21,33 @@ public class Brick
      */
     public final static int DEFAULT_HEIGHT = 44;
         
-    // TODO (fix) declare constant as a constant
+    // TODO (fixed) declare constant as a constant
     /**
      * That is the normal state of a brick
      */
-    private final int NORMAL_STATE = 3;
+    private static final int NORMAL_STATE = 3;
     
-    // TODO (fix) declare constant as a constant
+    // TODO (fixed) declare constant as a constant
     /**
      * That is the second state of a brick
      * That is when the brick was hit 
      */
-    private final int TOUCHED_STATE = 2;
+    private static final int TOUCHED_STATE = 2;
     
-    // TODO (fix) declare constant as a constant
+    // TODO (fixed) declare constant as a constant
     /**
      * That is the third state of a brick
      * That is when the brick was hit 
      */
-    private final int DAMAGED_STATE = 1;
+    private static final int DAMAGED_STATE = 1;
     
-    // TODO (fix) declare constant as a constant
+    // TODO (fixed) declare constant as a constant
     /**
      * That is the laster state of a brick
      * That is when the brick was hit for the last time
      * And then, it is delete of the screen
      */
-    private final int DESTROYED_STATE = 0;
+    private static final int DESTROYED_STATE = 0;
     
     /**
      * Position of the top left corner (in pixels)
@@ -59,16 +59,19 @@ public class Brick
      */
     private int state;
     
-    // TODO (fix) fix comment (no one ask something)
-    // TODO (fix) finish writing comment
+    // TODO (fixed) fix comment (no one ask something)
+    // TODO (fixed) finish writing comment
+
     /**
-     * This is the initialization of a brick who ask the position of the brick
+     * This is the initialization of a brick, a new position is created according to posX and posY
+     * @param posX
+     * @param posY
      */
     public Brick(int posX, int posY)
     {
         super();
         this.position = new Position(posX,posY);
-        this.state = this.NORMAL_STATE;
+        this.state = Brick.NORMAL_STATE;
     }
     
     /**
@@ -79,28 +82,29 @@ public class Brick
         return"{x : " + this.position.getPosX() +", y : " + this.position.getPosY() + ", state :"+ this.state +"}";
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * 
-     * @return the position of the brick
+     * Return the position of the brick
+     * @return position
      */
     public Position getBrickPosition()
     {
         return this.position;
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * @return the state of the brick
+     * Return the state of the brick
+     * @return state
      */
     public int getState()
     {
         return this.state;
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * set the current state of the brick
+     * Set the current state of the brick
      * @param state 
      */
     public void setState(int state)

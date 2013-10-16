@@ -8,26 +8,30 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class Paddle
 {   
-    /**
-     * position on the paddle
-     */
-    private Position position;
-    
-    // TODO (fix) declare constant as a constant
-    // TODO (fix) comply with naming conventions
-    public final static int initialYPosition = 396;
-    
-    /**
-     *  Width size of the paddle (in pixels)
-     */
-    private int size;
     
     // TODO (fix) declare constants before fields
     /**
      * Width size of the paddle (in pixels)
      */
     public final static int PADDLE_SIZE = 30;
+
     
+    // TODO (fixed) declare constant as a constant
+    // TODO (fixed) comply with naming conventions
+    /**
+     * The paddle is always at the same height : 396
+     */
+    public static final int INITIALYPOSITION = 396;
+    
+    /**
+     *  Width size of the paddle (in pixels)
+     */
+    private int size;
+
+    /**
+     * position on the paddle
+     */
+    private Position position;
     
     /**
      * That create a paddle with that we can play, X position can be specified
@@ -37,7 +41,7 @@ public class Paddle
     public Paddle(float posX, int size)
     {
         super();
-        this.position = new Position(posX,(float)this.initialYPosition);
+        this.position = new Position(posX,(float)Paddle.INITIALYPOSITION);
         this.size = size;
     }
 
@@ -47,32 +51,39 @@ public class Paddle
     public Paddle()
     {
         super();
-        this.position = new Position(0,this.initialYPosition);
+        this.position = new Position(0,Paddle.INITIALYPOSITION);
         // TODO (fixed) declare hard-coded value as a constant
-        this.size = this.PADDLE_SIZE; 
+        this.size = Paddle.PADDLE_SIZE; 
     }
 
     // TODO (fix) write comment
     // TODO (fix) rename method
-    public Position getPaddlePosition()
+    /**
+     * Return the paddle's position
+     * @return position
+     */
+    public Position getPosition()
     {
         return this.position;
     }
     
 
     /**
+     * Return the paddle's size
      * @return give the size of paddle
      */
-    // TODO (fix) finish writing a comment
+    // TODO (fixed) finish writing a comment
     public int getSize()
     {
-        return size;
+        return this.size;
     }
-    
+
+    // TODO (fixed) finish writing a comment
+
     /**
-     * @return set the size of paddle
+     * Set the paddle's size
+     * @param size
      */
-    // TODO (fix) finish writing a comment
     public void setSize(int size)
     {
         this.size = size;

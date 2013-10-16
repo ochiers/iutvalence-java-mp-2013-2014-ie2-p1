@@ -17,9 +17,5 @@ public class BrickBreaker
         // tests 
         
         Game newGame = new Game();
-        for(int i = 0; i< newGame.NUMBER_OF_BRICKS; i++)
-        {
-            System.out.println(newGame.bricks[i].toString());
-        }
     }
 }
