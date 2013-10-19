@@ -32,14 +32,14 @@ public class Brick
      * That is the second state of a brick
      * That is when the brick was hit 
      */
-    private static final int TOUCHED_STATE = 2;
+    public static final int TOUCHED_STATE = 2;
     
     // TODO (fixed) declare constant as a constant
     /**
      * That is the third state of a brick
      * That is when the brick was hit 
      */
-    private static final int DAMAGED_STATE = 1;
+    public static final int DAMAGED_STATE = 1;
     
     // TODO (fixed) declare constant as a constant
     /**
@@ -47,7 +47,7 @@ public class Brick
      * That is when the brick was hit for the last time
      * And then, it is delete of the screen
      */
-    private static final int DESTROYED_STATE = 0;
+    public static final int DESTROYED_STATE = 0;
     
     /**
      * Position of the top left corner (in pixels)

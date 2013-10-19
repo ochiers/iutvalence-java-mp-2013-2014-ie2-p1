@@ -1,5 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+
+
 /**
  * This class defines the ball used to destroy bricks
  * 
@@ -15,9 +17,21 @@ public class Ball
     public final static int BALL_SIZE = 10;
     
     /**
-     * It is the future position of the ball
+     * It is the top left corner position of the ball
      */
-    private Position position;
+    private Position positionLeftTopCorner;
+    /**
+     * It is the Bottom left corner position of the ball
+     */
+    private Position positionLeftBottomCorner;
+    /**
+     * It is the top right corner position of the ball
+     */
+    private Position positionRightTopCorner;
+    /**
+     * It is the bottom right corner position of the ball
+     */
+    private Position positionRightBottomCorner;
     
     // TODO (think about it) consider gathering a and b in a single object 
     /**
@@ -38,7 +52,10 @@ public class Ball
     public Ball(float x, float y)
     {
         super();
-        this.position = new Position(x,y);
+        this.positionLeftTopCorner = new Position(x,y);
+        this.positionLeftBottomCorner = new Position(x,y+Ball.BALL_SIZE);
+        this.positionRightTopCorner = new Position(x+Ball.BALL_SIZE,y);
+        this.positionRightBottomCorner = new Position(x+Ball.BALL_SIZE,y+Ball.BALL_SIZE);
         this.a=1;
         this.b=1;
     }
@@ -52,18 +69,55 @@ public class Ball
      */
     public void setPosition(float x, float y)
     {
-        this.position = new Position(x,y);   
+        this.positionLeftTopCorner = new Position(x,y);   
     }
     
     // TODO (fixed) write comment
     // TODO (fixed) rename method
     /**
-     * Return the ball's position
+     * Return the ball's top left corner position
      * @return position
      */
-    public Position getPosition()
-    {     
-        return this.position;    
+    public Position getPositionLeftTopCorner()
+    {
+        return this.positionLeftTopCorner; 
+    }
+    /**
+     * Return the ball's bottom left corner position
+     * @return position
+     */
+    public Position getPositionLeftBottomCorner() {
+        return positionLeftBottomCorner;
+    }
+    /**
+     * Return the ball's top right corner position
+     * @return position
+     */
+    public Position getPositionRightTopCorner() {
+        return positionRightTopCorner;
+    }
+    /**
+     * Return the ball's bottom right corner position
+     * @return position
+     */
+    public Position getPositionRightBottomCorner() {
+        return positionRightBottomCorner;
+    }
+    
+    
+    /**
+     * Set the four corner's position according to x,d and the baal size
+     * @param x
+     * @param d
+     */
+    public void setPositionBall(float x, float d)
+    {
+        
+        this.positionLeftTopCorner = new Position(x,d);
+        this.positionLeftBottomCorner = new Position(x,d+Ball.BALL_SIZE);
+        this.positionRightTopCorner = new Position(x+Ball.BALL_SIZE,d);
+        this.positionRightBottomCorner = new Position(x+Ball.BALL_SIZE,d+Ball.BALL_SIZE);
+        
     }
 
     // TODO (fixed) write comment
@@ -106,4 +160,12 @@ public class Ball
     {
         this.b = b;
     } 
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "{X : " + getPositionLeftTopCorner().getPosX() +", Y : " + getPositionLeftTopCorner().getPosY() + ", a : " + getA() + ", b : " + getB() + "}";
+    }
 }

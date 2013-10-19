@@ -17,5 +17,6 @@ public class BrickBreaker
         // tests 
         
         Game newGame = new Game();
+        newGame.go();
     }
 }

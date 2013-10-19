@@ -1,12 +1,10 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-
-
 import java.util.Random;
+
 /**
  * Called when a game is created
  * @author ochiers soulierc
- * 
  * */
 public class Game
 {
@@ -39,12 +37,26 @@ public class Game
      */
     private static final int Y_POSITION_BRICKS = 44;
     
+    /**
+     * Maximal number of player's lives
+     */
+    private static final int MAXIMAL_LIVES = 3;
+    
+    /**
+     * Paddle initial position
+     */
+    private static final float PADDLE_INITIAL_POSITION = 250.0F;
+    
+    /**
+     * Constant for tests, number maximal of ball's moves
+     */
+    private static final int NB_MAX_BALL_MOVES = 1000;    
     
     // TODO (fixed) this field should not be declared as public
     /**
-     * Number of life
+     * Number of lives
      */
-    private int nbBalls; 
+    private int currentNbBalls; 
 
    /**
     * The ball that shoots the bricks
@@ -73,6 +85,12 @@ public class Game
     private Random rand;
     
     
+    /**
+     * Number of brick currently not in state destroyed
+     */
+    private int currentNbBricks;
+    
+    
     // TODO (fixed) detail comment (how is the game created)
     /**
      * This is the procedure where the game find his start
@@ -80,16 +98,15 @@ public class Game
      * the number of lifes is 3 
      *
      */
-
     public Game()
     {
         super();
-        // TODO (fix) declare hard-coded values as constants
-        this.nbBalls = 3;
-        // TODO (fix) declare hard-coded values as constants
-        this.theBall = new Ball(50,50);
-        // TODO (fix) declare hard-coded values as constants
-        this.thePaddle = new Paddle(380F,Paddle.PADDLE_SIZE);
+        // TODO (fixed) declare hard-coded values as constants
+        this.currentNbBalls = Game.MAXIMAL_LIVES;
+        // TODO (fixed) declare hard-coded values as constants
+        this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION/2,Game.PADDLE_INITIAL_POSITION/2);
+        // TODO (fixed) declare hard-coded values as constants
+        this.thePaddle = new Paddle(Game.PADDLE_INITIAL_POSITION,Paddle.PADDLE_SIZE);
         this.bricks = new Brick[Game.NUMBER_OF_BRICKS];
         for(int i = 0; i<Game.NUMBER_OF_BRICKS; i++)
         {
@@ -97,25 +114,24 @@ public class Game
         }
         this.rand = new Random();
         
-        // TODO (fix) remove this call. The constructor is intended to return instantly
-        go();
     }
     
     /**
      * method who move the ball and take care of the game's outlines
      */
-    private void go()
+    public void go()
     {
-        /**
-         * It is the test to know if the ball arrive at the outline 
-         */
+        boolean stop = false;
+        boolean thereWasAcollision = false;
+        int collisionSide = 0;
+        
         // TODO (fix) declare hard-coded values as constants
-        for(int i=0; i<1000; i++)
+        for(int i=0; i<Game.NB_MAX_BALL_MOVES; i++)
         {
             /**
              * 
              */
-            if(!isIntBetween(this.theBall.getPosition().getPosX(),0,Game.WIDTH_OF_GAME_PANEL) || !isIntBetween(this.theBall.getPosition().getPosX() + Ball.BALL_SIZE,0,Game.WIDTH_OF_GAME_PANEL))
+            if(!isIntBetween(this.theBall.getPositionLeftTopCorner().getPosX(),0,Game.WIDTH_OF_GAME_PANEL) || !isIntBetween(this.theBall.getPositionLeftTopCorner().getPosX() + Ball.BALL_SIZE,0,Game.WIDTH_OF_GAME_PANEL))
             {
                 this.theBall.setB(-1*this.theBall.getB());
             }
@@ -123,44 +139,121 @@ public class Game
              * Si l'ordonnée de la balle est supérieur au bord inférieur du jeu ou si  l'ordonnée de la balle est inférieur ou égale au bord supérieur du jeu
              * alors on change l'angle de la trajectoire
              */
-            else if (this.theBall.getPosition().getPosY() <= 0 )
+            else if (this.theBall.getPositionLeftTopCorner().getPosY() <= 0 )
             {
                 this.theBall.setA(-1*this.theBall.getA());
             }
-            else if(this.theBall.getPosition().getPosY() + Ball.BALL_SIZE >= Paddle.INITIALYPOSITION)
+            else if(this.theBall.getPositionLeftTopCorner().getPosY() + Ball.BALL_SIZE >= Paddle.INITIALYPOSITION)
             {
-                if (isIntBetween(this.theBall.getPosition().getPosX(),this.thePaddle.getPosition().getPosX(),this.thePaddle.getPosition().getPosX()+this.thePaddle.getSize())||isIntBetween(this.theBall.getPosition().getPosX()+Ball.BALL_SIZE,this.thePaddle.getPosition().getPosX(),this.thePaddle.getPosition().getPosX()+this.thePaddle.getSize()))
+                if (isIntBetween(this.theBall.getPositionLeftTopCorner().getPosX(),this.thePaddle.getPosition().getPosX(),this.thePaddle.getPosition().getPosX()+this.thePaddle.getSize())||isIntBetween(this.theBall.getPositionLeftTopCorner().getPosX()+Ball.BALL_SIZE,this.thePaddle.getPosition().getPosX(),this.thePaddle.getPosition().getPosX()+this.thePaddle.getSize()))
                 {
                         this.theBall.setA(-1*this.rand.nextFloat());
                 }
                 else
                 {
                     System.out.println("perdu");
-                    i = 1000;
+                    i = Game.NB_MAX_BALL_MOVES;
                 }
             }
             
-            this.theBall.setPosition(this.theBall.getPosition().getPosX() + this.theBall.getB(),this.theBall.getPosition().getPosY() + this.theBall.getA() );
+            this.theBall.setPosition(this.theBall.getPositionLeftTopCorner().getPosX() + this.theBall.getB(),this.theBall.getPositionLeftTopCorner().getPosY() + this.theBall.getA() );
 
-            
-            
-            System.out.println("{"+this.theBall.getPosition().getPosX()+", "+this.theBall.getPosition().getPosY()+"}");
-            
+            if(this.currentNbBalls !=0 && this.currentNbBricks ==0)
+            {
+                stop = true;
+                System.out.println("GAGNE !");
+            }
+            int j;
+            thereWasAcollision = false;
+            for(j=0; j <10;j++)
+            {
+                if(this.bricks[j].getState() != Brick.DESTROYED_STATE)
+                {
+                    collisionSide = isBallInColisionToBrick(j);
+                    if(collisionSide != 0)
+                    {
+                        this.bricks[j].setState(Brick.DESTROYED_STATE);
+                        this.currentNbBricks--;
+                        if(!thereWasAcollision)
+                        {
+                        switch (collisionSide)
+                            {
+                            case 1: this.theBall.setB(-1*this.theBall.getB()); break;
+                            case 2: this.theBall.setA(-1*this.theBall.getA()); break;
+                            }
+                        }
+                        thereWasAcollision = true;
+                    }
+                }
+            }
+            System.out.println(this.theBall.toString());
         }
         
     
     }
     
+ 
+    /**
+     * Function who say if the ball is in collision with the brick, in the tab of bricks to the index i
+     * @param i Index of the brick to compare in the game tab brick
+     * @return true in case of collision, false otherwise
+     */
+    private int isBallInColisionToBrick(int i)
+    {
+        int res;
+        Position posBaLT = this.theBall.getPositionLeftTopCorner();
+        Position posBaLB = this.theBall.getPositionLeftBottomCorner();
+        Position posBaRT = this.theBall.getPositionRightTopCorner();
+        Position posBaRB = this.theBall.getPositionRightBottomCorner();
+        Position posBr = this.bricks[i].getBrickPosition();
+        
+        if((!isPositionInRect(posBaLT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) && !isPositionInRect(posBaLB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) && (isPositionInRect(posBaRT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) || isPositionInRect(posBaRB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) )
+        {
+            res = 1;
+        }
+        else if((!isPositionInRect(posBaRT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) && !isPositionInRect(posBaRB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) && (isPositionInRect(posBaLT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) || isPositionInRect(posBaLB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) )
+        {
+            res = 1;
+        }
+        else if((!isPositionInRect(posBaLT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) && !isPositionInRect(posBaRT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) && (isPositionInRect(posBaLB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) || isPositionInRect(posBaRB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) )
+        {
+            res = 2;
+        }
+        else if((!isPositionInRect(posBaLB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) && !isPositionInRect(posBaRB,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) && (isPositionInRect(posBaLT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT) || isPositionInRect(posBaRT,posBr,Brick.DEFAULT_WIDTH,Brick.DEFAULT_HEIGHT)) )
+        {
+            res = 2;
+        }
+        else
+        {
+            res = 0;
+        }
+        
+        return res;
+    }
+    
     /**
      * Function who say if the number toCompare is between the number a and the number b
-     * @param toCompare
-     * @param a 
-     * @param b
-     * @return
+     * @param toCompare Number to compare
+     * @param a Bound of comparison
+     * @param b Bound of comparison
+     * @return true if the number is in, false otherwise
      */
    private boolean isIntBetween(float toCompare, float a, float b)
     {
         return (toCompare >= a && toCompare <= b)||(toCompare >= b && toCompare <= a);
     }
-    
+   
+   /**
+    * Function who say if a position is in a rectangle who can be a brick
+    * It is used to simplify the algorithm of collision
+     * @param posBall Ball's position
+     * @param posRect Top left corner position of a brick
+     * @param widthRect Brick's width
+     * @param heightRect Brick's height
+     * @return true if the position is in, false otherwise
+ */
+private boolean isPositionInRect(Position posBall, Position posRect, int widthRect, int heightRect)
+   {
+       return (isIntBetween(posBall.getPosX(),posRect.getPosX(),posRect.getPosX()+widthRect) && isIntBetween(posBall.getPosY(), posRect.getPosY(),posRect.getPosY()+heightRect));
+   }
 }
