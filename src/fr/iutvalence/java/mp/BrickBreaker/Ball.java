@@ -1,7 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-
-
 /**
  * This class defines the ball used to destroy bricks
  * 
@@ -9,130 +7,137 @@ package fr.iutvalence.java.mp.BrickBreaker;
  **/
 public class Ball
 {
-    
-    // TODO (fixed) declare constants before fields
+
     /**
-     *  This is the size of a ball
+     * Size of a ball
      */
     public final static int BALL_SIZE = 10;
-    
+
+    // TODO (think about it) consider gathering the 4 positions in a single
+    // object called BoundingBox
     /**
      * It is the top left corner position of the ball
      */
-    private Position positionLeftTopCorner;
+    private Position topLeftCornerPosition;
     /**
      * It is the Bottom left corner position of the ball
      */
-    private Position positionLeftBottomCorner;
+    private Position bottomLeftCornerPosition;
     /**
      * It is the top right corner position of the ball
      */
-    private Position positionRightTopCorner;
+    private Position topRightCornerPosition;
     /**
      * It is the bottom right corner position of the ball
      */
-    private Position positionRightBottomCorner;
-    
-    // TODO (think about it) consider gathering a and b in a single object 
+    private Position bottomRightCornerPosition;
+
+    // TODO (think about it) consider gathering a and b in a single object
     /**
      * a is the director coefficient of the ball's trajectory (y=ax+b)
      */
     private float a;
-    
+
     /**
      * b from (y=ax+b)
      */
     private float b;
-    
-    
-    // TODO (fixed) finish writing comment
+
     /**
-     * Create a new ball at new position (x,y) and set fields a and b to 1
+     * Creates a new ball at new position (x,y) and set fields a and b to 1
      */
     public Ball(float x, float y)
     {
         super();
-        this.positionLeftTopCorner = new Position(x,y);
-        this.positionLeftBottomCorner = new Position(x,y+Ball.BALL_SIZE);
-        this.positionRightTopCorner = new Position(x+Ball.BALL_SIZE,y);
-        this.positionRightBottomCorner = new Position(x+Ball.BALL_SIZE,y+Ball.BALL_SIZE);
-        this.a=1;
-        this.b=1;
+        this.topLeftCornerPosition = new Position(x, y);
+        this.bottomLeftCornerPosition = new Position(x, y + Ball.BALL_SIZE);
+        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
+        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
+        this.a = 1;
+        this.b = 1;
     }
-    
-    // TODO (fixed) write comment
-    // TODO (fixed) rename method
+
+    // TODO (think about it) is this method still useful?
     /**
      * Set a new position according to x and y
+     * 
      * @param x
      * @param y
      */
     public void setPosition(float x, float y)
     {
-        this.positionLeftTopCorner = new Position(x,y);   
+        this.topLeftCornerPosition = new Position(x, y);
     }
-    
-    // TODO (fixed) write comment
-    // TODO (fixed) rename method
+
     /**
      * Return the ball's top left corner position
+     * 
      * @return position
      */
-    public Position getPositionLeftTopCorner()
+    public Position getTopLeftCornerPosition()
     {
-        return this.positionLeftTopCorner; 
+        return this.topLeftCornerPosition;
     }
+
     /**
      * Return the ball's bottom left corner position
+     * 
      * @return position
      */
-    public Position getPositionLeftBottomCorner() {
-        return positionLeftBottomCorner;
+    public Position getBottomLeftCornerPosition()
+    {
+        return bottomLeftCornerPosition;
     }
+
     /**
      * Return the ball's top right corner position
+     * 
      * @return position
      */
-    public Position getPositionRightTopCorner() {
-        return positionRightTopCorner;
+    public Position getTopRightCornerPosition()
+    {
+        return topRightCornerPosition;
     }
+
     /**
      * Return the ball's bottom right corner position
+     * 
      * @return position
      */
-    public Position getPositionRightBottomCorner() {
-        return positionRightBottomCorner;
+    public Position getBottomRightCornerPosition()
+    {
+        return bottomRightCornerPosition;
     }
-    
-    
+
     /**
      * Set the four corner's position according to x,d and the baal size
+     * 
      * @param x
      * @param d
      */
-    public void setPositionBall(float x, float d)
+    // TODO (fix) consider having a single position as parameter
+    public void setPositionsFromTopLeftCorner(float x, float d)
     {
-        
-        this.positionLeftTopCorner = new Position(x,d);
-        this.positionLeftBottomCorner = new Position(x,d+Ball.BALL_SIZE);
-        this.positionRightTopCorner = new Position(x+Ball.BALL_SIZE,d);
-        this.positionRightBottomCorner = new Position(x+Ball.BALL_SIZE,d+Ball.BALL_SIZE);
-        
+        this.topLeftCornerPosition = new Position(x, d);
+        this.bottomLeftCornerPosition = new Position(x, d + Ball.BALL_SIZE);
+        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, d);
+        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, d + Ball.BALL_SIZE);
+
     }
 
-    // TODO (fixed) write comment
     /**
-     * Return a field
-     * @return a 
+     * Return a
+     * 
+     * @return a
      */
     public float getA()
     {
         return a;
     }
 
-    // TODO (fixed) write comment
     /**
      * Set a field
+     * 
      * @param a
      */
     public void setA(float a)
@@ -140,10 +145,9 @@ public class Ball
         this.a = a;
     }
 
-    // TODO (fixed) write comment
-    
     /**
      * return b field
+     * 
      * @return b
      */
     public float getB()
@@ -151,21 +155,24 @@ public class Ball
         return b;
     }
 
-    // TODO (fixed) write comment
     /**
      * Set b field
+     * 
      * @param b
      */
     public void setB(float b)
     {
         this.b = b;
-    } 
-    
-    /* (non-Javadoc)
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "{X : " + getPositionLeftTopCorner().getPosX() +", Y : " + getPositionLeftTopCorner().getPosY() + ", a : " + getA() + ", b : " + getB() + "}";
+        return "{X : " + getTopLeftCornerPosition().getPosX() + ", Y : " + getTopLeftCornerPosition().getPosY()
+                + ", a : " + getA() + ", b : " + getB() + "}";
     }
 }
