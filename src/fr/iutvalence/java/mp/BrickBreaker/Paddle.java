@@ -86,4 +86,14 @@ public class Paddle
     {
         this.size = size;
     }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "{" + this.position.toString() + ", size : " + this.size + "}";
+    }
 }

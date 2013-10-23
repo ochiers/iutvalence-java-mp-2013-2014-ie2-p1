@@ -107,5 +107,36 @@ public class Brick
         this.state = state;
        
      }
-
+    
+    /**
+     * Function who say if a position is in a rectangle who can be a brick It is
+     * used to simplify the algorithm of collision
+     * 
+     * @param posBall
+     *            Ball's position
+     * @return true if the position is in, false otherwise
+     */
+    public boolean isPositionInRect(Position posBall)
+    {
+        return (isFloatBetween(posBall.getPosX(), this.topLeftCornerPosition.getPosX(), this.topLeftCornerPosition.getPosX() + this.DEFAULT_WIDTH) && isFloatBetween(
+                posBall.getPosY(), this.topLeftCornerPosition.getPosY(), this.topLeftCornerPosition.getPosY() + this.DEFAULT_HEIGHT));
+    }
+    
+    /**
+     * Function who say if the number toCompare is between the number a and the
+     * number b
+     * 
+     * @param toCompare
+     *            Number to compare
+     * @param a
+     *            Bound of comparison
+     * @param b
+     *            Bound of comparison
+     * @return true if the number is in, false otherwise
+     */
+    private boolean isFloatBetween(float toCompare, float a, float b)
+    {
+        return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
+    }
+    
 }

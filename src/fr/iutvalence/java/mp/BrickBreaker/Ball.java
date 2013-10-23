@@ -34,14 +34,9 @@ public class Ball
 
     // TODO (think about it) consider gathering a and b in a single object
     /**
-     * a is the director coefficient of the ball's trajectory (y=ax+b)
+     * The ball's trajectory
      */
-    private float a;
-
-    /**
-     * b from (y=ax+b)
-     */
-    private float b;
+    private Trajectory trajectory;
 
     /**
      * Creates a new ball at new position (x,y) and set fields a and b to 1
@@ -53,8 +48,7 @@ public class Ball
         this.bottomLeftCornerPosition = new Position(x, y + Ball.BALL_SIZE);
         this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
         this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
-        this.a = 1;
-        this.b = 1;
+        this.trajectory = new Trajectory(1,1);
     }
 
 
@@ -102,15 +96,15 @@ public class Ball
      * Set the four corner's position according to x,d and the baal size
      * 
      * @param x
-     * @param d
+     * @param y
      */
     // TODO (fix) consider having a single position as parameter
-    public void setPositionsFromTopLeftCorner(float x, float d)
+    public void setPositionsFromTopLeftCorner(float x, float y)
     {
-        this.topLeftCornerPosition  = new Position(x, d);
-        this.bottomLeftCornerPosition = new Position(x, d + Ball.BALL_SIZE);
-        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, d);
-        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, d + Ball.BALL_SIZE);
+        this.topLeftCornerPosition  = new Position(x, y);
+        this.bottomLeftCornerPosition = new Position(x, y + Ball.BALL_SIZE);
+        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
+        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
     }
 
     /**
@@ -118,9 +112,9 @@ public class Ball
      * 
      * @return a
      */
-    public float getA()
+    public Trajectory getTrajectory()
     {
-        return this.a;
+        return this.trajectory;
     }
 
     /**
@@ -128,30 +122,11 @@ public class Ball
      * 
      * @param a
      */
-    public void setA(float a)
+    public void setTrajectory(Trajectory a)
     {
-        this.a = a;
+        this.trajectory = a;
     }
 
-    /**
-     * return b field
-     * 
-     * @return b
-     */
-    public float getB()
-    {
-        return this.b;
-    }
-
-    /**
-     * Set b field
-     * 
-     * @param b
-     */
-    public void setB(float b)
-    {
-        this.b = b;
-    }
 
     /*
      * (non-Javadoc)
@@ -160,7 +135,6 @@ public class Ball
      */
     public String toString()
     {
-        return "{X : " + getTopLeftCornerPosition().getPosX() + ", Y : " + getTopLeftCornerPosition().getPosY()
-                + ", a : " + getA() + ", b : " + getB() + "}";
+        return "{" + this.topLeftCornerPosition.toString() + ", " + this.trajectory.toString() + "}";
     }
 }

@@ -1,5 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+
+
 import java.util.Random;
 
 /**
@@ -40,7 +42,7 @@ public class Game
     /**
      * Number that specify that there is no collision between ball and brick
      */
-    private static final int NO_SIDE_COLLISION = 1;
+    private static final int NO_SIDE_COLLISION = 0;
     
     /**
      * Number that specify a collision between the ball and the left or the right side of a brick
@@ -85,6 +87,11 @@ public class Game
     private int currentNumberOfBricks;
 
     /**
+     * Used to stop the game
+     */
+    private boolean stopGame;
+    
+    /**
      * This is the procedure where the game find its start It's the
      * initialization of the game : a new paddle, a new ball and a new tab of
      * bricks is created, the number of lifes is 3
@@ -94,6 +101,7 @@ public class Game
     {
         super();
         int yPositionBricks = 44;
+        this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
         this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2);
@@ -106,99 +114,115 @@ public class Game
             this.bricks[i] = new Brick(i * Brick.DEFAULT_WIDTH, yPositionBricks);
         }
         this.rand = new Random();
-        
+        this.currentNumberOfBricks = 10;
 
     }
 
-    // TODO (fix) simplify this method by moving some inner code in outside
+    // TODO (fixed) simplify this method by moving some inner code in outside
     // private methods
     /**
-     * method who move the ball and take care of the game's outlines
+     * method who move the ball and take care of collisions
      */
     public void go()
     {
         int nbMaxBallMoves = 1000;
-        boolean stop = false;
         boolean thereWasAcollision = false;
         int collisionSide = 0;
 
         for (int i = 0; i < nbMaxBallMoves; i++)
         {
-            /**
-             * 
-             */
-            if (!isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX(), 0, Game.WIDTH_OF_GAME_PANEL)
-                    || !isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX() + Ball.BALL_SIZE, 0,
-                            Game.WIDTH_OF_GAME_PANEL))
+            if (!manageCollisionWithGamePanelSides())
             {
-                this.theBall.setB(-1 * this.theBall.getB());
-            }
-            /*
-             * Si l'ordonnée de la balle est supérieur au bord inférieur du jeu
-             * ou si l'ordonnée de la balle est inférieur ou égale au bord
-             * supérieur du jeu alors on change l'angle de la trajectoire
-             */
-            else if (this.theBall.getTopLeftCornerPosition().getPosY() <= 0)
-            {
-                this.theBall.setA(-1 * this.theBall.getA());
-            }
-            else if (this.theBall.getTopLeftCornerPosition().getPosY() + Ball.BALL_SIZE >= Paddle.INITIAL_Y_POSITION)
-            {
-                if (isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX(), this.thePaddle.getPosition()
-                        .getPosX(), this.thePaddle.getPosition().getPosX() + this.thePaddle.getSize())
-                        || isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX() + Ball.BALL_SIZE,
-                                this.thePaddle.getPosition().getPosX(), this.thePaddle.getPosition().getPosX()
-                                        + this.thePaddle.getSize()))
-                {
-                    this.theBall.setA(-1 * this.rand.nextFloat());
-                }
-                else
-                {
-                    System.out.println("perdu");
-                    i = nbMaxBallMoves;
-                }
+                manageCollisionWithPaddle();
             }
 
-            this.theBall.setPositionsFromTopLeftCorner(this.theBall.getTopLeftCornerPosition().getPosX() + this.theBall.getB(),
-                    this.theBall.getTopLeftCornerPosition().getPosY() + this.theBall.getA());
+            this.theBall.setPositionsFromTopLeftCorner(this.theBall.getTopLeftCornerPosition().getPosX() + this.theBall.getTrajectory().getCoefB(),
+            this.theBall.getTopLeftCornerPosition().getPosY() + this.theBall.getTrajectory().getCoefA());
 
             if (this.currentNumberOfBalls != 0 && this.currentNumberOfBricks == 0)
             {
-                stop = true;
-                System.out.println("GAGNE !");
+               onVictory();
             }
-            int j;
-            thereWasAcollision = false;
-            for (j = 0; j < 10; j++)
+            
+            if(!this.stopGame)
             {
-                if (this.bricks[j].getState() != Brick.DESTROYED_STATE)
+                int j;
+                thereWasAcollision = false;
+                for (j = 0; j < 10; j++)
                 {
-                    collisionSide = isBallInCollisionWithBrick(j);
-                    if (collisionSide != 0)
+                    if (this.bricks[j].getState() != Brick.DESTROYED_STATE)
                     {
-                        this.bricks[j].setState(Brick.DESTROYED_STATE);
-                        this.currentNumberOfBricks--;
-                        if (!thereWasAcollision)
-                        {
-                            switch (collisionSide)
-                            {
-                            case 1:
-                                this.theBall.setB(-1 * this.theBall.getB());
-                                break;
-                            case 2:
-                                this.theBall.setA(-1 * this.theBall.getA());
-                                break;
-                            }
-                        }
-                        thereWasAcollision = true;
+                        collisionSide = isBallInCollisionWithBrick(j);
+                        onCollisionWithBrick(thereWasAcollision,j,collisionSide);
+                        if(collisionSide != 0)
+                            thereWasAcollision = true;
                     }
-                }
+                }                
+                System.out.println(this.theBall.toString());
             }
-            System.out.println(this.theBall.toString());
+            else
+            {
+                i = nbMaxBallMoves;
+            }
+            
         }
         
     }
-
+ 
+    /**
+     * Called when the ball collide a brick
+     * @param thereWasAcollision true if the ball collide at least two bricks in the same time
+     * @param indexOfBrick index of the brick who is collided
+     * @param collisionSide side collided
+     */
+    private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
+    {
+        if (collisionSide != 0)
+        {
+            this.bricks[indexOfBrick].setState(Brick.DESTROYED_STATE);
+            this.currentNumberOfBricks--;
+            if (!thereWasAcollision)
+            {
+                switch (collisionSide)
+                {
+                case 1:
+                    this.theBall.getTrajectory().reverseCoefB();
+                    break;
+                case 2:
+                    this.theBall.getTrajectory().reverseCoefA();
+                    break;
+                }
+            }
+            
+        }
+    }
+    
+    /**
+     * Called when the player win the game
+     */
+    private void onVictory()
+    {
+        System.out.println("GAGNE !");
+        this.stopGame = true;
+    }
+    
+    /**
+     * Called when the player lose the game
+     */
+    private void onLose()
+    {
+        if(this.currentNumberOfBalls == 0)
+        {
+            System.out.println("perdu");
+            this.stopGame = true;
+        }
+        else
+        {
+            this.currentNumberOfBalls--;
+            this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION , Game.PADDLE_INITIAL_POSITION);
+        }
+    }
+    
     // TODO (fixed) fix comment, return type is not a boolean
     // TODO (fixed) declare constants for returned values
     /**
@@ -217,33 +241,24 @@ public class Game
         Position posBaLB = this.theBall.getBottomLeftCornerPosition();
         Position posBaRT = this.theBall.getTopRightCornerPosition();
         Position posBaRB = this.theBall.getBottomRightCornerPosition();
-        Position posBr = this.bricks[i].getBrickPosition();
 
-        if ((!isPositionInRect(posBaLT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) && !isPositionInRect(posBaLB,
-                posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT))
-                && (isPositionInRect(posBaRT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) || isPositionInRect(
-                        posBaRB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT)))
+        if (!this.bricks[i].isPositionInRect(posBaLT) && !this.bricks[i].isPositionInRect(posBaLB)
+                && (this.bricks[i].isPositionInRect(posBaRT) || this.bricks[i].isPositionInRect(posBaRB)))
         {
             res = Game.COLLISION_LEFT_RIGHT_SIDE;
         }
-        else if ((!isPositionInRect(posBaRT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) && !isPositionInRect(
-                posBaRB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT))
-                && (isPositionInRect(posBaLT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) || isPositionInRect(
-                        posBaLB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT)))
+        else if ((!this.bricks[i].isPositionInRect(posBaRT) && !this.bricks[i].isPositionInRect(posBaRB))
+                && (this.bricks[i].isPositionInRect(posBaLT) || this.bricks[i].isPositionInRect(posBaLB)))
         {
             res = Game.COLLISION_LEFT_RIGHT_SIDE;
         }
-        else if ((!isPositionInRect(posBaLT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) && !isPositionInRect(
-                posBaRT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT))
-                && (isPositionInRect(posBaLB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) || isPositionInRect(
-                        posBaRB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT)))
+        else if ((!this.bricks[i].isPositionInRect(posBaLT) && !this.bricks[i].isPositionInRect(posBaRT))
+                && (this.bricks[i].isPositionInRect(posBaLB) || this.bricks[i].isPositionInRect(posBaRB)))
         {
             res = Game.COLLISION_TOP_BOTTOM_SIDE;
         }
-        else if ((!isPositionInRect(posBaLB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) && !isPositionInRect(
-                posBaRB, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT))
-                && (isPositionInRect(posBaLT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT) || isPositionInRect(
-                        posBaRT, posBr, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT)))
+        else if ((!this.bricks[i].isPositionInRect(posBaLB) && !this.bricks[i].isPositionInRect(posBaRB))
+                && (this.bricks[i].isPositionInRect(posBaLT) || this.bricks[i].isPositionInRect(posBaRT)))
         {
             res = Game.COLLISION_TOP_BOTTOM_SIDE;
         }
@@ -253,6 +268,50 @@ public class Game
         }
 
         return res;
+    }
+    
+    /**
+     * Method who manages collisions between ball and paddle, if the ball don't hit the paddle the player loses
+     */
+    private void manageCollisionWithPaddle()
+    {
+        if (this.theBall.getTopLeftCornerPosition().getPosY() + Ball.BALL_SIZE >= Paddle.INITIAL_Y_POSITION)
+        {
+            if (isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX(), this.thePaddle.getPosition()
+                    .getPosX(), this.thePaddle.getPosition().getPosX() + this.thePaddle.getSize())
+                    || isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX() + Ball.BALL_SIZE,
+                            this.thePaddle.getPosition().getPosX(), this.thePaddle.getPosition().getPosX()
+                                    + this.thePaddle.getSize()))
+            {
+                this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(),this.theBall.getTrajectory().getCoefB()));
+            }
+            else
+            {
+                onLose();
+            }
+        }
+    }
+    
+    /**
+     * Method who manage collsion between the ball and the sides of the game panel, change the ball's direction when collided and return true
+     * @return true if the ball hit a side
+     */
+    private boolean manageCollisionWithGamePanelSides()
+    {
+        boolean thereIsCollision = false;
+        if (!isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX(), 0, Game.WIDTH_OF_GAME_PANEL)
+                || !isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX() + Ball.BALL_SIZE, 0,
+                        Game.WIDTH_OF_GAME_PANEL))
+        {
+            this.theBall.getTrajectory().reverseCoefB();
+            thereIsCollision = true;
+        }
+        else if (this.theBall.getTopLeftCornerPosition().getPosY() <= 0)
+        {
+            this.theBall.getTrajectory().reverseCoefA();
+            thereIsCollision = true;
+        }    
+        return thereIsCollision;
     }
 
     /**
@@ -273,24 +332,5 @@ public class Game
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
 
-    /**
-     * Function who say if a position is in a rectangle who can be a brick It is
-     * used to simplify the algorithm of collision
-     * 
-     * @param posBall
-     *            Ball's position
-     * @param posRect
-     *            Top left corner position of a brick
-     * @param widthRect
-     *            Brick's width
-     * @param heightRect
-     *            Brick's height
-     * @return true if the position is in, false otherwise
-     */
-    // TODO (fix) move this method where it has to be
-    private boolean isPositionInRect(Position posBall, Position posRect, int widthRect, int heightRect)
-    {
-        return (isFloatBetween(posBall.getPosX(), posRect.getPosX(), posRect.getPosX() + widthRect) && isFloatBetween(
-                posBall.getPosY(), posRect.getPosY(), posRect.getPosY() + heightRect));
-    }
+
 }

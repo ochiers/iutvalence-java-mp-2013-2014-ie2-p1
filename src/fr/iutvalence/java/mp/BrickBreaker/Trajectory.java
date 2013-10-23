@@ -1,5 +1,10 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+/**
+ * Define a trajectory of a moving object;
+ * @author soulierc
+ *
+ */
 public class Trajectory
 {
     /**
@@ -22,6 +27,17 @@ public class Trajectory
         this.coefA = a;
         this.coefB = b;
     }
+    
+    public void reverseCoefA()
+    {
+        this.coefA = -this.coefA;
+    }
+    public void reverseCoefB()
+    {
+        this.coefB = -this.coefB;
+    }
+        
+    
     /**
      * Return the A coeficient
      * @return a coeficicent
@@ -38,5 +54,14 @@ public class Trajectory
     public float getCoefB()
     {
         return coefB;
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "Coef A : "+this.coefA+", Coef B: "+this.coefB;
+    
     }
 }

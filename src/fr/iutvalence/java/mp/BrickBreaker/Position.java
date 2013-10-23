@@ -50,5 +50,13 @@ public class Position
     {
         return this.posY;
     }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "Pos X : "+this.posX+", Pos Y : "+this.posY;
+    }
 
 }
