@@ -57,17 +57,6 @@ public class Ball
         this.b = 1;
     }
 
-    // TODO (think about it) is this method still useful?
-    /**
-     * Set a new position according to x and y
-     * 
-     * @param x
-     * @param y
-     */
-    public void setPosition(float x, float y)
-    {
-        this.topLeftCornerPosition = new Position(x, y);
-    }
 
     /**
      * Return the ball's top left corner position
@@ -86,7 +75,7 @@ public class Ball
      */
     public Position getBottomLeftCornerPosition()
     {
-        return bottomLeftCornerPosition;
+        return this.bottomLeftCornerPosition;
     }
 
     /**
@@ -96,7 +85,7 @@ public class Ball
      */
     public Position getTopRightCornerPosition()
     {
-        return topRightCornerPosition;
+        return this.topRightCornerPosition;
     }
 
     /**
@@ -106,7 +95,7 @@ public class Ball
      */
     public Position getBottomRightCornerPosition()
     {
-        return bottomRightCornerPosition;
+        return this.bottomRightCornerPosition;
     }
 
     /**
@@ -118,11 +107,10 @@ public class Ball
     // TODO (fix) consider having a single position as parameter
     public void setPositionsFromTopLeftCorner(float x, float d)
     {
-        this.topLeftCornerPosition = new Position(x, d);
+        this.topLeftCornerPosition  = new Position(x, d);
         this.bottomLeftCornerPosition = new Position(x, d + Ball.BALL_SIZE);
         this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, d);
         this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, d + Ball.BALL_SIZE);
-
     }
 
     /**
@@ -132,7 +120,7 @@ public class Ball
      */
     public float getA()
     {
-        return a;
+        return this.a;
     }
 
     /**
@@ -152,7 +140,7 @@ public class Ball
      */
     public float getB()
     {
-        return b;
+        return this.b;
     }
 
     /**

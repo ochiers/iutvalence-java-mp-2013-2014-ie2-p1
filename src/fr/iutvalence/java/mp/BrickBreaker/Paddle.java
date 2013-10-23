@@ -15,11 +15,11 @@ public class Paddle
      */
     public final static int PADDLE_SIZE = 30;
 
-    // TODO (fix) comply with naming conventions
+    // TODO (fixed) comply with naming conventions
     /**
      * The paddle is always at the same height : 396
      */
-    public static final int INITIALYPOSITION = 396;
+    public static final int INITIAL_Y_POSITION = 396;
 
     /**
      * Width size of the paddle (in pixels)
@@ -27,7 +27,7 @@ public class Paddle
     private int size;
 
     /**
-     * position on the paddle
+     * Position of top left corner of the paddle, in fact only the x will change with the mouse's position
      */
     // TODO (explain) what is precisely this position?
     private Position position;
@@ -43,7 +43,7 @@ public class Paddle
     public Paddle(float posX, int size)
     {
         super();
-        this.position = new Position(posX, (float) Paddle.INITIALYPOSITION);
+        this.position = new Position(posX, (float) Paddle.INITIAL_Y_POSITION);
         this.size = size;
     }
 
@@ -53,7 +53,7 @@ public class Paddle
     public Paddle()
     {
         super();
-        this.position = new Position(0, Paddle.INITIALYPOSITION);
+        this.position = new Position(0, Paddle.INITIAL_Y_POSITION);
         this.size = Paddle.PADDLE_SIZE;
     }
 

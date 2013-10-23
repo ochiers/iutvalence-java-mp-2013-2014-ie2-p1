@@ -1,6 +1,11 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) write comment
+// TODO (fixed) write comment
+/**
+ * Describe a position of an object on the screen
+ * @author soulierc
+ *
+ */
 public class Position
 {
 
@@ -14,29 +19,36 @@ public class Position
      */
     private float posY;
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Create a new position according to given coordinates
+     * @param x Horizontal position
+     * @param y Vertical position
+     */
     Position(float x, float y)
     {
         this.posX = x;
         this.posY = y;
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
+     * Return the horizontal position
      * @return x position
      */
     public float getPosX()
     {
-        return posX;
+        return this.posX;
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
+     * Return the vertical position
      * @return y position
      */
     public float getPosY()
     {
-        return posY;
+        return this.posY;
     }
 
 }

@@ -50,10 +50,10 @@ public class Brick
      */
     private int state;
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
      * This is the initialization of a brick, a new position is created
-     * according to posX and posY
+     * according to posX and posY, the initial state is normal
      * 
      * @param posX
      * @param posY
@@ -87,9 +87,9 @@ public class Brick
 
     // TODO (fix) finish writing comment
     /**
-     * Return the state of the brick
+     * Return the current state of the brick
      * 
-     * @return state
+     * @return Return the current state of the brick
      */
     public int getState()
     {
@@ -100,11 +100,12 @@ public class Brick
     /**
      * Set the current state of the brick
      * 
-     * @param state
+     * SET THE @param state
      */
     public void setState(int state)
     {
         this.state = state;
-    }
+       
+     }
 
 }
