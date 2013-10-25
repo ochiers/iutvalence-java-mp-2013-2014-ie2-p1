@@ -37,6 +37,8 @@ public class Ball
      * The ball's trajectory
      */
     private Trajectory trajectory;
+    
+    private CollisionBox ballBox;
 
     /**
      * Creates a new ball at new position (x,y) and set fields a and b to 1
@@ -49,7 +51,16 @@ public class Ball
         this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
         this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
         this.trajectory = new Trajectory(1,1);
+        this.ballBox = new CollisionBox(this.topLeftCornerPosition, BALL_SIZE, BALL_SIZE);
+        
     }
+
+
+    public CollisionBox getBallBox()
+    {
+        return ballBox;
+    }
+    
 
 
     /**

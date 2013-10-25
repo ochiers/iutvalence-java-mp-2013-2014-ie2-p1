@@ -2,6 +2,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 
 
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 /**
@@ -54,6 +55,11 @@ public class Game
      */
     private static final int COLLISION_TOP_BOTTOM_SIDE = 2;
         
+    /**
+     * Number that specify a collision between the ball and a corner of a brick
+     */
+    private static final int COLLISION_CORNER = 3;
+    
      /**
      * Number of lives
      */
@@ -152,9 +158,9 @@ public class Game
                 {
                     if (this.bricks[j].getState() != Brick.DESTROYED_STATE)
                     {
-                        collisionSide = isBallInCollisionWithBrick(j);
+                        collisionSide = isBallInCollisionWithBrick(this.bricks[j]);
                         onCollisionWithBrick(thereWasAcollision,j,collisionSide);
-                        if(collisionSide != 0)
+                        if(collisionSide != NO_SIDE_COLLISION)
                             thereWasAcollision = true;
                     }
                 }                
@@ -177,7 +183,7 @@ public class Game
      */
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
-        if (collisionSide != 0)
+        if (collisionSide != NO_SIDE_COLLISION)
         {
             this.bricks[indexOfBrick].setState(Brick.DESTROYED_STATE);
             this.currentNumberOfBricks--;
@@ -185,11 +191,15 @@ public class Game
             {
                 switch (collisionSide)
                 {
-                case 1:
+                case COLLISION_LEFT_RIGHT_SIDE:
                     this.theBall.getTrajectory().reverseCoefB();
                     break;
-                case 2:
+                case COLLISION_TOP_BOTTOM_SIDE:
                     this.theBall.getTrajectory().reverseCoefA();
+                    break;
+                case COLLISION_CORNER:
+                    this.theBall.getTrajectory().reverseCoefA();
+                    this.theBall.getTrajectory().reverseCoefB();
                     break;
                 }
             }
@@ -234,39 +244,23 @@ public class Game
      * @return 
      *            0 if no collision, 1 in case of collision with left or right sides, 2 in case of collision with top or bottom sides
      */
-    private int isBallInCollisionWithBrick(int i)
+    private int isBallInCollisionWithBrick(Brick b)
     {
-        int res;
-        Position posBaLT = this.theBall.getTopLeftCornerPosition();
-        Position posBaLB = this.theBall.getBottomLeftCornerPosition();
-        Position posBaRT = this.theBall.getTopRightCornerPosition();
-        Position posBaRB = this.theBall.getBottomRightCornerPosition();
-
-        if (!this.bricks[i].isPositionInRect(posBaLT) && !this.bricks[i].isPositionInRect(posBaLB)
-                && (this.bricks[i].isPositionInRect(posBaRT) || this.bricks[i].isPositionInRect(posBaRB)))
+        int res = NO_SIDE_COLLISION;
+        Rectangle2D.Float dest = new Rectangle2D.Float();
+        dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(b.getBrickBox());
+        if (dest.getWidth() < 0 && dest.getHeight() < 0)
         {
-            res = Game.COLLISION_LEFT_RIGHT_SIDE;
+            return NO_SIDE_COLLISION;
         }
-        else if ((!this.bricks[i].isPositionInRect(posBaRT) && !this.bricks[i].isPositionInRect(posBaRB))
-                && (this.bricks[i].isPositionInRect(posBaLT) || this.bricks[i].isPositionInRect(posBaLB)))
-        {
-            res = Game.COLLISION_LEFT_RIGHT_SIDE;
-        }
-        else if ((!this.bricks[i].isPositionInRect(posBaLT) && !this.bricks[i].isPositionInRect(posBaRT))
-                && (this.bricks[i].isPositionInRect(posBaLB) || this.bricks[i].isPositionInRect(posBaRB)))
-        {
-            res = Game.COLLISION_TOP_BOTTOM_SIDE;
-        }
-        else if ((!this.bricks[i].isPositionInRect(posBaLB) && !this.bricks[i].isPositionInRect(posBaRB))
-                && (this.bricks[i].isPositionInRect(posBaLT) || this.bricks[i].isPositionInRect(posBaRT)))
-        {
-            res = Game.COLLISION_TOP_BOTTOM_SIDE;
-        }
-        else
-        {
-            res = Game.NO_SIDE_COLLISION;
-        }
-
+        if (dest.getWidth() == 1 && dest.getHeight() == 1)
+            res = COLLISION_CORNER;
+        else if (dest.getWidth() == 1 && dest.getHeight() != 1)
+            res = COLLISION_LEFT_RIGHT_SIDE;
+        else if (dest.getWidth() == 1 && dest.getHeight() == 1)
+            res = COLLISION_TOP_BOTTOM_SIDE;
+        
+        
         return res;
     }
     

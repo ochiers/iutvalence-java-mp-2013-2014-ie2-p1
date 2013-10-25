@@ -14,7 +14,13 @@ public class Paddle
      * Width size of the paddle (in pixels)
      */
     public final static int PADDLE_SIZE = 30;
-
+    
+    /**
+     * Height size of the paddle (in pixels)
+     */
+    public final static int PADDLE_HEIGHT = 10;
+    
+    
     // TODO (fixed) comply with naming conventions
     /**
      * The paddle is always at the same height : 396
@@ -31,6 +37,17 @@ public class Paddle
      */
     // TODO (explain) what is precisely this position?
     private Position position;
+    
+
+    /**
+     * 
+     */
+    private CollisionBox paddleBox;
+
+    public CollisionBox getPaddleBox()
+    {
+        return paddleBox;
+    }
 
     /**
      * That create a paddle with that we can play, X position can be specified
@@ -45,6 +62,7 @@ public class Paddle
         super();
         this.position = new Position(posX, (float) Paddle.INITIAL_Y_POSITION);
         this.size = size;
+        this.paddleBox = new CollisionBox(this.position, this.size, PADDLE_HEIGHT);
     }
 
     /**
@@ -55,6 +73,7 @@ public class Paddle
         super();
         this.position = new Position(0, Paddle.INITIAL_Y_POSITION);
         this.size = Paddle.PADDLE_SIZE;
+        this.paddleBox = new CollisionBox(this.position, this.size, PADDLE_HEIGHT);
     }
 
     /**
@@ -96,4 +115,5 @@ public class Paddle
     {
         return "{" + this.position.toString() + ", size : " + this.size + "}";
     }
+    
 }

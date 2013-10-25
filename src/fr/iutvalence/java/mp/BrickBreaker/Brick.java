@@ -49,6 +49,8 @@ public class Brick
      * State of the brick (normal, a bit broken, really broken, destroyed)
      */
     private int state;
+    
+    private CollisionBox brickBox;
 
     // TODO (fixed) finish writing comment
     /**
@@ -64,6 +66,12 @@ public class Brick
         super();
         this.topLeftCornerPosition = new Position(posX, posY);
         this.state = Brick.NORMAL_STATE;
+        this.brickBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
+
+    public CollisionBox getBrickBox()
+    {
+        return brickBox;
     }
 
     /**
@@ -107,21 +115,7 @@ public class Brick
         this.state = state;
        
      }
-    
-    /**
-     * Function who say if a position is in a rectangle who can be a brick It is
-     * used to simplify the algorithm of collision
-     * 
-     * @param posBall
-     *            Ball's position
-     * @return true if the position is in, false otherwise
-     */
-    public boolean isPositionInRect(Position posBall)
-    {
-        return (isFloatBetween(posBall.getPosX(), this.topLeftCornerPosition.getPosX(), this.topLeftCornerPosition.getPosX() + this.DEFAULT_WIDTH) && isFloatBetween(
-                posBall.getPosY(), this.topLeftCornerPosition.getPosY(), this.topLeftCornerPosition.getPosY() + this.DEFAULT_HEIGHT));
-    }
-    
+       
     /**
      * Function who say if the number toCompare is between the number a and the
      * number b
