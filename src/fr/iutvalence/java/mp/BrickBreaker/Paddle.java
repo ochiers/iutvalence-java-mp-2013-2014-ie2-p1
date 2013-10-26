@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+
 // TODO (fixed)(think about it) for plate, you mean "paddle" ?
 /**
  * This class define what is a plate
@@ -30,7 +31,7 @@ public class Paddle
     /**
      * Width size of the paddle (in pixels)
      */
-    private int size;
+    private int paddleSize;
 
     /**
      * Position of top left corner of the paddle, in fact only the x will change with the mouse's position
@@ -44,10 +45,7 @@ public class Paddle
      */
     private CollisionBox paddleBox;
 
-    public CollisionBox getPaddleBox()
-    {
-        return paddleBox;
-    }
+   
 
     /**
      * That create a paddle with that we can play, X position can be specified
@@ -61,8 +59,8 @@ public class Paddle
     {
         super();
         this.position = new Position(posX, (float) Paddle.INITIAL_Y_POSITION);
-        this.size = size;
-        this.paddleBox = new CollisionBox(this.position, this.size, PADDLE_HEIGHT);
+        this.paddleSize = size;
+        this.paddleBox = new CollisionBox(this.position, this.paddleSize, PADDLE_HEIGHT);
     }
 
     /**
@@ -72,10 +70,15 @@ public class Paddle
     {
         super();
         this.position = new Position(0, Paddle.INITIAL_Y_POSITION);
-        this.size = Paddle.PADDLE_SIZE;
-        this.paddleBox = new CollisionBox(this.position, this.size, PADDLE_HEIGHT);
+        this.paddleSize = Paddle.PADDLE_SIZE;
+        this.paddleBox = new CollisionBox(this.position, this.paddleSize, PADDLE_HEIGHT);
     }
-
+    
+    public CollisionBox getPaddleBox()
+    {
+        return this.paddleBox;
+    }
+    
     /**
      * Return the paddle's position
      * 
@@ -91,9 +94,9 @@ public class Paddle
      * 
      * @return give the size of paddle
      */
-    public int getSize()
+    public int getPaddleSize()
     {
-        return this.size;
+        return this.paddleSize;
     }
 
     /**
@@ -101,11 +104,16 @@ public class Paddle
      * 
      * @param size
      */
-    public void setSize(int size)
+    public void setPaddleSize(int size)
     {
-        this.size = size;
+        this.paddleSize = size;
     }
     
+    public void setPosition(Position pos)
+    {
+        this.position = pos;
+        this.paddleBox = new CollisionBox(this.position, this.paddleSize, this.paddleSize);
+    }
     /*
      * (non-Javadoc)
      * 
@@ -113,7 +121,7 @@ public class Paddle
      */
     public String toString()
     {
-        return "{" + this.position.toString() + ", size : " + this.size + "}";
+        return "{" + this.position.toString() + ", size : " + this.paddleSize + "}";
     }
     
 }

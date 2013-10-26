@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+
 /**
  * This class defines the ball used to destroy bricks
  * 
@@ -104,20 +105,20 @@ public class Ball
     }
 
     /**
-     * Set the four corner's position according to x,d and the baal size
+     * Set the four corner's position according to x,d and the bal size
      * 
      * @param x
      * @param y
      */
-    // TODO (fix) consider having a single position as parameter
-    public void setPositionsFromTopLeftCorner(float x, float y)
+    // TODO (fixed) consider having a single position as parameter
+    public void updatePositions(Position pos)
     {
-        this.topLeftCornerPosition  = new Position(x, y);
-        this.bottomLeftCornerPosition = new Position(x, y + Ball.BALL_SIZE);
-        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
-        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
+        this.topLeftCornerPosition  = pos;
+        this.bottomLeftCornerPosition = pos.translate(0, Ball.BALL_SIZE);
+        this.topRightCornerPosition = pos.translate(Ball.BALL_SIZE,0);
+        this.bottomRightCornerPosition = pos.translate(Ball.BALL_SIZE, Ball.BALL_SIZE);
+        this.ballBox = new CollisionBox(this.topLeftCornerPosition,Ball.BALL_SIZE,Ball.BALL_SIZE);
     }
-
     /**
      * Return a
      * 

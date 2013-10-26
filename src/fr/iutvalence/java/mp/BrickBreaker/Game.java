@@ -2,6 +2,8 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 
 
+import Trajectory;
+
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
@@ -142,8 +144,9 @@ public class Game
                 manageCollisionWithPaddle();
             }
 
-            this.theBall.setPositionsFromTopLeftCorner(this.theBall.getTopLeftCornerPosition().getPosX() + this.theBall.getTrajectory().getCoefB(),
-            this.theBall.getTopLeftCornerPosition().getPosY() + this.theBall.getTrajectory().getCoefA());
+            this.theBall.updatePositions(this.theBall.getTopLeftCornerPosition().translate(this.theBall.getTrajectory().getCoefB(),
+            this.theBall.getTrajectory().getCoefA()));
+
 
             if (this.currentNumberOfBalls != 0 && this.currentNumberOfBricks == 0)
             {
@@ -254,13 +257,17 @@ public class Game
             return NO_SIDE_COLLISION;
         }
         if (dest.getWidth() == 1 && dest.getHeight() == 1)
+        {
             res = COLLISION_CORNER;
-        else if (dest.getWidth() == 1 && dest.getHeight() != 1)
+        }
+        else if (dest.getWidth() == 1 && dest.getHeight() > 1)
+        {
             res = COLLISION_LEFT_RIGHT_SIDE;
-        else if (dest.getWidth() == 1 && dest.getHeight() == 1)
+        }
+        else if (dest.getWidth() > 1 && dest.getHeight() == 1)
+        {
             res = COLLISION_TOP_BOTTOM_SIDE;
-        
-        
+        }
         return res;
     }
     
@@ -269,20 +276,17 @@ public class Game
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getTopLeftCornerPosition().getPosY() + Ball.BALL_SIZE >= Paddle.INITIAL_Y_POSITION)
+        if(this.theBall.getBottomLeftCornerPosition().getPosY() <= thePaddle.getPosition().getPosY())
         {
-            if (isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX(), this.thePaddle.getPosition()
-                    .getPosX(), this.thePaddle.getPosition().getPosX() + this.thePaddle.getSize())
-                    || isFloatBetween(this.theBall.getTopLeftCornerPosition().getPosX() + Ball.BALL_SIZE,
-                            this.thePaddle.getPosition().getPosX(), this.thePaddle.getPosition().getPosX()
-                                    + this.thePaddle.getSize()))
+            Rectangle2D.Float dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(this.thePaddle.getPaddleBox());
+            if(dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(),this.theBall.getTrajectory().getCoefB()));
             }
-            else
-            {
-                onLose();
-            }
+        }
+        else
+        {
+            onLose();
         }
     }
     
