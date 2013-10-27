@@ -1,6 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-
 /**
  * 
  * Define what is a brick That fix the position of a brick, and this state
@@ -11,25 +10,16 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public class Brick
 {
     /**
-     * Ratio of Width size of the brick (in pixels)
+     * Width size of the brick 
      */
-    public final static float RATIO_WIDTH = 0.05F;
+    public static int DEFAULT_WIDTH = 24;
 
     /**
-     * Ration of Height size of the brick (in pixels)
+     * Height size of the brick 
      */
-    public final static float RATIO_HEIGHT = 0.04F;
-    
-    /**
-     * Width size of the brick (in pixels)
-     */
-    public static int DEFAULT_WIDTH = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_WIDTH);
+    public static int DEFAULT_HEIGHT = 12;
 
-    /**
-     * Height size of the brick (in pixels)
-     */
-    public static int DEFAULT_HEIGHT = (int)(BrickBreaker.getBrickBreakerHeightSize() * RATIO_HEIGHT);
-
+    // TODO (fix) declare these constants in an external enumeration called BrickState
     /**
      * That is the normal state of a brick
      */
@@ -61,54 +51,59 @@ public class Brick
      */
     private int state;
     
-    private CollisionBox brickBox;
+    // TODO (fix) write comment
+    // TODO (think about it) seems redudant with position field
+    private CollisionBox collisionBox;
 
-    // TODO (fixed) finish writing comment
+    // TODO (fix) finish writing comment (parameters
     /**
-     * This is the initialization of a brick, a new position is created
-     * according to posX and posY, the initial state is normal
+     * Creates a new Brick, at a given position
      * 
-     * @param posX
-     * @param posY
+     * @param topLeftCornerposition 
      */
     // TODO (fix) replace x and y by a position
-    public Brick(int posX, int posY)
+    public Brick(Position topLeftCornerposition)
     {
         super();
-        this.topLeftCornerPosition = new Position(posX, posY);
+        this.topLeftCornerPosition = topLeftCornerposition;
         this.state = Brick.NORMAL_STATE;
-        this.brickBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
-    public CollisionBox getBrickBox()
+    // TODO (fix) write comment
+    // TODO (think about it) maybe you should take into account the fact that several objects share 
+    // the concept of having a collision box
+    public CollisionBox getCollisionBox()
     {
-        return brickBox;
+        return this.collisionBox;
     }
 
+    // TODO (fix) finish writing comment
     /**
+     * Returns a description of the brick as an ASCII string whose format is ...
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "{x : " + this.topLeftCornerPosition.getPosX() + ", y : " + this.topLeftCornerPosition.getPosY()
+        return "{x : " + this.topLeftCornerPosition.getX() + ", y : " + this.topLeftCornerPosition.getY()
                 + ", state :" + this.state + "}";
     }
 
+    // TODO (fix) detail comment
     /**
      * Return the position of the brick
      * 
      * @return the position of the brick
      */
-    public Position getBrickPosition()
+    public Position getTopLeftCornerPosition()
     {
         return this.topLeftCornerPosition;
     }
 
-    // TODO (fix) finish writing comment
     /**
      * Return the current state of the brick
      * 
-     * @return Return the current state of the brick
+     * @return the current state of the brick
      */
     public int getState()
     {
@@ -119,14 +114,16 @@ public class Brick
     /**
      * Set the current state of the brick
      * 
-     * SET THE @param state
+     * @param state the state of the brick
      */
     public void setState(int state)
     {
         this.state = state;
-       
-     }
-       
+    }
+
+    
+    // TODO (fix) move this method where it should be
+    // if it applies to no particular object, consider declaring a utility class and make this method become static
     /**
      * Function who say if the number toCompare is between the number a and the
      * number b
@@ -143,5 +140,5 @@ public class Brick
     {
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
-    
+
 }

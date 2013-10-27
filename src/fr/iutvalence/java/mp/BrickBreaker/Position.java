@@ -1,11 +1,11 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-
 // TODO (fixed) write comment
 /**
  * Describe a position of an object on the screen
+ * 
  * @author soulierc
- *
+ * 
  */
 public class Position
 {
@@ -13,62 +13,68 @@ public class Position
     /**
      * Position on horizontal axis
      */
-    private float posX;
+    private float x;
 
     /**
      * Position on vertical axis
      */
-    private float posY;
+    private float y;
 
-    // TODO (fixed) write comment
     /**
      * Create a new position according to given coordinates
-     * @param x Horizontal position
-     * @param y Vertical position
+     * 
+     * @param x
+     *            Horizontal position
+     * @param y
+     *            Vertical position
      */
     Position(float x, float y)
     {
-        this.posX = x;
-        this.posY = y;
+        this.x = x;
+        this.y = y;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Return the horizontal position
-     * @return x position
+     * 
+     * @return x coordinate
      */
-    public float getPosX()
+    public float getX()
     {
-        return this.posX;
+        return this.x;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Return the vertical position
-     * @return y position
+     * 
+     * @return y coordinate
      */
-    public float getPosY()
+    public float getY()
     {
-        return this.posY;
+        return this.y;
     }
-    
+
+    // TODO (fix) finish writing comment
     /**
      * Return a new position translated to deltaX ad deltaY
+     * 
      * @param deltaX
      * @param deltaY
-     * @return a position translated to deltaX ad deltaY
+     * @return a position translated to x+deltaX and y+deltaY
      */
     public Position translate(float deltaX, float deltaY)
     {
-        return new Position(this.posX + deltaX, this.posY + deltaY);
+        return new Position(this.x + deltaX, this.y + deltaY);
     }
-    
-    /* (non-Javadoc)
+
+    // TODO (fix) finish writing comment
+    /**
+     * Returns a description of the position as an ASCII string whose format is ...
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "Pos X : "+this.posX+", Pos Y : "+this.posY;
+        return "Pos X : " + this.x + ", Pos Y : " + this.y;
     }
 
 }

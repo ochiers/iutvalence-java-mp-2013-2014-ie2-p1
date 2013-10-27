@@ -1,7 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-
-
 /**
  * This class defines the ball used to destroy bricks
  * 
@@ -13,12 +11,7 @@ public class Ball
     /**
      * Ratio of the size of a ball
      */
-    public final static float RATIO_BALL_SIZE = 0.0125F;
-    
-    /**
-     * Size of a ball
-     */
-    public static int BALL_SIZE = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_BALL_SIZE);
+    public final static int DEFAULT_SIZE = 16;
 
     // TODO (think about it) consider gathering the 4 positions in a single
     // object called BoundingBox
@@ -44,31 +37,35 @@ public class Ball
      * The ball's trajectory
      */
     private Trajectory trajectory;
-    
-    private CollisionBox ballBox;
 
+    // TODO (think about it) this field seems redundant with the previous four
+    // position fields
+    private CollisionBox collisionBox;
+
+    // TODO (fix) finish writing comment (parameters)
     /**
      * Creates a new ball at new position (x,y) and set fields a and b to 1
+     * 
+     * @param x
+     * @param y
      */
     public Ball(float x, float y)
     {
         super();
         this.topLeftCornerPosition = new Position(x, y);
-        this.bottomLeftCornerPosition = new Position(x, y + Ball.BALL_SIZE);
-        this.topRightCornerPosition = new Position(x + Ball.BALL_SIZE, y);
-        this.bottomRightCornerPosition = new Position(x + Ball.BALL_SIZE, y + Ball.BALL_SIZE);
-        this.trajectory = new Trajectory(1,1);
-        this.ballBox = new CollisionBox(this.topLeftCornerPosition, BALL_SIZE, BALL_SIZE);
-        
+        this.bottomLeftCornerPosition = new Position(x, y + DEFAULT_SIZE);
+        this.topRightCornerPosition = new Position(x + DEFAULT_SIZE, y);
+        this.bottomRightCornerPosition = new Position(x + DEFAULT_SIZE, y + DEFAULT_SIZE);
+        this.trajectory = new Trajectory(1, 1);
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_SIZE, DEFAULT_SIZE);
+
     }
 
-
-    public CollisionBox getBallBox()
+    // TODO (fix) write comment
+    public CollisionBox getCollisionBox()
     {
-        return ballBox;
+        return this.collisionBox;
     }
-    
-
 
     /**
      * Return the ball's top left corner position
@@ -110,21 +107,23 @@ public class Ball
         return this.bottomRightCornerPosition;
     }
 
+    // TODO (fix) finish writing comment
     /**
      * Set the four corner's position according to x,d and the bal size
      * 
-     * @param x
-     * @param y
+     * @param newTopLeftCornerposition 
+     * 
      */
-    // TODO (fixed) consider having a single position as parameter
-    public void updatePositions(Position pos)
+    public void updatePositions(Position newTopLeftCornerposition)
     {
-        this.topLeftCornerPosition  = pos;
-        this.bottomLeftCornerPosition = pos.translate(0, Ball.BALL_SIZE);
-        this.topRightCornerPosition = pos.translate(Ball.BALL_SIZE,0);
-        this.bottomRightCornerPosition = pos.translate(Ball.BALL_SIZE, Ball.BALL_SIZE);
-        this.ballBox = new CollisionBox(this.topLeftCornerPosition,Ball.BALL_SIZE,Ball.BALL_SIZE);
+        this.topLeftCornerPosition = newTopLeftCornerposition;
+        this.bottomLeftCornerPosition = newTopLeftCornerposition.translate(0, DEFAULT_SIZE);
+        this.topRightCornerPosition = newTopLeftCornerposition.translate(DEFAULT_SIZE, 0);
+        this.bottomRightCornerPosition = newTopLeftCornerposition.translate(DEFAULT_SIZE, DEFAULT_SIZE);
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_SIZE, DEFAULT_SIZE);
     }
+
+    // TODO (fix) rewrite comment
     /**
      * Return a
      * 
@@ -135,6 +134,7 @@ public class Ball
         return this.trajectory;
     }
 
+    // TODO (fix) rewrite comment
     /**
      * Set a field
      * 
@@ -145,10 +145,9 @@ public class Ball
         this.trajectory = a;
     }
 
-
-    /*
-     * (non-Javadoc)
-     * 
+    // TODO (fix) finish writing comment
+    /**
+     * Returns a description of the ball as an ASCII string whose format is ...
      * @see java.lang.Object#toString()
      */
     public String toString()

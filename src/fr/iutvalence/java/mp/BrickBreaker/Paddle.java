@@ -1,4 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
+
 // TODO (fixed)(think about it) for plate, you mean "paddle" ?
 /**
  * This class define what is a plate
@@ -8,93 +9,69 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class Paddle
 {
+    /**
+     *  Paddle width 
+     */
+    public final static int DEFAULT_WIDTH = 36;
 
     /**
-     * Ratio Width size of the paddle
+     * Paddle height
      */
-    private static final float RATIO_PADDLE_SIZE = 0.2F;
-    
-    /**
-     * Ratio of the vertical position of paddle 
-     */
-    private static final float RATIO_VERTICAL_POSITION = 0.85F;
-    
-    /**
-     * Width size of the paddle (in pixels)
-     */
-    public static int DEFAULT_PADDLE_SIZE = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_PADDLE_SIZE);
-    
-    /**
-     * Height size of the paddle (in pixels)
-     */
-    public final static int DEFAULT_PADDLE_HEIGHT = 10;
-    
-    
-    // TODO (fixed) comply with naming conventions
+    public final static int DEFAULT_HEIGHT = 12;
+
     /**
      * The paddle is always at the same height
      */
-    public static final int INITIAL_Y_POSITION = (int)(BrickBreaker.getBrickBreakerHeightSize() * RATIO_VERTICAL_POSITION);
+    public static final Position DEFAULT_TOP_LEFT_CORNER_POSITION = new Position(50, 50);
 
     /**
-     * Width size of the paddle (in pixels)
+     * Paddle width
      */
-    private int paddleSize;
+    private int width;
 
     /**
-     * Position of top left corner of the paddle, in fact only the x will change with the mouse's position
+     * Position of top left corner of the paddle
      */
-    // TODO (explain) what is precisely this position?
-    private Position position;
-    
+    private Position topLeftCornerPosition;
 
-    /**
-     * 
-     */
-    private CollisionBox paddleBox;
+    // TODO (fix) write comment
+    private CollisionBox collisionBox;
 
-   
-
-    /**
-     * That create a paddle with that we can play, X position can be specified
-     * 
-     * @param posX
-     *            horizontal position of the paddle, vertical is constant
-     * @param size
-     *            width of the paddle
-     */
-    public Paddle(float posX, int size)
+    // TODO (fix) write comment
+    public Paddle(Position topLeftCornerPosition, int width)
     {
         super();
-        this.position = new Position(posX, (float) Paddle.INITIAL_Y_POSITION);
-        this.paddleSize = size;
-        this.paddleBox = new CollisionBox(this.position, this.paddleSize, DEFAULT_PADDLE_HEIGHT);
+        this.topLeftCornerPosition = topLeftCornerPosition;
+        this.width = width;
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, DEFAULT_HEIGHT);
     }
 
+    
+    // TODO (fix) finish writing comment
     /**
-     * That create a paddle with that we can play
+     * creates a paddle initially ...
      */
     public Paddle()
     {
         super();
-        this.position = new Position(0, Paddle.INITIAL_Y_POSITION);
-        this.paddleSize = Paddle.DEFAULT_PADDLE_SIZE;
-        this.paddleBox = new CollisionBox(this.position, this.paddleSize, DEFAULT_PADDLE_HEIGHT);
+        this.topLeftCornerPosition = DEFAULT_TOP_LEFT_CORNER_POSITION;
+        this.width = Paddle.DEFAULT_WIDTH;
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, DEFAULT_HEIGHT);
     }
-    
-    public CollisionBox getPaddleBox()
+
+    public CollisionBox getCollisionBox()
     {
-        return this.paddleBox;
+        return this.collisionBox;
     }
-    
+
     /**
      * Return the paddle's position
      * 
      * @return position
      */
-    public Position getPosition()
+    public Position getTopLeftCornerPosition()
     {
-        return this.position;
+        return this.topLeftCornerPosition;
     }
 
     /**
@@ -102,34 +79,36 @@ public class Paddle
      * 
      * @return give the size of paddle
      */
-    public int getPaddleSize()
+    public int getWidth()
     {
-        return this.paddleSize;
+        return this.width;
     }
 
+    // TODO (fix) finish xriting comment
     /**
-     * Set the paddle's size
+     * Set the paddle width
      * 
-     * @param size
+     * @param width
      */
-    public void setPaddleSize(int size)
+    public void setWidth(int width)
     {
-        this.paddleSize = size;
+        this.width = width;
     }
-    
-    public void setPosition(Position pos)
+
+    public void setTopLeftCornerPosition(Position newTopLeftCornerPosition)
     {
-        this.position = pos;
-        this.paddleBox = new CollisionBox(this.position, this.paddleSize, this.paddleSize);
+        this.topLeftCornerPosition = newTopLeftCornerPosition;
+        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, this.width);
     }
-    /*
-     * (non-Javadoc)
-     * 
+
+    // TODO (fix) finish writing comment
+    /**
+     * Returns a description of the paddle as an ASCII string whose format is ...
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "{" + this.position.toString() + ", size : " + this.paddleSize + "}";
+        return "{" + this.topLeftCornerPosition.toString() + ", size : " + this.width + "}";
     }
-    
+
 }

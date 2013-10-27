@@ -2,21 +2,23 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 /**
  * Define a trajectory of a moving object;
+ * 
  * @author soulierc
- *
+ * 
  */
 public class Trajectory
 {
     /**
-     * Coeficient on vertical axis
+     * Coefficient on vertical axis
      */
-    private float coefA;
-    
+    private float aCoefficient;
+
     /**
-     * Coeficient on horizontal axis
+     * Coefficient on horizontal axis
      */
-    private float coefB;
-    
+    private float bCoefficient;
+
+    // TODO (fix) finish writing comment
     /**
      * 
      * @param a
@@ -24,44 +26,52 @@ public class Trajectory
      */
     Trajectory(float a, float b)
     {
-        this.coefA = a;
-        this.coefB = b;
+        this.aCoefficient = a;
+        this.bCoefficient = b;
     }
-    
-    public void reverseCoefA()
+
+    // TODO (fix) write comment
+    public void reverseACoefficient()
     {
-        this.coefA = -this.coefA;
+        this.aCoefficient = -this.aCoefficient;
     }
-    public void reverseCoefB()
+
+    // TODO (fix) write comment
+    public void reverseBCoefficient()
     {
-        this.coefB = -this.coefB;
+        this.bCoefficient = -this.bCoefficient;
     }
-        
-    
+
     /**
      * Return the A coeficient
+     * 
      * @return a coeficicent
      */
-    public float getCoefA()
+    public float getACoefficient()
     {
-        return coefA;
+        return aCoefficient;
     }
 
     /**
      * Return the B coeficient
+     * 
      * @return b coeficient
      */
-    public float getCoefB()
+    public float getBCoefficient()
     {
-        return coefB;
+        return bCoefficient;
     }
-    
-    /* (non-Javadoc)
+
+    // TODO (fix) finish writing comment
+    /**
+     * Returns a description of the trajectory as an ASCII string whose format
+     * is ...
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "Coef A : "+this.coefA+", Coef B: "+this.coefB;
-    
+        return "Coef A : " + this.aCoefficient + ", Coef B: " + this.bCoefficient;
+
     }
 }
