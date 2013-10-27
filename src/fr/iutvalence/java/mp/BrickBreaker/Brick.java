@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+
 /**
  * 
  * Define what is a brick That fix the position of a brick, and this state
@@ -10,14 +11,24 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public class Brick
 {
     /**
+     * Ratio of Width size of the brick (in pixels)
+     */
+    public final static float RATIO_WIDTH = 0.05F;
+
+    /**
+     * Ration of Height size of the brick (in pixels)
+     */
+    public final static float RATIO_HEIGHT = 0.04F;
+    
+    /**
      * Width size of the brick (in pixels)
      */
-    public final static int DEFAULT_WIDTH = 50;
+    public static int DEFAULT_WIDTH = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_WIDTH);
 
     /**
      * Height size of the brick (in pixels)
      */
-    public final static int DEFAULT_HEIGHT = 44;
+    public static int DEFAULT_HEIGHT = (int)(BrickBreaker.getBrickBreakerHeightSize() * RATIO_HEIGHT);
 
     /**
      * That is the normal state of a brick

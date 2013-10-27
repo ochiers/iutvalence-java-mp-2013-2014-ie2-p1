@@ -1,9 +1,4 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
-
-
-import Trajectory;
-
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
@@ -15,14 +10,25 @@ import java.util.Random;
 public class Game
 {
     /**
+     * Ratio Width size of the container
+     */
+    private static final float RATIO_WIDTH_OF_GAME_PANEL = 0.8F;
+
+    /**
+     * Ratio Height size of the container
+     */
+    private static final float RATIO_HEIGHT_OF_GAME_PANEL = 0.75F;
+    
+    /**
      * Width size of the container
      */
-    private static final int WIDTH_OF_GAME_PANEL = 500;
+    private static int WIDTH_OF_GAME_PANEL = (int) (BrickBreaker.getBrickBreakerWidthSize() * RATIO_WIDTH_OF_GAME_PANEL);
 
     /**
      * Height size of the container
      */
-    private static final int HEIGHT_OF_GAME_PANEL = 440;
+    private static int HEIGHT_OF_GAME_PANEL = (int) (BrickBreaker.getBrickBreakerHeightSize() * RATIO_HEIGHT_OF_GAME_PANEL);
+    
 
     // TODO (fixed) comment is confusing
     // default number of bricks?
@@ -114,7 +120,7 @@ public class Game
 
         this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2);
 
-        this.thePaddle = new Paddle(Game.PADDLE_INITIAL_POSITION, Paddle.PADDLE_SIZE);
+        this.thePaddle = new Paddle(Game.PADDLE_INITIAL_POSITION, Paddle.DEFAULT_PADDLE_SIZE);
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)

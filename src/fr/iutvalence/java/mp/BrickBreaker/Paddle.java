@@ -1,6 +1,4 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
-
 // TODO (fixed)(think about it) for plate, you mean "paddle" ?
 /**
  * This class define what is a plate
@@ -12,21 +10,31 @@ public class Paddle
 {
 
     /**
+     * Ratio Width size of the paddle
+     */
+    private static final float RATIO_PADDLE_SIZE = 0.2F;
+    
+    /**
+     * Ratio of the vertical position of paddle 
+     */
+    private static final float RATIO_VERTICAL_POSITION = 0.85F;
+    
+    /**
      * Width size of the paddle (in pixels)
      */
-    public final static int PADDLE_SIZE = 30;
+    public static int DEFAULT_PADDLE_SIZE = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_PADDLE_SIZE);
     
     /**
      * Height size of the paddle (in pixels)
      */
-    public final static int PADDLE_HEIGHT = 10;
+    public final static int DEFAULT_PADDLE_HEIGHT = 10;
     
     
     // TODO (fixed) comply with naming conventions
     /**
-     * The paddle is always at the same height : 396
+     * The paddle is always at the same height
      */
-    public static final int INITIAL_Y_POSITION = 396;
+    public static final int INITIAL_Y_POSITION = (int)(BrickBreaker.getBrickBreakerHeightSize() * RATIO_VERTICAL_POSITION);
 
     /**
      * Width size of the paddle (in pixels)
@@ -60,7 +68,7 @@ public class Paddle
         super();
         this.position = new Position(posX, (float) Paddle.INITIAL_Y_POSITION);
         this.paddleSize = size;
-        this.paddleBox = new CollisionBox(this.position, this.paddleSize, PADDLE_HEIGHT);
+        this.paddleBox = new CollisionBox(this.position, this.paddleSize, DEFAULT_PADDLE_HEIGHT);
     }
 
     /**
@@ -70,8 +78,8 @@ public class Paddle
     {
         super();
         this.position = new Position(0, Paddle.INITIAL_Y_POSITION);
-        this.paddleSize = Paddle.PADDLE_SIZE;
-        this.paddleBox = new CollisionBox(this.position, this.paddleSize, PADDLE_HEIGHT);
+        this.paddleSize = Paddle.DEFAULT_PADDLE_SIZE;
+        this.paddleBox = new CollisionBox(this.position, this.paddleSize, DEFAULT_PADDLE_HEIGHT);
     }
     
     public CollisionBox getPaddleBox()

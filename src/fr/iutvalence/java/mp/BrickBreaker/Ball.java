@@ -1,6 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 
+
 /**
  * This class defines the ball used to destroy bricks
  * 
@@ -10,9 +11,14 @@ public class Ball
 {
 
     /**
+     * Ratio of the size of a ball
+     */
+    public final static float RATIO_BALL_SIZE = 0.0125F;
+    
+    /**
      * Size of a ball
      */
-    public final static int BALL_SIZE = 10;
+    public static int BALL_SIZE = (int)(BrickBreaker.getBrickBreakerWidthSize() * RATIO_BALL_SIZE);
 
     // TODO (think about it) consider gathering the 4 positions in a single
     // object called BoundingBox
