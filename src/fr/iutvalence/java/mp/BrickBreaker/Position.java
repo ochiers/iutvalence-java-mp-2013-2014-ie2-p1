@@ -1,6 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fixed) write comment
 /**
  * Describe a position of an object on the screen
  * 
@@ -56,7 +55,7 @@ public class Position
 
     // TODO (fix) finish writing comment
     /**
-     * Return a new position translated to deltaX ad deltaY
+     * Return a new position translated to deltaX and deltaY
      * 
      * @param deltaX
      * @param deltaY
@@ -67,9 +66,9 @@ public class Position
         return new Position(this.x + deltaX, this.y + deltaY);
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * Returns a description of the position as an ASCII string whose format is ...
+     * Returns a description of the position as an ASCII string whose format is "Pos X : Position's x field, Pos Y Position's y field"
      * @see java.lang.Object#toString()
      */
     public String toString()

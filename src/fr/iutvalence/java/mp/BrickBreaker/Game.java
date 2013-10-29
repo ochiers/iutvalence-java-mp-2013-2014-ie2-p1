@@ -13,18 +13,18 @@ public class Game
     /**
      * Width size of the container
      */
-    private static int DEFAULT_MAP_WIDTH = 800;
+    public static int DEFAULT_MAP_WIDTH = 600;
 
     /**
      * Height size of the container
      */
-    private static int DEFAULT_MAP_HEIGHT = 600;
+    public static int DEFAULT_MAP_HEIGHT = 400;
 
     /**
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 10;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 2;
 
     /**
      * Maximal number of player's lives
@@ -105,14 +105,15 @@ public class Game
     {
         super();
         
-        // TODO (fix) declare hard-coded values as constants
-        int yPositionBricks = 44;
+        // TODO (fixed) declare hard-coded values as constants
+        int yPositionBricks = Brick.DEFAULT_HEIGHT;
         this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
         this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2);
 
-        this.thePaddle = new Paddle();
+        //For the tests, the paddle size is the total game size
+        this.thePaddle = new Paddle(new Position(0,386), Game.DEFAULT_MAP_WIDTH);
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
@@ -122,8 +123,8 @@ public class Game
         this.rand = new Random();
         
         
-        // TODO (fix) use constants
-        this.currentNumberOfBricks = 10;
+        // TODO (fixed) use constants
+        this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
 
     }
 
@@ -134,13 +135,12 @@ public class Game
      */
     public void play()
     {
-        // TODO (fix) declare hard-coded values as constants
-        int nbMaxBallMoves = 1000;
         boolean thereWasAcollision = false;
         int collisionSide = 0;
-
-        for (int i = 0; i < nbMaxBallMoves; i++)
+        
+        while(!this.stopGame)
         {
+            printInConsole(true);
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();
@@ -158,9 +158,9 @@ public class Game
             {
                 int j;
                 thereWasAcollision = false;
-                for (j = 0; j < 10; j++)
+                for (j = 0; j < Game.DEFAULT_NUMBER_OF_BRICKS; j++)
                 {
-                    if (this.bricks[j].getState() != Brick.DESTROYED_STATE)
+                    if (this.bricks[j].getState() != BrickState.DESTROYED_STATE)
                     {
                         collisionSide = isBallInCollisionWithBrick(this.bricks[j]);
                         onCollisionWithBrick(thereWasAcollision, j, collisionSide);
@@ -168,13 +168,15 @@ public class Game
                             thereWasAcollision = true;
                     }
                 }
-                System.out.println(this.theBall.toString());
+                //System.out.println(this.theBall.toString());
             }
-            else
-            {
-                i = nbMaxBallMoves;
+            
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-
         }
 
     }
@@ -189,16 +191,21 @@ public class Game
      * @param collisionSide
      *            side collided
      */
-    // TODO (fix) if this method is called when a collision occurs, why passing a boolean as parameter
+    // TODO (fixed) if this method is called when a collision occurs, why passing a boolean as parameter
     // that indicates if there was a collision?
+    //Parcequ'on parcourt le tableau de briques pour detecter les collisions, si la balle entre en collsion avec une premiere brique
+    //on inverse le coefficient de la trajectoire, puis on test la collsion sur une deuxieme brique, si il y a aussi une collision on inverse le coefficient :
+    // au final on a rien fait puisqu'on a inversé deux fois le coefficient, et la balle va continuer comme elle venue, 
+    //ce n'est pas ce que l'on veut. Il faut donc un booléen permettant de savoir si il y a déjà eu collision pour empècher d'inverser le coefficient plusieurs fois
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
         if (collisionSide != NO_SIDE_COLLISION)
         {
-            this.bricks[indexOfBrick].setState(Brick.DESTROYED_STATE);
+            this.bricks[indexOfBrick].setState(BrickState.DESTROYED_STATE);
             this.currentNumberOfBricks--;
             if (!thereWasAcollision)
             {
+                System.out.println("Brick(s) hited");
                 switch (collisionSide)
                 {
                 case COLLISION_LEFT_RIGHT_SIDE:
@@ -243,13 +250,13 @@ public class Game
         }
     }
 
-    // TODO (fix) rewrite comment (parameter types have changed)
+    // TODO (fixed) rewrite comment (parameter types have changed)
     /**
      * Function that says if the ball is in collision with the brick, in the tab
      * of bricks to the index i
      * 
-     * @param i
-     *            Index of the brick to compare in the game tab brick
+     * @param brick
+     *            The brick to compare in the game tab brick
      * @return 0 if no collision, 1 in case of collision with left or right
      *         sides, 2 in case of collision with top or bottom sides
      */
@@ -267,12 +274,14 @@ public class Game
             result = COLLISION_CORNER;
         }
         // TODO (fix) simplify
+        //I don't know to simplify ...
         else if (dest.getWidth() == 1 && dest.getHeight() > 1)
         {
             result = COLLISION_LEFT_RIGHT_SIDE;
         }
         
         // TODO (fix) simplify
+        //I don't know to simplify ...
         else if (dest.getWidth() > 1 && dest.getHeight() == 1)
         {
             result = COLLISION_TOP_BOTTOM_SIDE;
@@ -286,7 +295,7 @@ public class Game
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getBottomLeftCornerPosition().getY() <= thePaddle.getTopLeftCornerPosition().getY())
+        if (this.theBall.getTopLeftCornerPosition().getY() + this.theBall.DEFAULT_SIZE <= this.thePaddle.getTopLeftCornerPosition().getY())
         {
             Rectangle2D.Float dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(
                     this.thePaddle.getCollisionBox());
@@ -294,6 +303,7 @@ public class Game
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
                         .getBCoefficient()));
+                System.out.println("Paddle hited");
             }
         }
         else
@@ -316,11 +326,13 @@ public class Game
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();
+            System.out.println("Game Side Left or Right hited");
             thereIsCollision = true;
         }
         else if (this.theBall.getTopLeftCornerPosition().getY() <= 0)
         {
             this.theBall.getTrajectory().reverseACoefficient();
+            System.out.println("Game Side Top or Bottom hited");
             thereIsCollision = true;
         }
         return thereIsCollision;
@@ -338,10 +350,92 @@ public class Game
      *            Bound of comparison
      * @return true if the number is in, false otherwise
      */
-    // TODO (fixed) rename this method (i see no int)
     private boolean isFloatBetween(float toCompare, float a, float b)
     {
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
 
+    
+    /**
+     * Method who build a line of the game, in order to be printed in console
+     * @param pos
+     * @param increment
+     * @return
+     */
+    public String printLineInConsole(float pos, float increment)
+    {
+        String res = "#";
+        boolean aBrickIsWritten = false;
+        int count = 0;
+        for(int k =0; k < Game.DEFAULT_MAP_WIDTH; k += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+        {
+            if(count < Game.DEFAULT_NUMBER_OF_BRICKS)
+            {
+                if(isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY(), pos, pos + increment) ||
+                        isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY() + Brick.DEFAULT_WIDTH, pos, pos + increment))
+                {
+                    aBrickIsWritten = true;
+                    if(this.bricks[count].getState() != BrickState.DESTROYED_STATE)
+                        res += "N";
+                    else
+                        res += "X";
+                }
+                else
+                {
+                    res +=  " " ;
+                }
+                count++;
+            }
+            else
+            {
+                res += " ";
+            }
+            
+            
+        }
+        if(!aBrickIsWritten && isFloatBetween(theBall.getTopLeftCornerPosition().getY(), pos, pos + increment))
+        {
+            res = theBall.stringBallInConsole();
+        }
+        
+        if(isFloatBetween(thePaddle.getTopLeftCornerPosition().getY(), pos, pos + increment))
+        {
+            res = thePaddle.stringPaddleInConsole();
+        }
+            
+        return res;
+    }
+    
+    
+    
+    /**
+     * Print the game in the console
+     * @param isGraphic
+     */
+    public void printInConsole(boolean isGraphic)
+    {
+        if(isGraphic)
+        {
+            System.out.print("#");
+            for(int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+            {
+                System.out.print("#");
+            }
+            System.out.println();
+           for(int j =0; j < Game.DEFAULT_MAP_HEIGHT; j+= Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE)) 
+            {   
+               System.out.println(printLineInConsole(j,Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE)));
+            }
+        }
+        else
+        {
+            System.out.println("Ball" + theBall);
+            System.out.println("Paddle" + thePaddle);
+
+            
+        }
+    }
+    
+    
+    
 }
