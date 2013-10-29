@@ -13,20 +13,17 @@ public class Ball
      */
     public final static int DEFAULT_SIZE = 16;
 
-
     /**
      * It is the top left corner position of the ball
      */
     private Position topLeftCornerPosition;
-    
 
     /**
      * The ball's trajectory
      */
     private Trajectory trajectory;
 
-    // TODO (fixed)(think about it) this field seems redundant with the previous four
-    // position fields
+    // TODO (think about it) this field seems redundant with the topLeftCornerPosition field
     private CollisionBox collisionBox;
 
     // TODO (fix) finish writing comment (parameters)
@@ -45,7 +42,6 @@ public class Ball
 
     }
 
-    // TODO (fixed) write comment
     /**
      * Return a CollisionBox associated with this ball
      * 
@@ -66,12 +62,13 @@ public class Ball
         return this.topLeftCornerPosition;
     }
 
-
     // TODO (fix) finish writing comment
     /**
-     * Update the ball's position and set a new CollisionBox according to the new position 
+     * Update the ball's position and set a new CollisionBox according to the
+     * new position
      * 
-     * @param newTopLeftCornerposition The new position of the ball
+     * @param newTopLeftCornerposition
+     *            The new position of the ball
      * 
      */
     public void updatePositions(Position newTopLeftCornerposition)
@@ -80,7 +77,6 @@ public class Ball
         this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_SIZE, DEFAULT_SIZE);
     }
 
-    // TODO (fixed) rewrite comment
     /**
      * Return the trajectory associated with this ball
      * 
@@ -91,47 +87,48 @@ public class Ball
         return this.trajectory;
     }
 
-    // TODO (fixed) rewrite comment
     /**
      * Set a new trajectory for the ball
      * 
-     * @param trajectory The new trajectory given for the ball
+     * @param trajectory
+     *            The new trajectory given for the ball
      */
     public void setTrajectory(Trajectory trajectory)
     {
         this.trajectory = trajectory;
     }
 
-    // TODO (fixed) finish writing comment
     /**
-     * Returns a description of the ball as an ASCII string whose format is "{  Ball's position ,Ball's trajectory }"
+     * Returns a description of the ball as an ASCII string whose format is
+     * "{  Ball's position ,Ball's trajectory }"
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
         return "{" + this.topLeftCornerPosition.toString() + ", " + this.trajectory.toString() + "}";
     }
-    
-    
+
     public String stringBallInConsole()
     {
         String res = "#";
-        for(int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
-            
-            if(isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE))))
+
+            if (isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+                    / (2 * Ball.DEFAULT_SIZE))))
             {
-               res = res + "B";
+                res = res + "B";
             }
             else
                 res = res + " ";
         }
         return res;
     }
+
     private boolean isFloatBetween(float toCompare, float a, float b)
     {
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
-    
-    
+
 }

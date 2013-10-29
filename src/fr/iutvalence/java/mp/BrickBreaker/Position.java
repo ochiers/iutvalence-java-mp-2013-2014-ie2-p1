@@ -66,9 +66,10 @@ public class Position
         return new Position(this.x + deltaX, this.y + deltaY);
     }
 
-    // TODO (fixed) finish writing comment
     /**
-     * Returns a description of the position as an ASCII string whose format is "Pos X : Position's x field, Pos Y Position's y field"
+     * Returns a description of the position as an ASCII string whose format is
+     * "Pos X : Position's x field, Pos Y Position's y field"
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()

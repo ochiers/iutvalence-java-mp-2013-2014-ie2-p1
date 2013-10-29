@@ -38,9 +38,12 @@ public class CollisionBox
     }
 
     /**
-     * Return a rectangle2D corresponding to the intersection between this CollisionBox and another
+     * Return a rectangle2D corresponding to the intersection between this
+     * CollisionBox and another
+     * 
      * @param box2
-     * @return the rectangle2D corresponding to the intersection between this CollisionBox and box2
+     * @return the rectangle2D corresponding to the intersection between this
+     *         CollisionBox and box2
      */
     public Rectangle2D.Float getRectangleFromIntersectionWithOtherCollisionBox(CollisionBox box2)
     {

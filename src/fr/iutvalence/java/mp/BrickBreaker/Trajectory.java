@@ -21,6 +21,7 @@ public class Trajectory
     // TODO (fix) finish writing comment
     /**
      * Create a new trajectory with given coefficients a and b
+     * 
      * @param a
      * @param b
      */
@@ -30,7 +31,6 @@ public class Trajectory
         this.bCoefficient = b;
     }
 
-    // TODO (fixed) write comment
     /**
      * Set the opposite aCoefficient
      */
@@ -39,7 +39,6 @@ public class Trajectory
         this.aCoefficient = -this.aCoefficient;
     }
 
-    // TODO (fixed) write comment
     /**
      * Set the opposite bCoefficient
      */
@@ -68,10 +67,10 @@ public class Trajectory
         return bCoefficient;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Returns a description of the trajectory as an ASCII string whose format
-     * is "Coef A : Trajectory's A coefficicent, Coef B: " Trajectory's B coefficicent"
+     * is "Coef A : Trajectory's A coefficicent, Coef B: " Trajectory's B
+     * coefficicent"
      * 
      * @see java.lang.Object#toString()
      */

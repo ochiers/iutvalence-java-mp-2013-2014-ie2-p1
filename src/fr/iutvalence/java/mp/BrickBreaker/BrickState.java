@@ -2,7 +2,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 
 /**
  * @author soulierc
- *
+ * 
  */
 public enum BrickState
 {
@@ -26,6 +26,5 @@ public enum BrickState
      * the last time And then, it is delete of the screen
      */
     DESTROYED_STATE;
-    
-    
+
 }

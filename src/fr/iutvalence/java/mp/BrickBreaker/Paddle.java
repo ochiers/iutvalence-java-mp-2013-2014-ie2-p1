@@ -9,7 +9,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public class Paddle
 {
     /**
-     *  Paddle width 
+     * Paddle width
      */
     public final static int DEFAULT_WIDTH = 36;
 
@@ -33,17 +33,19 @@ public class Paddle
      */
     private Position topLeftCornerPosition;
 
-    // TODO (fixed) write comment
     /**
      * CollisionBox associated with this paddle
      */
     private CollisionBox collisionBox;
 
-    // TODO (fixed) write comment
     /**
-     * Create a new paddle and the CollisionBox associated  at a given position and with the given width size
-     * @param topLeftCornerPosition Paddle's initial position of the top left corner
-     * @param width Paddle's width size
+     * Create a new paddle and the CollisionBox associated at a given position
+     * and with the given width size
+     * 
+     * @param topLeftCornerPosition
+     *            Paddle's initial position of the top left corner
+     * @param width
+     *            Paddle's width size
      */
     public Paddle(Position topLeftCornerPosition, int width)
     {
@@ -53,12 +55,9 @@ public class Paddle
         this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, DEFAULT_HEIGHT);
     }
 
-    
-    // TODO (fixed) finish writing comment
     /**
-     * creates a paddle initially at DEFAULT_TOP_LEFT_CORNER_POSITION and 
-     * with the default width size DEFAULT_WIDTH
-     * and the CollisionBox associated
+     * creates a paddle initially at DEFAULT_TOP_LEFT_CORNER_POSITION and with
+     * the default width size DEFAULT_WIDTH and the CollisionBox associated
      */
     public Paddle()
     {
@@ -98,11 +97,11 @@ public class Paddle
         return this.width;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Set a new paddle width
      * 
-     * @param width New width of the paddle
+     * @param width
+     *            New width of the paddle
      */
     public void setWidth(int width)
     {
@@ -115,9 +114,10 @@ public class Paddle
         this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, this.width);
     }
 
-    // TODO (fixed) finish writing comment
     /**
-     * Returns a description of the paddle as an ASCII string whose format is "{Paddle's position, size : Paddle's width}"
+     * Returns a description of the paddle as an ASCII string whose format is
+     * "{Paddle's position, size : Paddle's width}"
+     * 
      * @see java.lang.Object#toString()
      */
     public String toString()
@@ -128,22 +128,23 @@ public class Paddle
     public String stringPaddleInConsole()
     {
         String res = "#";
-        for(int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
-            
-            if(isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE))))
+
+            if (isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+                    / (2 * Ball.DEFAULT_SIZE))))
             {
-               res = res + "P";
+                res = res + "P";
             }
             else
                 res = res + " ";
         }
         return res;
     }
+
     private boolean isFloatBetween(float toCompare, float a, float b)
     {
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
-    
-    
+
 }

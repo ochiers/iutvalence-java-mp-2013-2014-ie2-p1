@@ -104,32 +104,26 @@ public class Game
     public Game()
     {
         super();
-        
-        // TODO (fixed) declare hard-coded values as constants
+
         int yPositionBricks = Brick.DEFAULT_HEIGHT;
         this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
         this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2);
 
-        //For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0,386), Game.DEFAULT_MAP_WIDTH);
+        // For the tests, the paddle size is the total game size
+        this.thePaddle = new Paddle(new Position(0, 386), Game.DEFAULT_MAP_WIDTH);
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
         {
-            this.bricks[i] = new Brick(new Position (i * Brick.DEFAULT_WIDTH, yPositionBricks));
+            this.bricks[i] = new Brick(new Position(i * Brick.DEFAULT_WIDTH, yPositionBricks));
         }
         this.rand = new Random();
-        
-        
-        // TODO (fixed) use constants
-        this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
 
+        this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
     }
 
-    // TODO (fixed) simplify this method by moving some inner code in outside
-    // private methods
     /**
      * method who move the ball and take care of collisions
      */
@@ -137,8 +131,8 @@ public class Game
     {
         boolean thereWasAcollision = false;
         int collisionSide = 0;
-        
-        while(!this.stopGame)
+
+        while (!this.stopGame)
         {
             printInConsole(true);
             if (!manageCollisionWithGamePanelSides())
@@ -168,12 +162,15 @@ public class Game
                             thereWasAcollision = true;
                     }
                 }
-                //System.out.println(this.theBall.toString());
+                // System.out.println(this.theBall.toString());
             }
-            
-            try {
+
+            try
+            {
                 Thread.sleep(5);
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -191,12 +188,19 @@ public class Game
      * @param collisionSide
      *            side collided
      */
-    // TODO (fixed) if this method is called when a collision occurs, why passing a boolean as parameter
+    // TODO (fixed) if this method is called when a collision occurs, why
+    // passing a boolean as parameter
     // that indicates if there was a collision?
-    //Parcequ'on parcourt le tableau de briques pour detecter les collisions, si la balle entre en collsion avec une premiere brique
-    //on inverse le coefficient de la trajectoire, puis on test la collsion sur une deuxieme brique, si il y a aussi une collision on inverse le coefficient :
-    // au final on a rien fait puisqu'on a inversé deux fois le coefficient, et la balle va continuer comme elle venue, 
-    //ce n'est pas ce que l'on veut. Il faut donc un booléen permettant de savoir si il y a déjà eu collision pour empècher d'inverser le coefficient plusieurs fois
+    // Parcequ'on parcourt le tableau de briques pour detecter les collisions,
+    // si la balle entre en collsion avec une premiere brique
+    // on inverse le coefficient de la trajectoire, puis on test la collsion sur
+    // une deuxieme brique, si il y a aussi une collision on inverse le
+    // coefficient :
+    // au final on a rien fait puisqu'on a inversé deux fois le coefficient, et
+    // la balle va continuer comme elle venue,
+    // ce n'est pas ce que l'on veut. Il faut donc un booléen permettant de
+    // savoir si il y a déjà eu collision pour empècher d'inverser le
+    // coefficient plusieurs fois
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
         if (collisionSide != NO_SIDE_COLLISION)
@@ -250,7 +254,6 @@ public class Game
         }
     }
 
-    // TODO (fixed) rewrite comment (parameter types have changed)
     /**
      * Function that says if the ball is in collision with the brick, in the tab
      * of bricks to the index i
@@ -264,7 +267,8 @@ public class Game
     {
         int result = NO_SIDE_COLLISION;
         Rectangle2D.Float dest = new Rectangle2D.Float();
-        dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(brick.getCollisionBox());
+        dest = this.theBall.getCollisionBox()
+                .getRectangleFromIntersectionWithOtherCollisionBox(brick.getCollisionBox());
         if (dest.getWidth() < 0 && dest.getHeight() < 0)
         {
             return NO_SIDE_COLLISION;
@@ -274,14 +278,14 @@ public class Game
             result = COLLISION_CORNER;
         }
         // TODO (fix) simplify
-        //I don't know to simplify ...
+        // I don't know to simplify ...
         else if (dest.getWidth() == 1 && dest.getHeight() > 1)
         {
             result = COLLISION_LEFT_RIGHT_SIDE;
         }
-        
+
         // TODO (fix) simplify
-        //I don't know to simplify ...
+        // I don't know to simplify ...
         else if (dest.getWidth() > 1 && dest.getHeight() == 1)
         {
             result = COLLISION_TOP_BOTTOM_SIDE;
@@ -290,12 +294,13 @@ public class Game
     }
 
     /**
-     * Method who manages collisions between ball and paddle, if the ball doesn't
-     * hit the paddle the player loses
+     * Method who manages collisions between ball and paddle, if the ball
+     * doesn't hit the paddle the player loses
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getTopLeftCornerPosition().getY() + this.theBall.DEFAULT_SIZE <= this.thePaddle.getTopLeftCornerPosition().getY())
+        if (this.theBall.getTopLeftCornerPosition().getY() + this.theBall.DEFAULT_SIZE <= this.thePaddle
+                .getTopLeftCornerPosition().getY())
         {
             Rectangle2D.Float dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(
                     this.thePaddle.getCollisionBox());
@@ -355,9 +360,9 @@ public class Game
         return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
     }
 
-    
     /**
      * Method who build a line of the game, in order to be printed in console
+     * 
      * @param pos
      * @param increment
      * @return
@@ -367,22 +372,23 @@ public class Game
         String res = "#";
         boolean aBrickIsWritten = false;
         int count = 0;
-        for(int k =0; k < Game.DEFAULT_MAP_WIDTH; k += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+        for (int k = 0; k < Game.DEFAULT_MAP_WIDTH; k += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
-            if(count < Game.DEFAULT_NUMBER_OF_BRICKS)
+            if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
             {
-                if(isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY(), pos, pos + increment) ||
-                        isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY() + Brick.DEFAULT_WIDTH, pos, pos + increment))
+                if (isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY(), pos, pos + increment)
+                        || isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY() + Brick.DEFAULT_WIDTH,
+                                pos, pos + increment))
                 {
                     aBrickIsWritten = true;
-                    if(this.bricks[count].getState() != BrickState.DESTROYED_STATE)
+                    if (this.bricks[count].getState() != BrickState.DESTROYED_STATE)
                         res += "N";
                     else
                         res += "X";
                 }
                 else
                 {
-                    res +=  " " ;
+                    res += " ";
                 }
                 count++;
             }
@@ -390,41 +396,39 @@ public class Game
             {
                 res += " ";
             }
-            
-            
+
         }
-        if(!aBrickIsWritten && isFloatBetween(theBall.getTopLeftCornerPosition().getY(), pos, pos + increment))
+        if (!aBrickIsWritten && isFloatBetween(theBall.getTopLeftCornerPosition().getY(), pos, pos + increment))
         {
             res = theBall.stringBallInConsole();
         }
-        
-        if(isFloatBetween(thePaddle.getTopLeftCornerPosition().getY(), pos, pos + increment))
+
+        if (isFloatBetween(thePaddle.getTopLeftCornerPosition().getY(), pos, pos + increment))
         {
             res = thePaddle.stringPaddleInConsole();
         }
-            
+
         return res;
     }
-    
-    
-    
+
     /**
      * Print the game in the console
+     * 
      * @param isGraphic
      */
     public void printInConsole(boolean isGraphic)
     {
-        if(isGraphic)
+        if (isGraphic)
         {
             System.out.print("#");
-            for(int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH/(2*Ball.DEFAULT_SIZE))
+            for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
             {
                 System.out.print("#");
             }
             System.out.println();
-           for(int j =0; j < Game.DEFAULT_MAP_HEIGHT; j+= Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE)) 
-            {   
-               System.out.println(printLineInConsole(j,Game.DEFAULT_MAP_HEIGHT/(2*Ball.DEFAULT_SIZE)));
+            for (int j = 0; j < Game.DEFAULT_MAP_HEIGHT; j += Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE))
+            {
+                System.out.println(printLineInConsole(j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
             }
         }
         else
@@ -432,10 +436,7 @@ public class Game
             System.out.println("Ball" + theBall);
             System.out.println("Paddle" + thePaddle);
 
-            
         }
     }
-    
-    
-    
+
 }
