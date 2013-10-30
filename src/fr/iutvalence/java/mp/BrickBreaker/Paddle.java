@@ -1,12 +1,14 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.awt.geom.Rectangle2D;
+
 /**
  * This class define what is a plate
  * 
  * @author ochiers soulierc
  * 
  */
-public class Paddle
+public class Paddle extends CollisionBox
 {
     /**
      * Paddle width
@@ -29,16 +31,6 @@ public class Paddle
     private int width;
 
     /**
-     * Position of top left corner of the paddle
-     */
-    private Position topLeftCornerPosition;
-
-    /**
-     * CollisionBox associated with this paddle
-     */
-    private CollisionBox collisionBox;
-
-    /**
      * Create a new paddle and the CollisionBox associated at a given position
      * and with the given width size
      * 
@@ -49,10 +41,8 @@ public class Paddle
      */
     public Paddle(Position topLeftCornerPosition, int width)
     {
-        super();
-        this.topLeftCornerPosition = topLeftCornerPosition;
+        super(topLeftCornerPosition,width, DEFAULT_HEIGHT);
         this.width = width;
-        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, DEFAULT_HEIGHT);
     }
 
     /**
@@ -61,30 +51,8 @@ public class Paddle
      */
     public Paddle()
     {
-        super();
-        this.topLeftCornerPosition = DEFAULT_TOP_LEFT_CORNER_POSITION;
+        super(DEFAULT_TOP_LEFT_CORNER_POSITION, Paddle.DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.width = Paddle.DEFAULT_WIDTH;
-        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, DEFAULT_HEIGHT);
-    }
-
-    /**
-     * Return a CollisionBox associated with this paddle
-     * 
-     * @return the CollisionBox associated with this paddle
-     */
-    public CollisionBox getCollisionBox()
-    {
-        return this.collisionBox;
-    }
-
-    /**
-     * Return the paddle's position
-     * 
-     * @return position
-     */
-    public Position getTopLeftCornerPosition()
-    {
-        return this.topLeftCornerPosition;
     }
 
     /**
@@ -110,8 +78,7 @@ public class Paddle
 
     public void setTopLeftCornerPosition(Position newTopLeftCornerPosition)
     {
-        this.topLeftCornerPosition = newTopLeftCornerPosition;
-        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, this.width, this.width);
+        this.setBox(new Rectangle2D.Float(newTopLeftCornerPosition.getX(), newTopLeftCornerPosition.getY(), this.width, Paddle.DEFAULT_HEIGHT));
     }
 
     /**
@@ -122,7 +89,8 @@ public class Paddle
      */
     public String toString()
     {
-        return "{" + this.topLeftCornerPosition.toString() + ", size : " + this.width + "}";
+        Position pos = new Position(this.getBox().x,this.getBox().y);
+        return "{" + pos.toString() + ", size : " + this.width + "}";
     }
 
     public String stringPaddleInConsole()
@@ -131,7 +99,7 @@ public class Paddle
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (isFloatBetween((float)this.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
                 res = res + "P";

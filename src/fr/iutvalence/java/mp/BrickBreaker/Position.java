@@ -59,7 +59,7 @@ public class Position
      * 
      * @param deltaX
      * @param deltaY
-     * @return a position translated to x+deltaX and y+deltaY
+     * @return A position translated to x+deltaX and y+deltaY
      */
     public Position translate(float deltaX, float deltaY)
     {
@@ -68,13 +68,13 @@ public class Position
 
     /**
      * Returns a description of the position as an ASCII string whose format is
-     * "Pos X : Position's x field, Pos Y Position's y field"
+     * "[Position's x field, Position's y field]"
      * 
      * @see java.lang.Object#toString()
      */
     public String toString()
     {
-        return "Pos X : " + this.x + ", Pos Y : " + this.y;
+        return "[" + this.x + ", " + this.y + "]";
     }
 
 }

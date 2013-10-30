@@ -18,12 +18,12 @@ public class Trajectory
      */
     private float bCoefficient;
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
      * Create a new trajectory with given coefficients a and b
      * 
-     * @param a
-     * @param b
+     * @param a The coefficient for the vertical move
+     * @param b The coefficient for the horizontal move
      */
     Trajectory(float a, float b)
     {

@@ -13,18 +13,18 @@ public class Game
     /**
      * Width size of the container
      */
-    public static int DEFAULT_MAP_WIDTH = 600;
+    public static int DEFAULT_MAP_WIDTH = 800;
 
     /**
      * Height size of the container
      */
-    public static int DEFAULT_MAP_HEIGHT = 400;
+    public static int DEFAULT_MAP_HEIGHT = 600;
 
     /**
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 2;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 5;
 
     /**
      * Maximal number of player's lives
@@ -109,10 +109,11 @@ public class Game
         this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
-        this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2);
-
+        this.theBall = new Ball(new Position(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2));
+        this.theBall.setTrajectory(new Trajectory(0.5F,0.5F));
+        
         // For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0, 386), Game.DEFAULT_MAP_WIDTH);
+        this.thePaddle = new Paddle(new Position(0, PADDLE_INITIAL_POSITION), Game.DEFAULT_MAP_WIDTH);
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
@@ -139,8 +140,9 @@ public class Game
             {
                 manageCollisionWithPaddle();
             }
-
-            this.theBall.updatePositions(this.theBall.getTopLeftCornerPosition().translate(
+            
+            Position temp = new Position((float)this.theBall.getBox().getX(),(float)this.theBall.getBox().getY());
+            this.theBall.updatePositions(temp.translate(
                     this.theBall.getTrajectory().getBCoefficient(), this.theBall.getTrajectory().getACoefficient()));
 
             if (this.currentNumberOfBalls != 0 && this.currentNumberOfBricks == 0)
@@ -250,7 +252,7 @@ public class Game
         else
         {
             this.currentNumberOfBalls--;
-            this.theBall = new Ball(Game.PADDLE_INITIAL_POSITION, Game.PADDLE_INITIAL_POSITION);
+            this.theBall = new Ball(new Position(Game.PADDLE_INITIAL_POSITION, Game.PADDLE_INITIAL_POSITION));
         }
     }
 
@@ -267,26 +269,25 @@ public class Game
     {
         int result = NO_SIDE_COLLISION;
         Rectangle2D.Float dest = new Rectangle2D.Float();
-        dest = this.theBall.getCollisionBox()
-                .getRectangleFromIntersectionWithOtherCollisionBox(brick.getCollisionBox());
+        dest = this.theBall.getRectangleFromIntersectionWithOtherCollisionBox(brick);
         if (dest.getWidth() < 0 && dest.getHeight() < 0)
         {
             return NO_SIDE_COLLISION;
         }
-        if (dest.getWidth() == 1 && dest.getHeight() == 1)
+        if ((int)dest.getWidth() == 1 && (int)dest.getHeight() == 1)
         {
             result = COLLISION_CORNER;
         }
         // TODO (fix) simplify
-        // I don't know to simplify ...
-        else if (dest.getWidth() == 1 && dest.getHeight() > 1)
+        // I don't know how to simplify ...
+        else if ((int)dest.getWidth() == 1 && dest.getHeight() > 1)
         {
             result = COLLISION_LEFT_RIGHT_SIDE;
         }
 
         // TODO (fix) simplify
-        // I don't know to simplify ...
-        else if (dest.getWidth() > 1 && dest.getHeight() == 1)
+        // I don't know how to simplify ...
+        else if (dest.getWidth() > 1 && (int)dest.getHeight() == 1)
         {
             result = COLLISION_TOP_BOTTOM_SIDE;
         }
@@ -299,11 +300,11 @@ public class Game
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getTopLeftCornerPosition().getY() + this.theBall.DEFAULT_SIZE <= this.thePaddle
-                .getTopLeftCornerPosition().getY())
+        if (this.theBall.getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
+                .getBox().getY())
         {
-            Rectangle2D.Float dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(
-                    this.thePaddle.getCollisionBox());
+            Rectangle2D.Float dest = this.theBall.getRectangleFromIntersectionWithOtherCollisionBox(
+                    this.thePaddle);
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
@@ -326,15 +327,15 @@ public class Game
     private boolean manageCollisionWithGamePanelSides()
     {
         boolean thereIsCollision = false;
-        if (!isFloatBetween(this.theBall.getTopLeftCornerPosition().getX(), 0, Game.DEFAULT_MAP_WIDTH)
-                || !isFloatBetween(this.theBall.getTopLeftCornerPosition().getX() + Ball.DEFAULT_SIZE, 0,
+        if (!isFloatBetween((float)this.theBall.getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
+                || !isFloatBetween((float)this.theBall.getBox().getX() + Ball.DEFAULT_SIZE, 0,
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();
             System.out.println("Game Side Left or Right hited");
             thereIsCollision = true;
         }
-        else if (this.theBall.getTopLeftCornerPosition().getY() <= 0)
+        else if (this.theBall.getBox().getY() <= 0)
         {
             this.theBall.getTrajectory().reverseACoefficient();
             System.out.println("Game Side Top or Bottom hited");
@@ -362,7 +363,7 @@ public class Game
 
     /**
      * Method who build a line of the game, in order to be printed in console
-     * 
+     *
      * @param pos
      * @param increment
      * @return
@@ -376,8 +377,8 @@ public class Game
         {
             if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
             {
-                if (isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY(), pos, pos + increment)
-                        || isFloatBetween(this.bricks[count].getTopLeftCornerPosition().getY() + Brick.DEFAULT_WIDTH,
+                if (isFloatBetween((float)this.bricks[count].getBox().getY(), pos, pos + increment)
+                        || isFloatBetween((float)this.bricks[count].getBox().getY() + Brick.DEFAULT_WIDTH,
                                 pos, pos + increment))
                 {
                     aBrickIsWritten = true;
@@ -398,14 +399,14 @@ public class Game
             }
 
         }
-        if (!aBrickIsWritten && isFloatBetween(theBall.getTopLeftCornerPosition().getY(), pos, pos + increment))
+        if (!aBrickIsWritten && isFloatBetween((float)this.theBall.getBox().getY(), pos, pos + increment))
         {
-            res = theBall.stringBallInConsole();
+            res = this.theBall.stringBallInConsole();
         }
 
-        if (isFloatBetween(thePaddle.getTopLeftCornerPosition().getY(), pos, pos + increment))
+        if (isFloatBetween((float)this.thePaddle.getBox().getY(), pos, pos + increment))
         {
-            res = thePaddle.stringPaddleInConsole();
+            res = this.thePaddle.stringPaddleInConsole();
         }
 
         return res;
@@ -413,7 +414,7 @@ public class Game
 
     /**
      * Print the game in the console
-     * 
+     *
      * @param isGraphic
      */
     public void printInConsole(boolean isGraphic)
@@ -433,8 +434,8 @@ public class Game
         }
         else
         {
-            System.out.println("Ball" + theBall);
-            System.out.println("Paddle" + thePaddle);
+            System.out.println("Ball" + this.theBall);
+            System.out.println("Paddle" + this.thePaddle);
 
         }
     }

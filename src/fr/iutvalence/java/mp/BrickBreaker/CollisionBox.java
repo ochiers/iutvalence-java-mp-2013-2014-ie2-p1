@@ -28,13 +28,22 @@ public class CollisionBox
     }
 
     /**
-     * Return the rectangle associated with this collisionBox
+     * Return the rectangle associated with this CollisionBox
      * 
-     * @return
+     * @return The Rectangle2D associated with this CollisionBox
      */
     public Rectangle2D.Float getBox()
     {
         return box;
+    }
+
+    /**
+     * Update the Rectangle2D associated with this CollisionBox
+     * @param box The new rectangle2d who represent the CollisionBox
+     */
+    public void setBox(Rectangle2D.Float box)
+    {
+        this.box = box;
     }
 
     /**

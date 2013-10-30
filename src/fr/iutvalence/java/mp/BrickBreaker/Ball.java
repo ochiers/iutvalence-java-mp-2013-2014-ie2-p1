@@ -1,11 +1,13 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.awt.geom.Rectangle2D;
+
 /**
  * This class defines the ball used to destroy bricks
  * 
  * @author ochiers soulierc
  **/
-public class Ball
+public class Ball extends CollisionBox
 {
 
     /**
@@ -14,53 +16,22 @@ public class Ball
     public final static int DEFAULT_SIZE = 16;
 
     /**
-     * It is the top left corner position of the ball
-     */
-    private Position topLeftCornerPosition;
-
-    /**
      * The ball's trajectory
      */
     private Trajectory trajectory;
 
-    // TODO (think about it) this field seems redundant with the topLeftCornerPosition field
-    private CollisionBox collisionBox;
-
-    // TODO (fix) finish writing comment (parameters)
+    // TODO (fixed) finish writing comment (parameters)
     /**
-     * Creates a new ball at new position (x,y) and set fields a and b to 1
+     * Creates a new ball at new position and set a new trajectory
      * 
-     * @param x
-     * @param y
+     * @param pos The initial position of the ball
      */
-    public Ball(float x, float y)
+    public Ball(Position pos)
     {
-        super();
-        this.topLeftCornerPosition = new Position(x, y);
+        super(pos,DEFAULT_SIZE, DEFAULT_SIZE);
         this.trajectory = new Trajectory(1, 1);
-        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_SIZE, DEFAULT_SIZE);
-
     }
 
-    /**
-     * Return a CollisionBox associated with this ball
-     * 
-     * @return the CollisionBox associated with this ball
-     */
-    public CollisionBox getCollisionBox()
-    {
-        return this.collisionBox;
-    }
-
-    /**
-     * Return the ball's top left corner position
-     * 
-     * @return position
-     */
-    public Position getTopLeftCornerPosition()
-    {
-        return this.topLeftCornerPosition;
-    }
 
     // TODO (fix) finish writing comment
     /**
@@ -73,8 +44,7 @@ public class Ball
      */
     public void updatePositions(Position newTopLeftCornerposition)
     {
-        this.topLeftCornerPosition = newTopLeftCornerposition;
-        this.collisionBox = new CollisionBox(this.topLeftCornerPosition, DEFAULT_SIZE, DEFAULT_SIZE);
+        this.setBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
     }
 
     /**
@@ -106,7 +76,8 @@ public class Ball
      */
     public String toString()
     {
-        return "{" + this.topLeftCornerPosition.toString() + ", " + this.trajectory.toString() + "}";
+        Position temp = new Position((float)this.getBox().getX(),(float)this.getBox().getY());
+        return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
 
     public String stringBallInConsole()
@@ -115,7 +86,7 @@ public class Ball
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween(this.getTopLeftCornerPosition().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (isFloatBetween((float)this.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
                 res = res + "B";
