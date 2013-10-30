@@ -141,7 +141,7 @@ public class Game
                 manageCollisionWithPaddle();
             }
             
-            Position temp = new Position((float)this.theBall.getBox().getX(),(float)this.theBall.getBox().getY());
+            Position temp = new Position((float)this.theBall.getBallBox().getBox().getX(),(float)this.theBall.getBallBox().getBox().getY());
             this.theBall.updatePositions(temp.translate(
                     this.theBall.getTrajectory().getBCoefficient(), this.theBall.getTrajectory().getACoefficient()));
 
@@ -269,7 +269,7 @@ public class Game
     {
         int result = NO_SIDE_COLLISION;
         Rectangle2D.Float dest = new Rectangle2D.Float();
-        dest = this.theBall.getRectangleFromIntersectionWithOtherCollisionBox(brick);
+        dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(brick.getBrickBox());
         if (dest.getWidth() < 0 && dest.getHeight() < 0)
         {
             return NO_SIDE_COLLISION;
@@ -300,11 +300,11 @@ public class Game
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
-                .getBox().getY())
+        if (this.theBall.getBallBox().getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
+                .getPaddleBox().getBox().getY())
         {
-            Rectangle2D.Float dest = this.theBall.getRectangleFromIntersectionWithOtherCollisionBox(
-                    this.thePaddle);
+            Rectangle2D.Float dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(
+                    this.thePaddle.getPaddleBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
@@ -327,15 +327,15 @@ public class Game
     private boolean manageCollisionWithGamePanelSides()
     {
         boolean thereIsCollision = false;
-        if (!isFloatBetween((float)this.theBall.getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
-                || !isFloatBetween((float)this.theBall.getBox().getX() + Ball.DEFAULT_SIZE, 0,
+        if (!isFloatBetween((float)this.theBall.getBallBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
+                || !isFloatBetween((float)this.theBall.getBallBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();
             System.out.println("Game Side Left or Right hited");
             thereIsCollision = true;
         }
-        else if (this.theBall.getBox().getY() <= 0)
+        else if (this.theBall.getBallBox().getBox().getY() <= 0)
         {
             this.theBall.getTrajectory().reverseACoefficient();
             System.out.println("Game Side Top or Bottom hited");
@@ -377,8 +377,8 @@ public class Game
         {
             if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
             {
-                if (isFloatBetween((float)this.bricks[count].getBox().getY(), pos, pos + increment)
-                        || isFloatBetween((float)this.bricks[count].getBox().getY() + Brick.DEFAULT_WIDTH,
+                if (isFloatBetween((float)this.bricks[count].getBrickBox().getBox().getY(), pos, pos + increment)
+                        || isFloatBetween((float)this.bricks[count].getBrickBox().getBox().getY() + Brick.DEFAULT_WIDTH,
                                 pos, pos + increment))
                 {
                     aBrickIsWritten = true;
@@ -399,12 +399,12 @@ public class Game
             }
 
         }
-        if (!aBrickIsWritten && isFloatBetween((float)this.theBall.getBox().getY(), pos, pos + increment))
+        if (!aBrickIsWritten && isFloatBetween((float)this.theBall.getBallBox().getBox().getY(), pos, pos + increment))
         {
             res = this.theBall.stringBallInConsole();
         }
 
-        if (isFloatBetween((float)this.thePaddle.getBox().getY(), pos, pos + increment))
+        if (isFloatBetween((float)this.thePaddle.getPaddleBox().getBox().getY(), pos, pos + increment))
         {
             res = this.thePaddle.stringPaddleInConsole();
         }

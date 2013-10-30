@@ -34,14 +34,14 @@ public class CollisionBox
      */
     public Rectangle2D.Float getBox()
     {
-        return box;
+        return this.box;
     }
 
     /**
      * Update the Rectangle2D associated with this CollisionBox
      * @param box The new rectangle2d who represent the CollisionBox
      */
-    public void setBox(Rectangle2D.Float box)
+    public void updateBox(Rectangle2D.Float box)
     {
         this.box = box;
     }

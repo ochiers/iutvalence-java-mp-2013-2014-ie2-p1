@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
  * 
  * @author ochiers soulierc
  **/
-public class Ball extends CollisionBox
+public class Ball 
 {
 
     /**
@@ -20,6 +20,12 @@ public class Ball extends CollisionBox
      */
     private Trajectory trajectory;
 
+    /**
+     * The collision box associated with this Ball
+     * It's used to determinate collisions
+     */
+    private CollisionBox ballBox;
+    
     // TODO (fixed) finish writing comment (parameters)
     /**
      * Creates a new ball at new position and set a new trajectory
@@ -28,11 +34,20 @@ public class Ball extends CollisionBox
      */
     public Ball(Position pos)
     {
-        super(pos,DEFAULT_SIZE, DEFAULT_SIZE);
         this.trajectory = new Trajectory(1, 1);
+        this.ballBox = new CollisionBox(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
     }
-
-
+    
+    /**
+     * Return the CollisionBox associated with this ball
+     * @return The ball's CollisionBox
+     */
+    public CollisionBox getBallBox()
+    {
+        return this.ballBox;
+    }
+    
+    
     // TODO (fix) finish writing comment
     /**
      * Update the ball's position and set a new CollisionBox according to the
@@ -44,7 +59,7 @@ public class Ball extends CollisionBox
      */
     public void updatePositions(Position newTopLeftCornerposition)
     {
-        this.setBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
+        this.ballBox.updateBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
     }
 
     /**
@@ -76,7 +91,7 @@ public class Ball extends CollisionBox
      */
     public String toString()
     {
-        Position temp = new Position((float)this.getBox().getX(),(float)this.getBox().getY());
+        Position temp = new Position((float)this.ballBox.getBox().getX(),(float)this.ballBox.getBox().getY());
         return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
 
@@ -86,7 +101,7 @@ public class Ball extends CollisionBox
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween((float)this.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (isFloatBetween((float)this.ballBox.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
                 res = res + "B";

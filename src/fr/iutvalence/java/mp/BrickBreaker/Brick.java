@@ -7,35 +7,49 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author ochiers soulierc
  * 
  */
-public class Brick extends CollisionBox
+public class Brick
 {
     /**
      * Width size of the brick
      */
-    public static int DEFAULT_WIDTH = 2;
+    public static int DEFAULT_WIDTH = 24;
 
     /**
      * Height size of the brick
      */
-    public static int DEFAULT_HEIGHT = 1;
+    public static int DEFAULT_HEIGHT = 12;
 
     /**
      * State of the brick (normal, a bit broken, really broken, destroyed)
      */
     private BrickState state;
 
+    /**
+     * The collision box associated with this brick
+     * It's used to determinate collisions
+     */
+    private CollisionBox brickBox;
+    
     // TODO (fixed) finish writing comment (parameters
     /**
      * Creates a new Brick, at a given position
      * 
-     * @param topLeftCornerposition The position of the top left corner of the brick
+     * @param pos The position of the top left corner of the brick
      */
-    public Brick(Position topLeftCornerposition)
+    public Brick(Position pos)
     {
-        super(topLeftCornerposition,DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.brickBox = new CollisionBox(pos,DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.state = BrickState.NORMAL_STATE;
     }
-
+    
+    /**
+     * Return the CollisionBox associated with this brick
+     * @return The brick's CollisionBox
+     */
+    public CollisionBox getBrickBox()
+    {
+        return this.brickBox;
+    }
 
     // TODO (fixed) finish writing comment
     /**
@@ -46,7 +60,7 @@ public class Brick extends CollisionBox
      */
     public String toString()
     {
-        Position pos = new Position(this.getBox().x,this.getBox().y);
+        Position pos = new Position((float)this.getBrickBox().getBox().getX(),(float)this.getBrickBox().getBox().getY());
         return "{Position : " + pos.toString() + ", state :"
                 + this.state + "}";
     }

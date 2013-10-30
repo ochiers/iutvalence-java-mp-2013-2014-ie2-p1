@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
  * @author ochiers soulierc
  * 
  */
-public class Paddle extends CollisionBox
+public class Paddle
 {
     /**
      * Paddle width
@@ -31,17 +31,24 @@ public class Paddle extends CollisionBox
     private int width;
 
     /**
+     * The collision box associated with this paddle
+     * It's used to determinate collisions
+     */
+    private CollisionBox paddleBox;
+    
+    
+    /**
      * Create a new paddle and the CollisionBox associated at a given position
      * and with the given width size
      * 
-     * @param topLeftCornerPosition
+     * @param pos
      *            Paddle's initial position of the top left corner
      * @param width
      *            Paddle's width size
      */
-    public Paddle(Position topLeftCornerPosition, int width)
+    public Paddle(Position pos, int width)
     {
-        super(topLeftCornerPosition,width, DEFAULT_HEIGHT);
+        this.paddleBox = new CollisionBox(pos,width,Paddle.DEFAULT_HEIGHT);
         this.width = width;
     }
 
@@ -51,10 +58,19 @@ public class Paddle extends CollisionBox
      */
     public Paddle()
     {
-        super(DEFAULT_TOP_LEFT_CORNER_POSITION, Paddle.DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.paddleBox = new CollisionBox(Paddle.DEFAULT_TOP_LEFT_CORNER_POSITION,Paddle.DEFAULT_WIDTH,Paddle.DEFAULT_HEIGHT);
         this.width = Paddle.DEFAULT_WIDTH;
     }
 
+    /**
+     * Return the CollisionBox associated with this paddle
+     * @return The paddle's CollisionBox
+     */
+    public CollisionBox getPaddleBox()
+    {
+        return this.paddleBox;
+    }
+    
     /**
      * Return the paddle's size
      * 
@@ -76,9 +92,9 @@ public class Paddle extends CollisionBox
         this.width = width;
     }
 
-    public void setTopLeftCornerPosition(Position newTopLeftCornerPosition)
+    public void setTopLeftCornerPosition(Position newPos)
     {
-        this.setBox(new Rectangle2D.Float(newTopLeftCornerPosition.getX(), newTopLeftCornerPosition.getY(), this.width, Paddle.DEFAULT_HEIGHT));
+        this.paddleBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.width, Paddle.DEFAULT_HEIGHT));
     }
 
     /**
@@ -89,7 +105,7 @@ public class Paddle extends CollisionBox
      */
     public String toString()
     {
-        Position pos = new Position(this.getBox().x,this.getBox().y);
+        Position pos = new Position((float)this.paddleBox.getBox().getX(),(float)this.paddleBox.getBox().getY());
         return "{" + pos.toString() + ", size : " + this.width + "}";
     }
 
@@ -99,7 +115,7 @@ public class Paddle extends CollisionBox
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween((float)this.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (isFloatBetween((float)this.paddleBox.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
                 res = res + "P";
