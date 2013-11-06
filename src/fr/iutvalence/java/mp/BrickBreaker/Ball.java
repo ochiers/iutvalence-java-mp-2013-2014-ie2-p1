@@ -95,26 +95,26 @@ public class Ball
         return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
 
+    /**
+     * Give a string who represent the ball in the game
+     * @return A string representing the ball in the game
+     */
     public String stringBallInConsole()
     {
-        String res = "#";
+        String res = " # ";
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween((float)this.ballBox.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (Tools.isFloatBetween((float)this.ballBox.getBox().getX(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
-                res = res + "B";
+                res = res + " B ";
             }
             else
-                res = res + " ";
+                res = res + "   ";
         }
         return res;
     }
 
-    private boolean isFloatBetween(float toCompare, float a, float b)
-    {
-        return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
-    }
 
 }

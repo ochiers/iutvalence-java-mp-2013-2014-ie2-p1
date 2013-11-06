@@ -12,15 +12,18 @@ import java.awt.geom.Rectangle2D;
 public class CollisionBox
 {
 
+    /**
+     * Define a rectangle2D used to determinate a collision
+     */
     private Rectangle2D.Float box;
 
     /**
      * Constructor of a CollisionBox, it's a new rectangle a positon pos1 with
      * width and height specified
      * 
-     * @param pos1
-     * @param width
-     * @param height
+     * @param pos1 the position of the box
+     * @param width width size of the box
+     * @param height height size of the box
      */
     public CollisionBox(Position pos1, int width, int height)
     {
@@ -50,7 +53,7 @@ public class CollisionBox
      * Return a rectangle2D corresponding to the intersection between this
      * CollisionBox and another
      * 
-     * @param box2
+     * @param box2 The other collisionBox to compare
      * @return the rectangle2D corresponding to the intersection between this
      *         CollisionBox and box2
      */

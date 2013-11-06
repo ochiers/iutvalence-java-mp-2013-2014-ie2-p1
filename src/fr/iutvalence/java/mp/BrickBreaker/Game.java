@@ -34,7 +34,7 @@ public class Game
     /**
      * Paddle initial position
      */
-    private static final float PADDLE_INITIAL_POSITION = 250.0F;
+    private static final float PADDLE_INITIAL_POSITION = 550.0F;
 
     /**
      * Number that specify that there is no collision between ball and brick
@@ -109,11 +109,11 @@ public class Game
         this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
-        this.theBall = new Ball(new Position(Game.PADDLE_INITIAL_POSITION / 2, Game.PADDLE_INITIAL_POSITION / 2));
+        this.theBall = new Ball(new Position(100, 300));
         this.theBall.setTrajectory(new Trajectory(0.5F,0.5F));
         
         // For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0, PADDLE_INITIAL_POSITION), Game.DEFAULT_MAP_WIDTH);
+        this.thePaddle = new Paddle(new Position(0, Game.PADDLE_INITIAL_POSITION), 400);
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
@@ -135,7 +135,7 @@ public class Game
 
         while (!this.stopGame)
         {
-            printInConsole(true);
+            Display.displayScreen(this.bricks, this.thePaddle, this.theBall);
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();
@@ -190,19 +190,6 @@ public class Game
      * @param collisionSide
      *            side collided
      */
-    // TODO (fixed) if this method is called when a collision occurs, why
-    // passing a boolean as parameter
-    // that indicates if there was a collision?
-    // Parcequ'on parcourt le tableau de briques pour detecter les collisions,
-    // si la balle entre en collsion avec une premiere brique
-    // on inverse le coefficient de la trajectoire, puis on test la collsion sur
-    // une deuxieme brique, si il y a aussi une collision on inverse le
-    // coefficient :
-    // au final on a rien fait puisqu'on a inversé deux fois le coefficient, et
-    // la balle va continuer comme elle venue,
-    // ce n'est pas ce que l'on veut. Il faut donc un booléen permettant de
-    // savoir si il y a déjà eu collision pour empècher d'inverser le
-    // coefficient plusieurs fois
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
         if (collisionSide != NO_SIDE_COLLISION)
@@ -211,7 +198,6 @@ public class Game
             this.currentNumberOfBricks--;
             if (!thereWasAcollision)
             {
-                System.out.println("Brick(s) hited");
                 switch (collisionSide)
                 {
                 case COLLISION_LEFT_RIGHT_SIDE:
@@ -252,7 +238,7 @@ public class Game
         else
         {
             this.currentNumberOfBalls--;
-            this.theBall = new Ball(new Position(Game.PADDLE_INITIAL_POSITION, Game.PADDLE_INITIAL_POSITION));
+            this.theBall = new Ball(new Position(300, 100));
         }
     }
 
@@ -279,14 +265,14 @@ public class Game
             result = COLLISION_CORNER;
         }
         // TODO (fix) simplify
-        // I don't know how to simplify ...
+        // We don't know how to simplify ...
         else if ((int)dest.getWidth() == 1 && dest.getHeight() > 1)
         {
             result = COLLISION_LEFT_RIGHT_SIDE;
         }
 
         // TODO (fix) simplify
-        // I don't know how to simplify ...
+        // We don't know how to simplify ...
         else if (dest.getWidth() > 1 && (int)dest.getHeight() == 1)
         {
             result = COLLISION_TOP_BOTTOM_SIDE;
@@ -309,7 +295,6 @@ public class Game
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
                         .getBCoefficient()));
-                System.out.println("Paddle hited");
             }
         }
         else
@@ -319,7 +304,7 @@ public class Game
     }
 
     /**
-     * Method who manage collsion between the ball and the sides of the game
+     * Method who manage collision between the ball and the sides of the game
      * panel, change the ball's direction when collided and return true
      * 
      * @return true if the ball hit a side
@@ -327,117 +312,18 @@ public class Game
     private boolean manageCollisionWithGamePanelSides()
     {
         boolean thereIsCollision = false;
-        if (!isFloatBetween((float)this.theBall.getBallBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
-                || !isFloatBetween((float)this.theBall.getBallBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
+        if (!Tools.isFloatBetween((float)this.theBall.getBallBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
+                || !Tools.isFloatBetween((float)this.theBall.getBallBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();
-            System.out.println("Game Side Left or Right hited");
             thereIsCollision = true;
         }
         else if (this.theBall.getBallBox().getBox().getY() <= 0)
         {
             this.theBall.getTrajectory().reverseACoefficient();
-            System.out.println("Game Side Top or Bottom hited");
             thereIsCollision = true;
         }
         return thereIsCollision;
     }
-
-    /**
-     * Function who say if the number toCompare is between the number a and the
-     * number b
-     * 
-     * @param toCompare
-     *            Number to compare
-     * @param a
-     *            Bound of comparison
-     * @param b
-     *            Bound of comparison
-     * @return true if the number is in, false otherwise
-     */
-    private boolean isFloatBetween(float toCompare, float a, float b)
-    {
-        return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
-    }
-
-    /**
-     * Method who build a line of the game, in order to be printed in console
-     *
-     * @param pos
-     * @param increment
-     * @return
-     */
-    public String printLineInConsole(float pos, float increment)
-    {
-        String res = "#";
-        boolean aBrickIsWritten = false;
-        int count = 0;
-        for (int k = 0; k < Game.DEFAULT_MAP_WIDTH; k += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
-        {
-            if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
-            {
-                if (isFloatBetween((float)this.bricks[count].getBrickBox().getBox().getY(), pos, pos + increment)
-                        || isFloatBetween((float)this.bricks[count].getBrickBox().getBox().getY() + Brick.DEFAULT_WIDTH,
-                                pos, pos + increment))
-                {
-                    aBrickIsWritten = true;
-                    if (this.bricks[count].getState() != BrickState.DESTROYED_STATE)
-                        res += "N";
-                    else
-                        res += "X";
-                }
-                else
-                {
-                    res += " ";
-                }
-                count++;
-            }
-            else
-            {
-                res += " ";
-            }
-
-        }
-        if (!aBrickIsWritten && isFloatBetween((float)this.theBall.getBallBox().getBox().getY(), pos, pos + increment))
-        {
-            res = this.theBall.stringBallInConsole();
-        }
-
-        if (isFloatBetween((float)this.thePaddle.getPaddleBox().getBox().getY(), pos, pos + increment))
-        {
-            res = this.thePaddle.stringPaddleInConsole();
-        }
-
-        return res;
-    }
-
-    /**
-     * Print the game in the console
-     *
-     * @param isGraphic
-     */
-    public void printInConsole(boolean isGraphic)
-    {
-        if (isGraphic)
-        {
-            System.out.print("#");
-            for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
-            {
-                System.out.print("#");
-            }
-            System.out.println();
-            for (int j = 0; j < Game.DEFAULT_MAP_HEIGHT; j += Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE))
-            {
-                System.out.println(printLineInConsole(j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
-            }
-        }
-        else
-        {
-            System.out.println("Ball" + this.theBall);
-            System.out.println("Paddle" + this.thePaddle);
-
-        }
-    }
-
 }

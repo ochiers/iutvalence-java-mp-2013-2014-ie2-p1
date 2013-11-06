@@ -92,6 +92,11 @@ public class Paddle
         this.width = width;
     }
 
+    /**
+     * Update the position of the paddle and his collisionBox
+     * @param newPos   
+     *              New position of the paddle
+     */
     public void setTopLeftCornerPosition(Position newPos)
     {
         this.paddleBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.width, Paddle.DEFAULT_HEIGHT));
@@ -99,7 +104,7 @@ public class Paddle
 
     /**
      * Returns a description of the paddle as an ASCII string whose format is
-     * "{Paddle's position, size : Paddle's width}"
+     * "{Paddle's position, size : Paddle's width}" 
      * 
      * @see java.lang.Object#toString()
      */
@@ -109,26 +114,25 @@ public class Paddle
         return "{" + pos.toString() + ", size : " + this.width + "}";
     }
 
+    /**
+     * Give a string who represent the paddle in the game
+     * @return A string representing the paddle in the game
+     */
     public String stringPaddleInConsole()
     {
-        String res = "#";
+        String res = " # ";
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (isFloatBetween((float)this.paddleBox.getBox().getY(), i, (i + Game.DEFAULT_MAP_HEIGHT
-                    / (2 * Ball.DEFAULT_SIZE))))
+            if (this.paddleBox.getBox().getX() + this.width >= i)
             {
-                res = res + "P";
+                res = res + " P ";
             }
             else
-                res = res + " ";
+                res = res + "   ";
         }
         return res;
     }
 
-    private boolean isFloatBetween(float toCompare, float a, float b)
-    {
-        return (toCompare >= a && toCompare <= b) || (toCompare >= b && toCompare <= a);
-    }
 
 }
