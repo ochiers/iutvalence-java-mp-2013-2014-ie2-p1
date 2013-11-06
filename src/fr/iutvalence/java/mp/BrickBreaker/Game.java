@@ -59,6 +59,11 @@ public class Game
     private static final int COLLISION_CORNER = 3;
 
     /**
+     * The object who display this game
+     */
+    private Display display;
+    
+    /**
      * Number of lives
      */
     private int currentNumberOfBalls;
@@ -121,8 +126,8 @@ public class Game
             this.bricks[i] = new Brick(new Position(i * Brick.DEFAULT_WIDTH, yPositionBricks));
         }
         this.rand = new Random();
-
         this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
+        this.display = new Display();
     }
 
     /**
@@ -135,7 +140,7 @@ public class Game
 
         while (!this.stopGame)
         {
-            Display.displayScreen(this.bricks, this.thePaddle, this.theBall);
+            this.display.displayScreen(this.bricks, this.thePaddle, this.theBall);
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();

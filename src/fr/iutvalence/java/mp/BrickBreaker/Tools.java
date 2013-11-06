@@ -1,5 +1,10 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+/**
+ * This class gives tools for differents class
+ * @author ochiers
+ *
+ */
 public class Tools
 {
     /**

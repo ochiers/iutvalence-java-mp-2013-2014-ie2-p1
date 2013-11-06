@@ -7,7 +7,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class Display
 {
-    
     /**
      * Method who build a line of the game, in order to be printed in console
      * 
@@ -18,7 +17,7 @@ public class Display
      * @param increment The part of the game who is represented by this string
      * @return A string who represent the state of a part of the game
      */
-    private static String printLineInConsole(Brick[] bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
+    private String printLineInConsole(Brick[] bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
     {
         String res = " # ";
         boolean aBrickIsWritten = false;
@@ -69,7 +68,7 @@ public class Display
      * @param thePaddle The paddle who need to be displayed
      * @param theBall The ball who need to be displayed
      */
-    public static void displayScreen(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    public void displayScreen(Brick[] bricks, Paddle thePaddle, Ball theBall)
     {
             System.out.print(" # ");
             for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
