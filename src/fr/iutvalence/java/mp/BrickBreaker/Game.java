@@ -140,7 +140,7 @@ public class Game
 
         while (!this.stopGame)
         {
-            this.display.displayScreen(this.bricks, this.thePaddle, this.theBall);
+            this.display.displayConsoleScreen(this.bricks, this.thePaddle, this.theBall);
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();

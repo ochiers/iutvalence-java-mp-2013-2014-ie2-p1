@@ -5,7 +5,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author ochiers
  *
  */
-public class Display
+public class Display implements Gui
 {
     /**
      * Method who build a line of the game, in order to be printed in console
@@ -17,7 +17,7 @@ public class Display
      * @param increment The part of the game who is represented by this string
      * @return A string who represent the state of a part of the game
      */
-    private String printLineInConsole(Brick[] bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
+    private String buildLineForConsoleDisplay(Brick[] bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
     {
         String res = " # ";
         boolean aBrickIsWritten = false;
@@ -68,7 +68,7 @@ public class Display
      * @param thePaddle The paddle who need to be displayed
      * @param theBall The ball who need to be displayed
      */
-    public void displayScreen(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    public void displayConsoleScreen(Brick[] bricks, Paddle thePaddle, Ball theBall)
     {
             System.out.print(" # ");
             for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
@@ -78,8 +78,9 @@ public class Display
             System.out.println();
             for (int j = 0; j < Game.DEFAULT_MAP_HEIGHT; j += Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE))
             {
-                System.out.println(printLineInConsole(bricks, thePaddle, theBall, j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
+                System.out.println(buildLineForConsoleDisplay(bricks, thePaddle, theBall, j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
             }
         
     }
+    
 }
