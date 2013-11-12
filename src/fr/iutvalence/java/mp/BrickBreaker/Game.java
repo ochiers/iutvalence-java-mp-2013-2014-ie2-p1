@@ -24,7 +24,7 @@ public class Game
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 5;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 15;
 
     /**
      * Maximal number of player's lives
@@ -106,7 +106,7 @@ public class Game
      * bricks is created, the number of lifes is 3
      * 
      */
-    public Game()
+    public Game(Display display)
     {
         super();
 
@@ -127,8 +127,10 @@ public class Game
         }
         this.rand = new Random();
         this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
-        this.display = new Display();
+        this.display = display;
+        display.initializeDisplay(this.thePaddle);
     }
+
 
     /**
      * method who move the ball and take care of collisions
@@ -140,7 +142,7 @@ public class Game
 
         while (!this.stopGame)
         {
-            this.display.displayConsoleScreen(this.bricks, this.thePaddle, this.theBall);
+            this.display.displayGameState(this.bricks, this.thePaddle, this.theBall);
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();
@@ -226,7 +228,6 @@ public class Game
      */
     private void onVictory()
     {
-        System.out.println("GAGNE !");
         this.stopGame = true;
     }
 
@@ -237,7 +238,6 @@ public class Game
     {
         if (this.currentNumberOfBalls == 0)
         {
-            System.out.println("perdu");
             this.stopGame = true;
         }
         else

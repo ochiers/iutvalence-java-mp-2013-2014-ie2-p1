@@ -16,6 +16,6 @@ public class BrickBreaker
      */
     public static void main(String[] args)
     {
-        new Game().play();
+        new Game(new GUIDisplay()).play();
     }
 }
