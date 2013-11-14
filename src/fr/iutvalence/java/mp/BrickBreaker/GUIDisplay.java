@@ -10,6 +10,30 @@ public class GUIDisplay extends JPanel implements Display
 {
 
     /**
+     * Ratio of the brick's width for the display
+     */
+    public static float RATIO_WIDTH_BRICK = 0.05F;
+    /**
+     * Ratio of the brick's height for the display
+     */
+    public static float RATIO_HEIGHT_BRICK = 0.005F;
+    /**
+     * Ratio of the ball's size for the display
+     */
+    public static float RATIO_SIZE_BALL = 0.04F;
+
+    /**
+     * Ratio of the paddle's width for the display
+     */
+    public static float RATIO_WIDTH_PADDLE = 0.03F;
+    /**
+     * Ratio of the paddle's height for the display
+     */
+    public static float RATIO_HEIGHT_PADDLE = 0.001F;
+    
+    private JFrame window;
+    
+    /**
      * The ball displayed
      */
     private Ball theBall;
@@ -24,6 +48,8 @@ public class GUIDisplay extends JPanel implements Display
      * 
      */
     private Brick[] bricks;
+    
+    
     
     
     /**
@@ -42,15 +68,15 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void initializeDisplay(Paddle pad)
     {
-       JFrame window = new JFrame();
+       this.window = new JFrame();
        
        this.thePaddle = pad;
        new ThreadMovePaddle(this.thePaddle).start();
        
-        window.setSize(Game.DEFAULT_MAP_WIDTH, Game.DEFAULT_MAP_HEIGHT);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setContentPane(this);
-        window.setVisible(true);
+        this.window.setSize(Game.DEFAULT_MAP_WIDTH, Game.DEFAULT_MAP_HEIGHT);
+        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.window.setContentPane(this);
+        this.window.setVisible(true);
         
     }
     
@@ -72,13 +98,22 @@ public class GUIDisplay extends JPanel implements Display
         for(int i=0; i<this.bricks.length; i++)
         {
             if(this.bricks[i].getState() != BrickState.DESTROYED_STATE)
-            g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
+            {
+                //A remplacer par l'affichage d'une image
+                g.setColor(Color.blue);
+                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
+                g.setColor(Color.black);
+                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
+                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT); 
+                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x + (Brick.DEFAULT_WIDTH - Brick.DEFAULT_WIDTH/10), (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT);
+                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x , (int)this.bricks[i].getBrickBox().getBox().y + (Brick.DEFAULT_HEIGHT - Brick.DEFAULT_HEIGHT/10), Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
+            }
+    
         }
     }
-    
     private void paintBall(Graphics g){
         g.setColor(Color.red);
-        g.fillOval((int)this.theBall.getBallBox().getBox().x, (int)this.theBall.getBallBox().getBox().y, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
+        g.fillOval((int)this.theBall.getBallBox().getBox().x, (int)this.theBall.getBallBox().getBox().y, (int)(this.window.getWidth()*GUIDisplay.RATIO_SIZE_BALL),  (int)(this.window.getHeight()*GUIDisplay.RATIO_SIZE_BALL));
     }
     
     private void paintPaddle(Graphics g){
