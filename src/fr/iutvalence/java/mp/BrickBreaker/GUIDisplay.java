@@ -80,6 +80,9 @@ public class GUIDisplay extends JPanel implements Display
         
     }
     
+    /**
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     public void paintComponent(Graphics g)
     {
         g.setColor(Color.white);
