@@ -13,6 +13,15 @@ import javax.swing.JPanel;
  */
 public class GUIDisplay extends JPanel implements Display
 {
+    /**
+     * 
+     */
+    public static float GAME_WIDTH_OFFSET = 10F;
+    
+    /**
+     * 
+     */
+    public static float GAME_HEIGHT_OFFSET = 10F;
 
     /**
      * Ratio of the brick's width for the display
@@ -76,9 +85,9 @@ public class GUIDisplay extends JPanel implements Display
        this.window = new JFrame();
        
        this.thePaddle = (Paddle)obj;
-       new ThreadMovePaddle(this.thePaddle).start();
+       new ThreadMovePaddle(this.thePaddle, this).start();
        
-        this.window.setSize(Game.DEFAULT_MAP_WIDTH + 50,Game.DEFAULT_MAP_HEIGHT + 50);
+        this.window.setSize(Game.DEFAULT_MAP_WIDTH + 2*(int)this.GAME_WIDTH_OFFSET,Game.DEFAULT_MAP_HEIGHT + 2*(int)this.GAME_HEIGHT_OFFSET);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setContentPane(this);
         this.window.setVisible(true);
@@ -105,7 +114,7 @@ public class GUIDisplay extends JPanel implements Display
     {
         g.setColor(Color.white);
         //On vide l'ecran
-        g.fillRect(0, 0, (int) (Game.DEFAULT_MAP_WIDTH), Game.DEFAULT_MAP_HEIGHT);
+        g.fillRect((int)this.GAME_WIDTH_OFFSET, + (int)this.GAME_HEIGHT_OFFSET, (int) (Game.DEFAULT_MAP_WIDTH), Game.DEFAULT_MAP_HEIGHT);
         //On redessine un a un chaque composant de notre partie.
         paintBricks(g);
         paintBall(g);
@@ -124,23 +133,19 @@ public class GUIDisplay extends JPanel implements Display
             {
                 //A remplacer par l'affichage d'une image
                 g.setColor(Color.blue);
-                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
-                g.setColor(Color.black);
-                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
-                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT); 
-                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x + (Brick.DEFAULT_WIDTH - Brick.DEFAULT_WIDTH/10), (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT);
-                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x , (int)this.bricks[i].getCollisionBox().getBox().y + (Brick.DEFAULT_HEIGHT - Brick.DEFAULT_HEIGHT/10), Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x + (int)this.GAME_WIDTH_OFFSET, (int)this.bricks[i].getCollisionBox().getBox().y + (int)this.GAME_HEIGHT_OFFSET, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
+                
             }
     
         }
     }
     private void paintBall(Graphics g){
         g.setColor(Color.red);
-        g.fillOval((int)this.theBall.getCollisionBox().getBox().x, (int)this.theBall.getCollisionBox().getBox().y, (int)theBall.getCollisionBox().getBox().width,  (int)theBall.getCollisionBox().getBox().width);
+        g.fillOval((int)this.theBall.getCollisionBox().getBox().x + (int)this.GAME_WIDTH_OFFSET, (int)this.theBall.getCollisionBox().getBox().y + (int)this.GAME_HEIGHT_OFFSET, (int)theBall.getCollisionBox().getBox().width,  (int)theBall.getCollisionBox().getBox().width);
     }
     
     private void paintPaddle(Graphics g){
         g.setColor(Color.green);
-        g.fillRect((int)this.thePaddle.getCollisionBox().getBox().x, (int)this.thePaddle.getCollisionBox().getBox().y, this.thePaddle.getWidth(), Paddle.DEFAULT_HEIGHT);
+        g.fillRect((int)this.thePaddle.getCollisionBox().getBox().x + (int)this.GAME_WIDTH_OFFSET, (int)this.thePaddle.getCollisionBox().getBox().y + (int)this.GAME_HEIGHT_OFFSET, this.thePaddle.getWidth(), Paddle.DEFAULT_HEIGHT);
     }
 }

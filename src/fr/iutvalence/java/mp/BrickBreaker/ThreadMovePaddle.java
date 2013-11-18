@@ -1,11 +1,17 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
+
+
 /**
  * Define the thread who move the paddle
  * @author ochiers
  *
  */
-public class ThreadMovePaddle extends Thread
+public class ThreadMovePaddle extends Thread implements MouseMotionListener
 {
     // TODO (fixed) write comment
     /**
@@ -18,13 +24,14 @@ public class ThreadMovePaddle extends Thread
      * A thread who move the pad
      * @param pad The pad who will move
      */
-    public ThreadMovePaddle(Paddle pad){
+    public ThreadMovePaddle(Paddle pad, JPanel pan){
         
         super();
         if(pad == null)
             System.out.println("paddle null");
         else
        this.pad = pad;
+      pan.addMouseMotionListener(this);
     }
     
     /**
@@ -32,27 +39,22 @@ public class ThreadMovePaddle extends Thread
      */
     public void run()
     {
-       while(true)
-       {
-        if(this.pad.getCollisionBox().getBox().x + this.pad.getWidth() >= Game.DEFAULT_MAP_WIDTH)
-        {
-            this.pad.setTopLeftCornerPosition(new Position(0, this.pad.getCollisionBox().getBox().y));
-        }
-        else
-        {
-            this.pad.setTopLeftCornerPosition(new Position(++this.pad.getCollisionBox().getBox().x, this.pad.getCollisionBox().getBox().y));
-        }
-        
-        try
-        {
-            Thread.sleep(5);
-        }
-        catch (InterruptedException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+       while(true);
     }
+
+    @Override
+    public void mouseDragged(MouseEvent arg0)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent arg0)
+    {
+        if(arg0.getX() < Game.DEFAULT_MAP_WIDTH - pad.getWidth()/2 && arg0.getX() - pad.getWidth()/2>= 0)
+        pad.setTopLeftCornerPosition(new Position(arg0.getX() - pad.getWidth()/2, (float) pad.getCollisionBox().getBox().getY()));
+        
     }
 
    

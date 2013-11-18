@@ -300,7 +300,7 @@ public class Game
                     this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
-                this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
+                this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.3F, 1.0F), this.theBall.getTrajectory()
                         .getBCoefficient()));
             }
         }
