@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author soulierc
+ *
+ */
 public class GUIDisplay extends JPanel implements Display
 {
 
@@ -66,14 +71,14 @@ public class GUIDisplay extends JPanel implements Display
     /**
      * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
      */
-    public void initializeDisplay(Paddle pad)
+    public void initializeDisplay(Object obj)
     {
        this.window = new JFrame();
        
-       this.thePaddle = pad;
+       this.thePaddle = (Paddle)obj;
        new ThreadMovePaddle(this.thePaddle).start();
        
-        this.window.setSize(Game.DEFAULT_MAP_WIDTH, Game.DEFAULT_MAP_HEIGHT);
+        this.window.setSize(Game.DEFAULT_MAP_WIDTH + 50,Game.DEFAULT_MAP_HEIGHT + 50);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setContentPane(this);
         this.window.setVisible(true);
@@ -81,12 +86,27 @@ public class GUIDisplay extends JPanel implements Display
     }
     
     /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayVictory()
+     */
+    public void displayVictory()
+    {
+    }
+    
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayLoss()
+     */
+    public void displayLoss()
+    {
+    }
+    /**
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     public void paintComponent(Graphics g)
     {
         g.setColor(Color.white);
-        g.fillRect(0, 0, Game.DEFAULT_MAP_WIDTH, Game.DEFAULT_MAP_HEIGHT);
+        //On vide l'ecran
+        g.fillRect(0, 0, (int) (Game.DEFAULT_MAP_WIDTH), Game.DEFAULT_MAP_HEIGHT);
+        //On redessine un a un chaque composant de notre partie.
         paintBricks(g);
         paintBall(g);
         paintPaddle(g);
@@ -116,7 +136,7 @@ public class GUIDisplay extends JPanel implements Display
     }
     private void paintBall(Graphics g){
         g.setColor(Color.red);
-        g.fillOval((int)this.theBall.getCollisionBox().getBox().x, (int)this.theBall.getCollisionBox().getBox().y, (int)(this.window.getWidth()*GUIDisplay.RATIO_SIZE_BALL),  (int)(this.window.getHeight()*GUIDisplay.RATIO_SIZE_BALL));
+        g.fillOval((int)this.theBall.getCollisionBox().getBox().x, (int)this.theBall.getCollisionBox().getBox().y, (int)theBall.getCollisionBox().getBox().width,  (int)theBall.getCollisionBox().getBox().width);
     }
     
     private void paintPaddle(Graphics g){

@@ -1,8 +1,8 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) rewrite comment (useless)
+// TODO (fixed) rewrite comment (useless)
 /**
- * This class gives tools for differents class
+ * Define some tools that can be used in collisions algorithms
  * @author ochiers
  *
  */

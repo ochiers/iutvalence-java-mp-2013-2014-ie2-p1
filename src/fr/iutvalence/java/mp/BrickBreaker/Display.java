@@ -1,8 +1,8 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) finish writing comment (general description)
+// TODO (fixed) finish writing comment (general description)
 /**
- * 
+ * Define the interfqce who is used to display the game.
  * @author ochiers
  *
  */
@@ -17,9 +17,21 @@ public interface Display
      */
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
     
-    // TODO (fix) finish writing comment (parameter)
+    // TODO (fixed) finish writing comment (parameter)
     /**
      * Initialize the display
+     * @param obj Must be initialized in some case
      */
-    public void initializeDisplay(Paddle pad);
+    public void initializeDisplay(Object obj);
+    
+    /**
+     * Display the victory of the game 
+     */
+    public void displayVictory();
+    
+    /**
+     * Display the loss of the game 
+     */
+    public void displayLoss();
+    
 }

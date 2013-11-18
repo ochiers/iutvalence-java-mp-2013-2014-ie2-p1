@@ -1,13 +1,54 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) detail comment
+// TODO (fixed) detail comment
 /**
- * This class is used to display the game
+ * This class is used to display the game in console mod,
+ * the display is a ASCII-ART representation of the game.
+ * 
  * @author ochiers
  *
  */
 public class ConsoleDisplay implements Display
 {
+    // TODO (fixed) fix comment
+    /**
+     * Initialize the display, a single println is used to tell that the game begin.
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
+     */
+    public void initializeDisplay(Object obj)
+    {
+        System.out.println("Debut de la partie");
+    }
+    
+    /**
+     * Game state is displayed using an ASCII-art representation
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)
+     */
+    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    {
+            System.out.print(" # ");
+            for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
+            {
+                System.out.print(" # ");
+            }
+            System.out.println();
+            for (int j = 0; j < Game.DEFAULT_MAP_HEIGHT; j += Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE))
+            {
+                System.out.println(buildLineForConsoleDisplay(bricks, thePaddle, theBall, j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
+            }
+        
+    }
+    
+    public void displayVictory()
+    {
+        System.out.println("Not bad, you win !");
+    }
+    
+    public void displayLoss()
+    {
+        System.out.println("You loose, you sucks.");
+    }
+    
     /**
      * Method who build a line of the game, in order to be printed in console
      * 
@@ -51,46 +92,58 @@ public class ConsoleDisplay implements Display
         }
         if (!aBrickIsWritten && Tools.isFloatBetween((float)theBall.getCollisionBox().getBox().getY(), pos, pos + increment))
         {
-            res = theBall.stringBallInConsole();
+            res = stringBallInConsole(theBall);
         }
 
         if (Tools.isFloatBetween((float)thePaddle.getCollisionBox().getBox().getY(), pos, pos + increment))
         {
-            res = thePaddle.stringPaddleInConsole();
+            res = stringPaddleInConsole(thePaddle);
         }
 
         return res;
     }
     
-
-
     /**
-     * Game state is displayed using an ASCII-art representation
-     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)
+     * Give a string who represent the ball in the game
+     * @return A string representing the ball in the game
      */
-    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    private String stringBallInConsole(Ball b)
     {
-            System.out.print(" # ");
-            for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
+        String res = " # ";
+        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
+        {
+
+            if (Tools.isFloatBetween((float)b.getCollisionBox().getBox().getX(), i, (i + Game.DEFAULT_MAP_HEIGHT
+                    / (2 * Ball.DEFAULT_SIZE))))
             {
-                System.out.print(" # ");
+                res = res + " B ";
             }
-            System.out.println();
-            for (int j = 0; j < Game.DEFAULT_MAP_HEIGHT; j += Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE))
-            {
-                System.out.println(buildLineForConsoleDisplay(bricks, thePaddle, theBall, j, Game.DEFAULT_MAP_HEIGHT / (2 * Ball.DEFAULT_SIZE)));
-            }
-        
+            else
+                res = res + "   ";
+        }
+        return res;
     }
 
-
-    // TODO (fix) fix comment
     /**
-     * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
+     * Give a string who represent the paddle in the game
+     * @return A string representing the paddle in the game
      */
-    public void initializeDisplay(Paddle pad)
+    private String stringPaddleInConsole(Paddle p)
     {
-        System.out.println("Debut de la partie");
+        String res = " # ";
+        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
+        {
+
+            if (p.getCollisionBox().getBox().getX() + p.getWidth() >= i)
+            {
+                res = res + " P ";
+            }
+            else
+                res = res + "   ";
+        }
+        return res;
     }
+    
+    
     
 }

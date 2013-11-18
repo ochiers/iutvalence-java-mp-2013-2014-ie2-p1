@@ -1,7 +1,8 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fix) finish writing comment (general description is missing)
+// TODO (fixed) finish writing comment (general description is missing)
 /**
+ * Define the different state that a brick can be
  * @author soulierc
  * 
  */

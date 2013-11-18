@@ -118,27 +118,7 @@ public class Paddle
         return "{" + pos.toString() + ", size : " + this.width + "}";
     }
 
-    /**
-     * Give a string who represent the paddle in the game
-     * @return A string representing the paddle in the game
-     */
-    // TODO (fix) you should move this method to ConsoleDisplay since it is related 
-    // to console display
-    public String stringPaddleInConsole()
-    {
-        String res = " # ";
-        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
-        {
-
-            if (this.collisionBox.getBox().getX() + this.width >= i)
-            {
-                res = res + " P ";
-            }
-            else
-                res = res + "   ";
-        }
-        return res;
-    }
+    
 
 
 }

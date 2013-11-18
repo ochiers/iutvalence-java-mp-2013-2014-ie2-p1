@@ -94,28 +94,7 @@ public class Ball
         return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
 
-    /**
-     * Give a string who represent the ball in the game
-     * @return A string representing the ball in the game
-     */
-    // TODO (fix) you should move this method to ConsoleDisplay since it is related 
-    // to console display
-    public String stringBallInConsole()
-    {
-        String res = " # ";
-        for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
-        {
-
-            if (Tools.isFloatBetween((float)this.collisionBox.getBox().getX(), i, (i + Game.DEFAULT_MAP_HEIGHT
-                    / (2 * Ball.DEFAULT_SIZE))))
-            {
-                res = res + " B ";
-            }
-            else
-                res = res + "   ";
-        }
-        return res;
-    }
+    
 
 
 }

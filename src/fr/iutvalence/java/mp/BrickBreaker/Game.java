@@ -3,9 +3,9 @@ package fr.iutvalence.java.mp.BrickBreaker;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-// TODO (fix) rewrite comment
+// TODO (fixed) rewrite comment
 /**
- * Called when a game is created
+ * Define a game, a game is composed of one ball, a paddle and some bricks
  * 
  * @author ochiers soulierc
  * */
@@ -135,9 +135,11 @@ public class Game
 
 
     /**
-     * method who move the ball and take care of collisions
+     * Main loop of the game, at each loop, the ball move and the collision are tested
+     * 
      */
     // TODO (explain) i do not understand how the paddle moves are handled
+    //By the mouse (with a thread), if a graphical display is set. If not, the paddle don't move but we are working on ...
     public void play()
     {
         boolean thereWasAcollision = false;
@@ -232,6 +234,7 @@ public class Game
     private void onVictory()
     {
         this.stopGame = true;
+        this.display.displayVictory();
     }
 
     /**
@@ -242,6 +245,7 @@ public class Game
         if (this.currentNumberOfBalls == 0)
         {
             this.stopGame = true;
+            this.display.displayLoss();
         }
         else
         {
@@ -272,15 +276,10 @@ public class Game
         {
             result = COLLISION_CORNER;
         }
-        // TODO (fix) simplify
-        // We don't know how to simplify ...
         else if ((int)dest.getWidth() == 1 && dest.getHeight() > 1)
         {
             result = COLLISION_LEFT_RIGHT_SIDE;
         }
-
-        // TODO (fix) simplify
-        // We don't know how to simplify ...
         else if (dest.getWidth() > 1 && (int)dest.getHeight() == 1)
         {
             result = COLLISION_TOP_BOTTOM_SIDE;
@@ -321,7 +320,7 @@ public class Game
     {
         boolean thereIsCollision = false;
         if (!Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
-                || !Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
+                || !Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX() + (float)this.theBall.getCollisionBox().getBox().width, 0,
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();

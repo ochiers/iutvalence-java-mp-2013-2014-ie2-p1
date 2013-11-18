@@ -1,24 +1,29 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 /**
+ * Define the thread who move the paddle
  * @author ochiers
  *
  */
 public class ThreadMovePaddle extends Thread
 {
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * The paddle who is moved
+     */
     private Paddle pad;
     
     // TODO (fix) finish writing comment
     /**
-     * @param pad
+     * A thread who move the pad
+     * @param pad The pad who will move
      */
     public ThreadMovePaddle(Paddle pad){
         
         super();
         if(pad == null)
             System.out.println("paddle null");
-        
+        else
        this.pad = pad;
     }
     
@@ -29,7 +34,7 @@ public class ThreadMovePaddle extends Thread
     {
        while(true)
        {
-        if(this.pad.getCollisionBox().getBox().x + this.pad.getWidth() > Game.DEFAULT_MAP_WIDTH)
+        if(this.pad.getCollisionBox().getBox().x + this.pad.getWidth() >= Game.DEFAULT_MAP_WIDTH)
         {
             this.pad.setTopLeftCornerPosition(new Position(0, this.pad.getCollisionBox().getBox().y));
         }

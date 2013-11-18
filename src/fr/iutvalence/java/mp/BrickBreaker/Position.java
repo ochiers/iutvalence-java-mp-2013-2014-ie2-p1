@@ -53,12 +53,12 @@ public class Position
         return this.y;
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
      * Return a new position translated to deltaX and deltaY
      * 
-     * @param deltaX
-     * @param deltaY
+     * @param deltaX The delta to add to the x field
+     * @param deltaY The delta to add to the y field
      * @return A position translated to x+deltaX and y+deltaY
      */
     public Position translate(float deltaX, float deltaY)
