@@ -1,7 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 /**
- * Describe a position of an object on the screen
+ * Describe a position in 2D
  * 
  * @author soulierc
  * 

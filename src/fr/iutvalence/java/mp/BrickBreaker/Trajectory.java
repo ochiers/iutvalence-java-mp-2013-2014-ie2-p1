@@ -18,7 +18,6 @@ public class Trajectory
      */
     private float bCoefficient;
 
-    // TODO (fixed) finish writing comment
     /**
      * Create a new trajectory with given coefficients a and b
      * 
@@ -48,13 +47,13 @@ public class Trajectory
     }
 
     /**
-     * Return the A coeficient
+     * Return the A coefficient
      * 
-     * @return a coeficicent
+     * @return a coefficicent
      */
     public float getACoefficient()
     {
-        return aCoefficient;
+        return this.aCoefficient;
     }
 
     /**
@@ -64,7 +63,7 @@ public class Trajectory
      */
     public float getBCoefficient()
     {
-        return bCoefficient;
+        return this.bCoefficient;
     }
 
     /**

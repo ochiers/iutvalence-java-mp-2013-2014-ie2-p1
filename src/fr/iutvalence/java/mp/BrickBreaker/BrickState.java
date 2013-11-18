@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+// TODO (fix) finish writing comment (general description is missing)
 /**
  * @author soulierc
  * 

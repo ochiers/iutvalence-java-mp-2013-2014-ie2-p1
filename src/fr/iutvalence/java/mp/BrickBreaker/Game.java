@@ -3,6 +3,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+// TODO (fix) rewrite comment
 /**
  * Called when a game is created
  * 
@@ -114,6 +115,7 @@ public class Game
         this.stopGame = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
+        // TODO (think about it) why not having a constructor with 2 parameters?
         this.theBall = new Ball(new Position(100, 300));
         this.theBall.setTrajectory(new Trajectory(0.5F,0.5F));
         
@@ -135,6 +137,7 @@ public class Game
     /**
      * method who move the ball and take care of collisions
      */
+    // TODO (explain) i do not understand how the paddle moves are handled
     public void play()
     {
         boolean thereWasAcollision = false;
@@ -148,7 +151,7 @@ public class Game
                 manageCollisionWithPaddle();
             }
             
-            Position temp = new Position((float)this.theBall.getBallBox().getBox().getX(),(float)this.theBall.getBallBox().getBox().getY());
+            Position temp = new Position((float)this.theBall.getCollisionBox().getBox().getX(),(float)this.theBall.getCollisionBox().getBox().getY());
             this.theBall.updatePositions(temp.translate(
                     this.theBall.getTrajectory().getBCoefficient(), this.theBall.getTrajectory().getACoefficient()));
 
@@ -260,7 +263,7 @@ public class Game
     {
         int result = NO_SIDE_COLLISION;
         Rectangle2D.Float dest = new Rectangle2D.Float();
-        dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(brick.getBrickBox());
+        dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(brick.getCollisionBox());
         if (dest.getWidth() < 0 && dest.getHeight() < 0)
         {
             return NO_SIDE_COLLISION;
@@ -291,11 +294,11 @@ public class Game
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getBallBox().getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
-                .getPaddleBox().getBox().getY())
+        if (this.theBall.getCollisionBox().getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
+                .getCollisionBox().getBox().getY())
         {
-            Rectangle2D.Float dest = this.theBall.getBallBox().getRectangleFromIntersectionWithOtherCollisionBox(
-                    this.thePaddle.getPaddleBox());
+            Rectangle2D.Float dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(
+                    this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
                 this.theBall.setTrajectory(new Trajectory(-1 * this.rand.nextFloat(), this.theBall.getTrajectory()
@@ -317,14 +320,14 @@ public class Game
     private boolean manageCollisionWithGamePanelSides()
     {
         boolean thereIsCollision = false;
-        if (!Tools.isFloatBetween((float)this.theBall.getBallBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
-                || !Tools.isFloatBetween((float)this.theBall.getBallBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
+        if (!Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 0, Game.DEFAULT_MAP_WIDTH)
+                || !Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX() + Ball.DEFAULT_SIZE, 0,
                         Game.DEFAULT_MAP_WIDTH))
         {
             this.theBall.getTrajectory().reverseBCoefficient();
             thereIsCollision = true;
         }
-        else if (this.theBall.getBallBox().getBox().getY() <= 0)
+        else if (this.theBall.getCollisionBox().getBox().getY() <= 0)
         {
             this.theBall.getTrajectory().reverseACoefficient();
             thereIsCollision = true;

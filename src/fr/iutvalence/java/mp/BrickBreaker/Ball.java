@@ -24,9 +24,8 @@ public class Ball
      * The collision box associated with this Ball
      * It's used to determinate collisions
      */
-    private CollisionBox ballBox;
+    private CollisionBox collisionBox;
     
-    // TODO (fixed) finish writing comment (parameters)
     /**
      * Creates a new ball at new position and set a new trajectory
      * 
@@ -35,16 +34,16 @@ public class Ball
     public Ball(Position pos)
     {
         this.trajectory = new Trajectory(1, 1);
-        this.ballBox = new CollisionBox(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
+        this.collisionBox = new CollisionBox(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
     }
     
     /**
      * Return the CollisionBox associated with this ball
      * @return The ball's CollisionBox
      */
-    public CollisionBox getBallBox()
+    public CollisionBox getCollisionBox()
     {
-        return this.ballBox;
+        return this.collisionBox;
     }
     
     
@@ -59,7 +58,7 @@ public class Ball
      */
     public void updatePositions(Position newTopLeftCornerposition)
     {
-        this.ballBox.updateBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
+        this.collisionBox.updateBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
     }
 
     /**
@@ -91,7 +90,7 @@ public class Ball
      */
     public String toString()
     {
-        Position temp = new Position((float)this.ballBox.getBox().getX(),(float)this.ballBox.getBox().getY());
+        Position temp = new Position((float)this.collisionBox.getBox().getX(),(float)this.collisionBox.getBox().getY());
         return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
 
@@ -99,13 +98,15 @@ public class Ball
      * Give a string who represent the ball in the game
      * @return A string representing the ball in the game
      */
+    // TODO (fix) you should move this method to ConsoleDisplay since it is related 
+    // to console display
     public String stringBallInConsole()
     {
         String res = " # ";
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (Tools.isFloatBetween((float)this.ballBox.getBox().getX(), i, (i + Game.DEFAULT_MAP_HEIGHT
+            if (Tools.isFloatBetween((float)this.collisionBox.getBox().getX(), i, (i + Game.DEFAULT_MAP_HEIGHT
                     / (2 * Ball.DEFAULT_SIZE))))
             {
                 res = res + " B ";

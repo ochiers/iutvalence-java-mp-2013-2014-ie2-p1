@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+// TODO (fix) detail comment
 /**
  * This class is used to display the game
  * @author ochiers
@@ -26,8 +27,8 @@ public class ConsoleDisplay implements Display
         {
             if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
             {
-                if (Tools.isFloatBetween((float)bricks[count].getBrickBox().getBox().getY(), pos, pos + increment)
-                        || Tools.isFloatBetween((float)bricks[count].getBrickBox().getBox().getY() + Brick.DEFAULT_WIDTH,
+                if (Tools.isFloatBetween((float)bricks[count].getCollisionBox().getBox().getY(), pos, pos + increment)
+                        || Tools.isFloatBetween((float)bricks[count].getCollisionBox().getBox().getY() + Brick.DEFAULT_WIDTH,
                                 pos, pos + increment))
                 {
                     aBrickIsWritten = true;
@@ -48,12 +49,12 @@ public class ConsoleDisplay implements Display
             }
 
         }
-        if (!aBrickIsWritten && Tools.isFloatBetween((float)theBall.getBallBox().getBox().getY(), pos, pos + increment))
+        if (!aBrickIsWritten && Tools.isFloatBetween((float)theBall.getCollisionBox().getBox().getY(), pos, pos + increment))
         {
             res = theBall.stringBallInConsole();
         }
 
-        if (Tools.isFloatBetween((float)thePaddle.getPaddleBox().getBox().getY(), pos, pos + increment))
+        if (Tools.isFloatBetween((float)thePaddle.getCollisionBox().getBox().getY(), pos, pos + increment))
         {
             res = thePaddle.stringPaddleInConsole();
         }
@@ -83,7 +84,7 @@ public class ConsoleDisplay implements Display
     }
 
 
-
+    // TODO (fix) fix comment
     /**
      * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
      */

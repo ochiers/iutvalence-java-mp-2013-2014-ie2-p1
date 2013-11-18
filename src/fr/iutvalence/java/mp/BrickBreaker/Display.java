@@ -1,4 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
+
+// TODO (fix) finish writing comment (general description)
 /**
  * 
  * @author ochiers
@@ -15,6 +17,7 @@ public interface Display
      */
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
     
+    // TODO (fix) finish writing comment (parameter)
     /**
      * Initialize the display
      */

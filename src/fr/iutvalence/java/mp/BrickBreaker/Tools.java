@@ -1,5 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+// TODO (fix) rewrite comment (useless)
 /**
  * This class gives tools for differents class
  * @author ochiers

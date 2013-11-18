@@ -28,13 +28,15 @@ public class Paddle
     /**
      * Paddle width
      */
+    // TODO (think about it) this feld seems redundant with the collision box
+    // (the information can surely be retrieved using the collision box)
     private int width;
 
     /**
      * The collision box associated with this paddle
      * It's used to determinate collisions
      */
-    private CollisionBox paddleBox;
+    private CollisionBox collisionBox;
     
     
     /**
@@ -48,7 +50,7 @@ public class Paddle
      */
     public Paddle(Position pos, int width)
     {
-        this.paddleBox = new CollisionBox(pos,width,Paddle.DEFAULT_HEIGHT);
+        this.collisionBox = new CollisionBox(pos,width,Paddle.DEFAULT_HEIGHT);
         this.width = width;
     }
 
@@ -56,9 +58,11 @@ public class Paddle
      * creates a paddle initially at DEFAULT_TOP_LEFT_CORNER_POSITION and with
      * the default width size DEFAULT_WIDTH and the CollisionBox associated
      */
+    // TODO (think about it) is it useful to have a default collisionBox if
+    // area dimensions are not known?
     public Paddle()
     {
-        this.paddleBox = new CollisionBox(Paddle.DEFAULT_TOP_LEFT_CORNER_POSITION,Paddle.DEFAULT_WIDTH,Paddle.DEFAULT_HEIGHT);
+        this.collisionBox = new CollisionBox(Paddle.DEFAULT_TOP_LEFT_CORNER_POSITION,Paddle.DEFAULT_WIDTH,Paddle.DEFAULT_HEIGHT);
         this.width = Paddle.DEFAULT_WIDTH;
     }
 
@@ -66,9 +70,9 @@ public class Paddle
      * Return the CollisionBox associated with this paddle
      * @return The paddle's CollisionBox
      */
-    public CollisionBox getPaddleBox()
+    public CollisionBox getCollisionBox()
     {
-        return this.paddleBox;
+        return this.collisionBox;
     }
     
     /**
@@ -99,7 +103,7 @@ public class Paddle
      */
     public void setTopLeftCornerPosition(Position newPos)
     {
-        this.paddleBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.width, Paddle.DEFAULT_HEIGHT));
+        this.collisionBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.width, Paddle.DEFAULT_HEIGHT));
     }
 
     /**
@@ -110,7 +114,7 @@ public class Paddle
      */
     public String toString()
     {
-        Position pos = new Position((float)this.paddleBox.getBox().getX(),(float)this.paddleBox.getBox().getY());
+        Position pos = new Position((float)this.collisionBox.getBox().getX(),(float)this.collisionBox.getBox().getY());
         return "{" + pos.toString() + ", size : " + this.width + "}";
     }
 
@@ -118,13 +122,15 @@ public class Paddle
      * Give a string who represent the paddle in the game
      * @return A string representing the paddle in the game
      */
+    // TODO (fix) you should move this method to ConsoleDisplay since it is related 
+    // to console display
     public String stringPaddleInConsole()
     {
         String res = " # ";
         for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
         {
 
-            if (this.paddleBox.getBox().getX() + this.width >= i)
+            if (this.collisionBox.getBox().getX() + this.width >= i)
             {
                 res = res + " P ";
             }

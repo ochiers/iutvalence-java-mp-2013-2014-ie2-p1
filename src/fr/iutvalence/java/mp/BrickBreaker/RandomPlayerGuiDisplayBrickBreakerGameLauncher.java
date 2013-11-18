@@ -7,7 +7,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * 
  */
 
-public class BrickBreaker
+public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
 {
     /**
      * Default game launcher

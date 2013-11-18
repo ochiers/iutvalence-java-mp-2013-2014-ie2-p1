@@ -104,23 +104,23 @@ public class GUIDisplay extends JPanel implements Display
             {
                 //A remplacer par l'affichage d'une image
                 g.setColor(Color.blue);
-                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT);
                 g.setColor(Color.black);
-                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
-                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x, (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT); 
-                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x + (Brick.DEFAULT_WIDTH - Brick.DEFAULT_WIDTH/10), (int)this.bricks[i].getBrickBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT);
-                g.fillRect((int)this.bricks[i].getBrickBox().getBox().x , (int)this.bricks[i].getBrickBox().getBox().y + (Brick.DEFAULT_HEIGHT - Brick.DEFAULT_HEIGHT/10), Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x, (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT); 
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x + (Brick.DEFAULT_WIDTH - Brick.DEFAULT_WIDTH/10), (int)this.bricks[i].getCollisionBox().getBox().y, Brick.DEFAULT_WIDTH/10, Brick.DEFAULT_HEIGHT);
+                g.fillRect((int)this.bricks[i].getCollisionBox().getBox().x , (int)this.bricks[i].getCollisionBox().getBox().y + (Brick.DEFAULT_HEIGHT - Brick.DEFAULT_HEIGHT/10), Brick.DEFAULT_WIDTH, Brick.DEFAULT_HEIGHT/10);
             }
     
         }
     }
     private void paintBall(Graphics g){
         g.setColor(Color.red);
-        g.fillOval((int)this.theBall.getBallBox().getBox().x, (int)this.theBall.getBallBox().getBox().y, (int)(this.window.getWidth()*GUIDisplay.RATIO_SIZE_BALL),  (int)(this.window.getHeight()*GUIDisplay.RATIO_SIZE_BALL));
+        g.fillOval((int)this.theBall.getCollisionBox().getBox().x, (int)this.theBall.getCollisionBox().getBox().y, (int)(this.window.getWidth()*GUIDisplay.RATIO_SIZE_BALL),  (int)(this.window.getHeight()*GUIDisplay.RATIO_SIZE_BALL));
     }
     
     private void paintPaddle(Graphics g){
         g.setColor(Color.green);
-        g.fillRect((int)this.thePaddle.getPaddleBox().getBox().x, (int)this.thePaddle.getPaddleBox().getBox().y, this.thePaddle.getWidth(), Paddle.DEFAULT_HEIGHT);
+        g.fillRect((int)this.thePaddle.getCollisionBox().getBox().x, (int)this.thePaddle.getCollisionBox().getBox().y, this.thePaddle.getWidth(), Paddle.DEFAULT_HEIGHT);
     }
 }

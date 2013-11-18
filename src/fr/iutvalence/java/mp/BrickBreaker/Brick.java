@@ -28,17 +28,16 @@ public class Brick
      * The collision box associated with this brick
      * It's used to determinate collisions
      */
-    private CollisionBox brickBox;
-    
-    // TODO (fixed) finish writing comment (parameters
+    private CollisionBox collisionBox;
+
     /**
      * Creates a new Brick, at a given position
      * 
-     * @param pos The position of the top left corner of the brick
+     * @param position The position of the top left corner of the brick
      */
-    public Brick(Position pos)
+    public Brick(Position position)
     {
-        this.brickBox = new CollisionBox(pos,DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.collisionBox = new CollisionBox(position,DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.state = BrickState.NORMAL_STATE;
     }
     
@@ -46,12 +45,16 @@ public class Brick
      * Return the CollisionBox associated with this brick
      * @return The brick's CollisionBox
      */
-    public CollisionBox getBrickBox()
+    // TODO (think about it) it is better the same names for similar methods across
+    // objects that share some behaviour. Ball, Brick and Paddle share the fact
+    // that they have a collision box. so, there is no reason not to name the field
+   // collisionBox and the getter getCollisionBox. You should also think about having 
+    // common superclass.
+    public CollisionBox getCollisionBox()
     {
-        return this.brickBox;
+        return this.collisionBox;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Returns a description of the brick as an ASCII string whose format is "{Position : Brick's position,
      *  state : Brick's state"}"
@@ -60,7 +63,7 @@ public class Brick
      */
     public String toString()
     {
-        Position pos = new Position((float)this.getBrickBox().getBox().getX(),(float)this.getBrickBox().getBox().getY());
+        Position pos = new Position((float)this.getCollisionBox().getBox().getX(),(float)this.getCollisionBox().getBox().getY());
         return "{Position : " + pos.toString() + ", state :"
                 + this.state + "}";
     }

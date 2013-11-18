@@ -3,7 +3,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Define a box who is used to determinate collision between differents elements
+ * Define a box who is used to determinate collision between different elements
  * of the game
  * 
  * @author ochiers
