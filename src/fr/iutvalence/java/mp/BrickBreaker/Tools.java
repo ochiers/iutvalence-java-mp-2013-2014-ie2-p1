@@ -41,7 +41,7 @@ public class Tools
     {
         float newNumber = Tools.rand.nextFloat();
         
-        while(Tools.isFloatBetween(newNumber,a,b))
+        while(!Tools.isFloatBetween(newNumber,a,b))
         {
             newNumber = Tools.rand.nextFloat();
         }

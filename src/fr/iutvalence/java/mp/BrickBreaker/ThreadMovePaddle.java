@@ -19,16 +19,17 @@ public class ThreadMovePaddle extends Thread implements MouseMotionListener
      */
     private Paddle pad;
     
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
      * A thread who move the pad
      * @param pad The pad who will move
+     * @param pan The JPanel who catch the mouse events
      */
     public ThreadMovePaddle(Paddle pad, JPanel pan){
         
         super();
         if(pad == null)
-            System.out.println("paddle null");
+            System.err.println("paddle null");
         else
        this.pad = pad;
       pan.addMouseMotionListener(this);
@@ -39,7 +40,18 @@ public class ThreadMovePaddle extends Thread implements MouseMotionListener
      */
     public void run()
     {
-       while(true);
+       while(true)
+       {
+           try
+           {
+               Thread.sleep(5);
+           }
+           catch (InterruptedException e)
+           {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           }
+       }
     }
 
     @Override

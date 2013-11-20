@@ -6,7 +6,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author ochiers
  * 
  */
-
 public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
 {
     /**

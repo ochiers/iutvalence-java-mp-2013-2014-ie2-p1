@@ -120,7 +120,7 @@ public class Game
         this.theBall.setTrajectory(new Trajectory(0.5F,0.5F));
         
         // For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0, Game.PADDLE_INITIAL_POSITION), 400);
+        this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.1F*Game.DEFAULT_MAP_WIDTH));
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
@@ -233,8 +233,9 @@ public class Game
      */
     private void onVictory()
     {
-        this.stopGame = true;
         this.display.displayVictory();
+        this.stopGame = true;
+
     }
 
     /**
