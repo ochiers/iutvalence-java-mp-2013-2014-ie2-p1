@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 /**
  * Describe a position in 2D
  * 

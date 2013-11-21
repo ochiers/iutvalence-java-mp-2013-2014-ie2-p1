@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 /**
  * Define a trajectory of a moving object;
  * 

@@ -72,7 +72,7 @@ public class GUIDisplay extends JPanel implements Display
         
         this.theBall = theBall;
         this.bricks = bricks;
-        this.repaint();
+        this.repaint(); 
     }
 
 

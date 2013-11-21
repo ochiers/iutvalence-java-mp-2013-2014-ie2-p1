@@ -10,6 +10,6 @@ public interface UserPolling
     
         /**
          * 
-         */
+         */ 
         public void moveThePaddle(int posX);
 }

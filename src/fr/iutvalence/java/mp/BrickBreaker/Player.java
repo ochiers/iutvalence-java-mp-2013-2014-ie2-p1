@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 /**
  * Define what is a player
  * @author soulierc

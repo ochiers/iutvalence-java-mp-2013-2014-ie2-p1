@@ -70,7 +70,7 @@ public class Game implements UserPolling
     {
         return display;
     }
-
+ 
     /**
      * Number of lives
      */

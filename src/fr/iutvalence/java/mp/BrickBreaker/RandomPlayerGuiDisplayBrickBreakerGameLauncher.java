@@ -9,7 +9,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
 {
     /**
-     * Default game launcher
+     * Default game launcher 
      * 
      * @param args
      */

@@ -14,7 +14,7 @@ public interface Display
      * @param bricks an array of bricks
      * @param thePaddle a paddle
      * @param theBall a ball
-     */
+     */ 
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
     
     // TODO (fixed) finish writing comment (parameter)

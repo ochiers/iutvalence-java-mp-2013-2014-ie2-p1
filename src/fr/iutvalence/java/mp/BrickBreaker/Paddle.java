@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 import java.awt.geom.Rectangle2D;
 
 /**

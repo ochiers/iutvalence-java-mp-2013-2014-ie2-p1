@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 /**
  * 
  * Define what is a brick That fix the position of a brick, and this state

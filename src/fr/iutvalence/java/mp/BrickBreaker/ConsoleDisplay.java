@@ -1,5 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-
+ 
 // TODO (fixed) detail comment
 /**
  * This class is used to display the game in console mod,
