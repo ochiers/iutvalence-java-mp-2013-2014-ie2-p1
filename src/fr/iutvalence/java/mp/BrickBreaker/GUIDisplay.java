@@ -1,10 +1,14 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.io.IOException;
 
@@ -65,8 +69,7 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
     {       
-        this.xRatioGeneralDisplay =  (float)this.window.getWidth() / Game.DEFAULT_MAP_WIDTH;
-        this.yRatioGeneralDisplay =  (float)this.window.getHeight() / Game.DEFAULT_MAP_HEIGHT;
+        
         this.theBall = theBall;
         this.bricks = bricks;
         this.repaint();
@@ -78,13 +81,24 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void initializeDisplay(Object obj)
     {
-       this.window = new JFrame();
-       this.thePaddle = (Paddle)obj;
-       new ThreadMovePaddle(this.thePaddle, this).start();
-       
-        this.window.setSize(Game.DEFAULT_MAP_WIDTH + 2*GUIDisplay.GAME_WIDTH_OFFSET,Game.DEFAULT_MAP_HEIGHT + 2*GUIDisplay.GAME_HEIGHT_OFFSET);
-        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        int[] pixels = new int[16 * 16];
+        Image image = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(16, 16, pixels, 0, 16));
+        Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "invisibleCursor");
+        
+        
+        this.window = new JFrame();
+        this.thePaddle = (Paddle)obj;
+        this.window.setCursor(transparentCursor);
+        
+        this.window.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+        this.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+        this.window.setResizable(false);
         this.window.setContentPane(this);
+        
+        this.xRatioGeneralDisplay =  (float)window.getContentPane().getSize().width / (float)Game.DEFAULT_MAP_WIDTH;
+        this.yRatioGeneralDisplay =  (float)window.getContentPane().getSize().height / (float)Game.DEFAULT_MAP_HEIGHT;
+        
+        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setVisible(true);
         
     }
@@ -111,7 +125,7 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayLoss()
     {
-        Image loss = null;
+        /*Image loss = null;
         try {
             loss = ImageIO.read(new File("G:/Images/Screamer_by_Meshmonkey.jpg"));
         } catch (IOException e) {
@@ -119,7 +133,7 @@ public class GUIDisplay extends JPanel implements Display
             e.printStackTrace();
         }
         
-        this.getGraphics().drawImage(loss,0,0,null);
+        this.getGraphics().drawImage(loss,0,0,null);*/
     }
     /**
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)

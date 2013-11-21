@@ -15,6 +15,6 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
      */
     public static void main(String[] args)
     {
-        new Game(new GUIDisplay()).play();
+        new ThreadMovePaddleByMouse().run();
     }
 }

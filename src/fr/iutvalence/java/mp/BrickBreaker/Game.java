@@ -9,7 +9,7 @@ import java.util.Random;
  * 
  * @author ochiers soulierc
  * */
-public class Game
+public class Game implements UserPolling
 {
     /**
      * Width size of the container
@@ -64,6 +64,13 @@ public class Game
      */
     private Display display;
     
+   
+    
+    public Display getDisplay()
+    {
+        return display;
+    }
+
     /**
      * Number of lives
      */
@@ -181,7 +188,7 @@ public class Game
 
             try
             {
-                Thread.sleep(5);
+                Thread.sleep(3);
             }
             catch (InterruptedException e)
             {
@@ -334,4 +341,15 @@ public class Game
         }
         return thereIsCollision;
     }
+
+    /**
+     * 
+     */
+    public void moveThePaddle(int posX)
+    {
+        if(posX < Game.DEFAULT_MAP_WIDTH - thePaddle.getWidth()/2 && posX - thePaddle.getWidth()/2>= 0)
+            thePaddle.setTopLeftCornerPosition(new Position(posX - thePaddle.getWidth()/2, thePaddle.getCollisionBox().getBox().y));
+    }
+
+
 }
