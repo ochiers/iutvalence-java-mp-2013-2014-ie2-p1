@@ -7,7 +7,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public interface UserPolling
 {
 
-    
+        // TODO (fix) finish writing comment
         /**
          * 
          */ 

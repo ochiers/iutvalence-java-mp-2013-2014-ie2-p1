@@ -1,8 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
-// TODO (fixed) finish writing comment (general description)
 /**
- * Define the interfqce who is used to display the game.
+ * Define the interfqce that is used to display the game.
  * @author ochiers
  *
  */
@@ -17,7 +16,8 @@ public interface Display
      */ 
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
     
-    // TODO (fixed) finish writing comment (parameter)
+    // TODO (fix) this method is much more related to a particular implementation 
+    // rather than related to the service. Find another way to do this. 
     /**
      * Initialize the display
      * @param obj Must be initialized in some case

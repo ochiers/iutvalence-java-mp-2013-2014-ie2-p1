@@ -3,7 +3,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-// TODO (fixed) rewrite comment
 /**
  * Define a game, a game is composed of one ball, a paddle and some bricks
  * 

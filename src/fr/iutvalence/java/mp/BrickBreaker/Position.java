@@ -53,7 +53,6 @@ public class Position
         return this.y;
     }
 
-    // TODO (fixed) finish writing comment
     /**
      * Return a new position translated to deltaX and deltaY
      * 

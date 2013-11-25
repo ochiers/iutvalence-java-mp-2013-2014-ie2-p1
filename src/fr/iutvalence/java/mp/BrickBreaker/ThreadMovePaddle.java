@@ -13,18 +13,18 @@ import javax.swing.JPanel;
  */
 public class ThreadMovePaddle extends Thread implements MouseMotionListener
 {
-    // TODO (fixed) write comment
     /**
-     * The paddle who is moved
+     * The paddle that is moved
      */
     private Paddle pad;
     
-    // TODO (fixed) finish writing comment
     /**
-     * A thread who move the pad
+     * Constructor for a thread that moves a given paddle
      * @param pad The pad who will move
      * @param pan The JPanel who catch the mouse events
      */
+    // TODO (fix) avoid passing the panel
+    // TODO (fix) do not pass a paddle but the reference to a service that allows to move the paddle
     public ThreadMovePaddle(Paddle pad, JPanel pan){
         
         super();

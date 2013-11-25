@@ -1,6 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
-import java.util.Random;
-// TODO (fixed) rewrite comment (useless) 
+import java.util.Random; 
 /**
  * Define some tools that can be used in collisions algorithms
  * @author ochiers

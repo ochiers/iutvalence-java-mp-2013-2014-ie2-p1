@@ -1,6 +1,5 @@
 package fr.iutvalence.java.mp.BrickBreaker;
  
-// TODO (fixed) detail comment
 /**
  * This class is used to display the game in console mod,
  * the display is a ASCII-ART representation of the game.
@@ -10,7 +9,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class ConsoleDisplay implements Display
 {
-    // TODO (fixed) fix comment
     /**
      * Initialize the display, a single println is used to tell that the game begin.
      * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
