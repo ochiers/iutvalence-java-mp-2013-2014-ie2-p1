@@ -3,11 +3,9 @@ package fr.iutvalence.java.mp.BrickBreaker;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
 import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.io.IOException;
@@ -23,15 +21,11 @@ import javax.swing.JPanel;
  */
 public class GUIDisplay extends JPanel implements Display
 {
+
     /**
-     * 
+     * Tab of images who will used for the display, they are loaded one time in order to release IOs
      */
-    public static int GAME_WIDTH_OFFSET = 0;
-    
-    /**
-     * 
-     */
-    public static int GAME_HEIGHT_OFFSET = 0;
+    private final Image[] images;
 
     /**
      * Ratio for x position of components
@@ -61,35 +55,24 @@ public class GUIDisplay extends JPanel implements Display
      */
     private Brick[] bricks;
     
-    
-    
-    
     /**
-     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)
+     * Initialize the display
      */
-    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
-    {       
-        
-        this.theBall = theBall;
-        this.bricks = bricks;
-        this.repaint(); 
-    }
-
-
-    /**
-     * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
-     */
-    public void initializeDisplay(Object obj)
+    public GUIDisplay()
     {
-        int[] pixels = new int[16 * 16];
-        Image image = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(16, 16, pixels, 0, 16));
-        Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "invisibleCursor");
-        
-        
+        this.images = new Image[7];
         this.window = new JFrame();
-        this.thePaddle = (Paddle)obj;
-        this.window.setCursor(transparentCursor);
+        /* ----------   Hide the cursor    ---------- */
+        /*
+          
+          int[] pixels = new int[16 * 16];
+          Image image = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(16, 16, pixels, 0, 16));
+          Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "invisibleCursor");
+          this.window.setCursor(transparentCursor);
+          */
         
+        /* ----------   Set up of the JFrame    -------------*/
+
         this.window.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
         this.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
         this.window.setResizable(false);
@@ -101,6 +84,35 @@ public class GUIDisplay extends JPanel implements Display
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setVisible(true);
         
+        /* ---------    Loading images who will be displayed    ----------*/
+        
+        try
+        {
+            this.images[0] = ImageIO.read(new File("resources/images/brickNormal.png"));
+            this.images[1] = ImageIO.read(new File("resources/images/brickTouched.png"));
+            this.images[2] = ImageIO.read(new File("resources/images/brickDamaged.png"));
+            this.images[3] = ImageIO.read(new File("resources/images/Win.png"));
+            this.images[4] = ImageIO.read(new File("resources/images/Loss.jpg"));
+            this.images[5] = null;
+            this.images[6] = null;
+            
+        }
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)
+     */
+    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    {       
+        this.thePaddle = thePaddle;
+        this.theBall = theBall;
+        this.bricks = bricks;
+        this.repaint(); 
     }
     
     /**
@@ -108,16 +120,7 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayVictory()
     {
-        Image win = null;
-        try {
-            win = ImageIO.read(new File("G:/Images/Win.png"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        this.getGraphics().drawImage(win,0,0,null);
-        
+        this.getGraphics().drawImage(this.images[3],0,0,window.getContentPane().getSize().width,window.getContentPane().getSize().height,null);
     }
     
     /**
@@ -125,33 +128,25 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayLoss()
     {
-        /*Image loss = null;
-        try {
-            loss = ImageIO.read(new File("G:/Images/Screamer_by_Meshmonkey.jpg"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        this.getGraphics().drawImage(loss,0,0,null);*/
+        this.getGraphics().drawImage(this.images[4],0,0,null);
     }
+    
     /**
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     public void paintComponent(Graphics g)
     {
         
-        int xGame = (int)(GUIDisplay.GAME_WIDTH_OFFSET * this.xRatioGeneralDisplay) ;
-        int yGame = (int)(GUIDisplay.GAME_HEIGHT_OFFSET * this.yRatioGeneralDisplay);
-        int wGame = (int)(this.window.getWidth() - 2*GUIDisplay.GAME_WIDTH_OFFSET);
-        int hGame = (int)(this.window.getHeight() - 2*GUIDisplay.GAME_HEIGHT_OFFSET);
+        int xGame = 0 ;
+        int yGame = 0;
+        int wGame = (int)(this.window.getWidth());
+        int hGame = (int)(this.window.getHeight());
         
-        //System.out.println(wGame + " " + hGame);
-        
+        //Clear screen :
         g.setColor(Color.white);
-        //On vide l'ecran
         g.fillRect(xGame, yGame, wGame, hGame);
-        //On redessine un a un chaque composant de notre partie.
+        
+        //On repaint of all game components
         paintBricks(g);
         paintBall(g);
         paintPaddle(g);
@@ -172,24 +167,24 @@ public class GUIDisplay extends JPanel implements Display
         {
             if(this.bricks[i].getState() != BrickState.DESTROYED_STATE)
             {
-                xBrick = (int)((this.bricks[i].getCollisionBox().getBox().x + GUIDisplay.GAME_WIDTH_OFFSET) *this.xRatioGeneralDisplay);
-                yBrick = (int)((this.bricks[i].getCollisionBox().getBox().y + GUIDisplay.GAME_HEIGHT_OFFSET)*this.yRatioGeneralDisplay);
+                xBrick = (int)((this.bricks[i].getCollisionBox().getBox().x) *this.xRatioGeneralDisplay);
+                yBrick = (int)((this.bricks[i].getCollisionBox().getBox().y)*this.yRatioGeneralDisplay);
                 wBrick = (int)(Brick.DEFAULT_WIDTH *this.xRatioGeneralDisplay);
                 hBrick = (int)(Brick.DEFAULT_HEIGHT*this.yRatioGeneralDisplay);
-                //A remplacer par l'affichage d'une image
-                Image brick = null;
                 
-                try {
-                    brick = ImageIO.read(new File("G:/Images/brick.png"));
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                switch (this.bricks[i].getState())
+                {
+                case DAMAGED_STATE: g.drawImage(this.images[2], xBrick,yBrick,wBrick,hBrick, null);
+                    break;
+                case NORMAL_STATE:  g.drawImage(this.images[0], xBrick,yBrick,wBrick,hBrick, null);
+                    break;
+                case TOUCHED_STATE: g.drawImage(this.images[1], xBrick,yBrick,wBrick,hBrick, null);
+                    break;
+                default:
+                    break;
                 
-                g.drawImage(brick, xBrick,yBrick,wBrick,hBrick, null);
-                
-            }
-    
+                }                
+            }    
         }
     }
     private void paintBall(Graphics g){
@@ -205,8 +200,8 @@ public class GUIDisplay extends JPanel implements Display
     private void paintPaddle(Graphics g){
         
         
-        int xPad = (int)((this.thePaddle.getCollisionBox().getBox().x + GUIDisplay.GAME_WIDTH_OFFSET)*this.xRatioGeneralDisplay);
-        int yPad = (int)((this.thePaddle.getCollisionBox().getBox().y + GUIDisplay.GAME_HEIGHT_OFFSET)*this.yRatioGeneralDisplay);
+        int xPad = (int)((this.thePaddle.getCollisionBox().getBox().x)*this.xRatioGeneralDisplay);
+        int yPad = (int)((this.thePaddle.getCollisionBox().getBox().y)*this.yRatioGeneralDisplay);
         int wPad = (int)(this.thePaddle.getWidth()*this.xRatioGeneralDisplay);
         int hPad = (int)(Paddle.DEFAULT_HEIGHT);
         

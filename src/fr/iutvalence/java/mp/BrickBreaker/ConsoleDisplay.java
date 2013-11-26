@@ -9,15 +9,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class ConsoleDisplay implements Display
 {
-    /**
-     * Initialize the display, a single println is used to tell that the game begin.
-     * @see fr.iutvalence.java.mp.BrickBreaker.Display#initializeDisplay()
-     */
-    public void initializeDisplay(Object obj)
-    {
-        System.out.println("Debut de la partie");
-    }
-    
+   
     /**
      * Game state is displayed using an ASCII-art representation
      * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)

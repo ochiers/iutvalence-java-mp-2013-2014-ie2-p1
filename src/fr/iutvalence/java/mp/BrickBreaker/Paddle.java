@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
  * @author ochiers soulierc
  * 
  */
-public class Paddle
+public class Paddle extends GameComponents
 {
     /**
      * Paddle width
@@ -31,12 +31,7 @@ public class Paddle
     // TODO (think about it) this feld seems redundant with the collision box
     // (the information can surely be retrieved using the collision box)
     private int width;
-
-    /**
-     * The collision box associated with this paddle
-     * It's used to determinate collisions
-     */
-    private CollisionBox collisionBox;
+    
     
     
     /**
@@ -50,20 +45,8 @@ public class Paddle
      */
     public Paddle(Position pos, int width)
     {
-        this.collisionBox = new CollisionBox(pos,width,Paddle.DEFAULT_HEIGHT);
+        super(pos,width,Paddle.DEFAULT_HEIGHT);
         this.width = width;
-    }
-
-    /**
-     * creates a paddle initially at DEFAULT_TOP_LEFT_CORNER_POSITION and with
-     * the default width size DEFAULT_WIDTH and the CollisionBox associated
-     */
-    // TODO (think about it) is it useful to have a default collisionBox if
-    // area dimensions are not known?
-    public Paddle()
-    {
-        this.collisionBox = new CollisionBox(Paddle.DEFAULT_TOP_LEFT_CORNER_POSITION,Paddle.DEFAULT_WIDTH,Paddle.DEFAULT_HEIGHT);
-        this.width = Paddle.DEFAULT_WIDTH;
     }
 
     /**

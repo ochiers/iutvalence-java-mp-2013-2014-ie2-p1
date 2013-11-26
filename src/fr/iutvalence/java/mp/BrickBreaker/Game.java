@@ -63,11 +63,11 @@ public class Game implements UserPolling
      */
     private Display display;
     
-   
+    public boolean gamePaused;
     
     public Display getDisplay()
     {
-        return display;
+        return this.display;
     }
  
     /**
@@ -112,6 +112,7 @@ public class Game implements UserPolling
      * initialization of the game : a new paddle, a new ball and a new tab of
      * bricks is created, the number of lifes is 3
      * 
+     * @param display The display of the game.
      */
     public Game(Display display)
     {
@@ -119,11 +120,11 @@ public class Game implements UserPolling
 
         int yPositionBricks = Brick.DEFAULT_HEIGHT;
         this.stopGame = false;
+        this.gamePaused = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
 
-        // TODO (think about it) why not having a constructor with 2 parameters?
-        this.theBall = new Ball(new Position(100, 300));
-        this.theBall.setTrajectory(new Trajectory(0.5F,0.5F));
+        // TODO (fixed)(think about it) why not having a constructor with 2 parameters?
+        this.theBall = new Ball(new Position(100, 300), new Trajectory(0.5F,0.5F));
         
         // For the tests, the paddle size is the total game size
         this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.1F*Game.DEFAULT_MAP_WIDTH));
@@ -136,7 +137,6 @@ public class Game implements UserPolling
         this.rand = new Random();
         this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
         this.display = display;
-        display.initializeDisplay(this.thePaddle);
     }
 
 
@@ -144,45 +144,56 @@ public class Game implements UserPolling
      * Main loop of the game, at each loop, the ball move and the collision are tested
      * 
      */
-    // TODO (explain) i do not understand how the paddle moves are handled
-    //By the mouse (with a thread), if a graphical display is set. If not, the paddle don't move but we are working on ...
     public void play()
     {
         boolean thereWasAcollision = false;
         int collisionSide = 0;
-
+        
         while (!this.stopGame)
         {
+            
             this.display.displayGameState(this.bricks, this.thePaddle, this.theBall);
+
+            while(this.gamePaused)// If the game is paused, we do nothing.
+            {
+                try
+                {
+                    Thread.sleep(1);
+                }
+                catch (InterruptedException e){}
+            }
+            
+            
             if (!manageCollisionWithGamePanelSides())
             {
                 manageCollisionWithPaddle();
             }
             
             Position temp = new Position((float)this.theBall.getCollisionBox().getBox().getX(),(float)this.theBall.getCollisionBox().getBox().getY());
-            this.theBall.updatePositions(temp.translate(
+            this.theBall.updatePosition(temp.translate(
                     this.theBall.getTrajectory().getBCoefficient(), this.theBall.getTrajectory().getACoefficient()));
 
             if (this.currentNumberOfBalls != 0 && this.currentNumberOfBricks == 0)
             {
                 onVictory();
             }
-
+            
+            thereWasAcollision = false;
             if (!this.stopGame)
             {
-                int j;
-                thereWasAcollision = false;
-                for (j = 0; j < Game.DEFAULT_NUMBER_OF_BRICKS; j++)
+                for (int j = 0; j < Game.DEFAULT_NUMBER_OF_BRICKS; j++)
                 {
                     if (this.bricks[j].getState() != BrickState.DESTROYED_STATE)
                     {
                         collisionSide = isBallInCollisionWithBrick(this.bricks[j]);
-                        onCollisionWithBrick(thereWasAcollision, j, collisionSide);
-                        if (collisionSide != NO_SIDE_COLLISION)
+                       
+                        if(collisionSide != NO_SIDE_COLLISION)
+                        {
+                            onCollisionWithBrick(thereWasAcollision, j, collisionSide);
                             thereWasAcollision = true;
+                        }
                     }
                 }
-                // System.out.println(this.theBall.toString());
             }
 
             try
@@ -210,11 +221,11 @@ public class Game implements UserPolling
      */
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
-        if (collisionSide != NO_SIDE_COLLISION)
-        {
-            this.bricks[indexOfBrick].setState(BrickState.DESTROYED_STATE);
-            this.currentNumberOfBricks--;
-            if (!thereWasAcollision)
+            this.bricks[indexOfBrick].manageBrickStateAfterCollision();
+            if( this.bricks[indexOfBrick].getState() == BrickState.DESTROYED_STATE)
+                this.currentNumberOfBricks--;
+            
+            if(!thereWasAcollision)
             {
                 switch (collisionSide)
                 {
@@ -230,8 +241,6 @@ public class Game implements UserPolling
                     break;
                 }
             }
-
-        }
     }
 
     /**
@@ -257,7 +266,8 @@ public class Game implements UserPolling
         else
         {
             this.currentNumberOfBalls--;
-            this.theBall = new Ball(new Position(300, 100));
+            this.theBall = new Ball(new Position(300, 100), new Trajectory(0.5F,0.5F));
+            pauseOrRestartGame();
         }
     }
 
@@ -341,13 +351,24 @@ public class Game implements UserPolling
         return thereIsCollision;
     }
 
+
     /**
-     * 
+     * @see fr.iutvalence.java.mp.BrickBreaker.UserPolling#moveThePaddle(int)
      */
     public void moveThePaddle(int posX)
     {
-        if(posX < Game.DEFAULT_MAP_WIDTH - thePaddle.getWidth()/2 && posX - thePaddle.getWidth()/2>= 0)
-            thePaddle.setTopLeftCornerPosition(new Position(posX - thePaddle.getWidth()/2, thePaddle.getCollisionBox().getBox().y));
+        if(posX < Game.DEFAULT_MAP_WIDTH - this.thePaddle.getWidth()/2 && posX - this.thePaddle.getWidth()/2>= 0)
+            this.thePaddle.setTopLeftCornerPosition(new Position(posX - this.thePaddle.getWidth()/2, this.thePaddle.getCollisionBox().getBox().y));
+    }
+
+
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.UserPolling#pauseOrRestartGame()
+     */
+    public void pauseOrRestartGame()
+    {
+        this.gamePaused = !this.gamePaused;
+        
     }
 
 

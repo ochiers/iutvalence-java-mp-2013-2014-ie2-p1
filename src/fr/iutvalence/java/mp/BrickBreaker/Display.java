@@ -15,15 +15,7 @@ public interface Display
      * @param theBall a ball
      */ 
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
-    
-    // TODO (fix) this method is much more related to a particular implementation 
-    // rather than related to the service. Find another way to do this. 
-    /**
-     * Initialize the display
-     * @param obj Must be initialized in some case
-     */
-    public void initializeDisplay(Object obj);
-    
+      
     /**
      * Display the victory of the game 
      */

@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
  * 
  * @author ochiers soulierc
  **/
-public class Ball 
+public class Ball extends GameComponents
 {
 
     /**
@@ -19,22 +19,17 @@ public class Ball
      * The ball's trajectory
      */
     private Trajectory trajectory;
-
-    /**
-     * The collision box associated with this Ball
-     * It's used to determinate collisions
-     */
-    private CollisionBox collisionBox;
     
     /**
      * Creates a new ball at new position and set a new trajectory
      * 
      * @param pos The initial position of the ball
+     * @param traj The initial trajectory of the ball
      */
-    public Ball(Position pos)
+    public Ball(Position pos, Trajectory traj)
     {
-        this.trajectory = new Trajectory(1, 1);
-        this.collisionBox = new CollisionBox(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
+        super(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
+        this.trajectory = traj;
     }
     
     /**
@@ -52,13 +47,13 @@ public class Ball
      * Update the ball's position and set a new CollisionBox according to the
      * new position
      * 
-     * @param newTopLeftCornerposition
+     * @param newTopLeftCornerPosition
      *            The new position of the ball
      * 
      */
-    public void updatePositions(Position newTopLeftCornerposition)
+    public void updatePosition(Position newTopLeftCornerPosition)
     {
-        this.collisionBox.updateBox(new Rectangle2D.Float(newTopLeftCornerposition.getX(),newTopLeftCornerposition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
+        this.collisionBox.updateBox(new Rectangle2D.Float(newTopLeftCornerPosition.getX(),newTopLeftCornerPosition.getY(),Ball.DEFAULT_SIZE,Ball.DEFAULT_SIZE));
     }
 
     /**

@@ -7,28 +7,22 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author ochiers soulierc
  * 
  */
-public class Brick
+public class Brick extends GameComponents
 {
     /**
      * Width size of the brick
      */
-    public static int DEFAULT_WIDTH = 24;
+    public static int DEFAULT_WIDTH = 28;
 
     /**
      * Height size of the brick
      */
-    public static int DEFAULT_HEIGHT = 12;
+    public static int DEFAULT_HEIGHT = 16;
 
     /**
      * State of the brick (normal, a bit broken, really broken, destroyed)
      */
     private BrickState state;
-
-    /**
-     * The collision box associated with this brick
-     * It's used to determinate collisions
-     */
-    private CollisionBox collisionBox;
 
     /**
      * Creates a new Brick, at a given position
@@ -37,7 +31,7 @@ public class Brick
      */
     public Brick(Position position)
     {
-        this.collisionBox = new CollisionBox(position,DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        super(position,DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.state = BrickState.NORMAL_STATE;
     }
     
@@ -45,7 +39,7 @@ public class Brick
      * Return the CollisionBox associated with this brick
      * @return The brick's CollisionBox
      */
-    // TODO (think about it) it is better the same names for similar methods across
+    // TODO (think about it)(fixed) it is better the same names for similar methods across
     // objects that share some behaviour. Ball, Brick and Paddle share the fact
     // that they have a collision box. so, there is no reason not to name the field
    // collisionBox and the getter getCollisionBox. You should also think about having 
@@ -84,8 +78,27 @@ public class Brick
      * @param state
      *            The new state of the brick
      */
-    public void setState(BrickState state)
+    private void setState(BrickState state)
     {
         this.state = state;
+    }
+    
+    /**
+     * Manage the brick's state after a collision has occured
+     */
+    public void manageBrickStateAfterCollision()
+    {
+        switch (this.state)
+        {
+        case DAMAGED_STATE: setState(BrickState.DESTROYED_STATE);
+            break;
+        case NORMAL_STATE: setState(BrickState.TOUCHED_STATE);
+            break;
+        case TOUCHED_STATE: setState(BrickState.DAMAGED_STATE);
+            break;
+        default:
+            break;
+        
+        }
     }
 }
