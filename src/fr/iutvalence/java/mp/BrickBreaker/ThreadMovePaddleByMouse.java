@@ -7,8 +7,17 @@ import java.awt.event.MouseMotionListener;
 public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListener, MouseListener
 {
 
+    /**
+     * The game played in this thread
+     */
     private Game theGame;
+    
+    /**
+     * The display for the game
+     */
     private GUIDisplay d;
+    
+    
     public void run()
     {
         
@@ -39,9 +48,7 @@ public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListen
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        System.out.println("hh");
         this.theGame.pauseOrRestartGame();
-        System.out.println(this.theGame.gamePaused);
         
     }
 
@@ -49,16 +56,14 @@ public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListen
     @Override
     public void mouseEntered(MouseEvent e)
     {
-        // TODO Auto-generated method stub
-        
+        this.theGame.pauseOrRestartGame();
     }
 
 
     @Override
     public void mouseExited(MouseEvent e)
     {
-        // TODO Auto-generated method stub
-        
+        this.theGame.pauseOrRestartGame();
     }
 
 

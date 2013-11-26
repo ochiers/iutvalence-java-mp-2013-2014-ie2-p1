@@ -151,8 +151,7 @@ public class Game implements UserPolling
         
         while (!this.stopGame)
         {
-            
-            this.display.displayGameState(this.bricks, this.thePaddle, this.theBall);
+           this.display.displayGameState(this.bricks, this.thePaddle, this.theBall);
 
             while(this.gamePaused)// If the game is paused, we do nothing.
             {
@@ -317,8 +316,25 @@ public class Game implements UserPolling
                     this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
-                this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.3F, 1.0F), this.theBall.getTrajectory()
-                        .getBCoefficient()));
+                float bX = theBall.getCollisionBox().getBox().x;
+                float bW = theBall.getCollisionBox().getBox().width;
+                
+                float pX = thePaddle.getCollisionBox().getBox().x;
+                float pW = thePaddle.getCollisionBox().getBox().width;
+                
+                  if(Tools.isFloatBetween(bX, pX, pX + pW*1/6 ) || Tools.isFloatBetween(bX + bW, pX, pX + pW*1/6 ))  
+                  {
+                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory()
+                              .getBCoefficient()));
+                  }
+                  else if(Tools.isFloatBetween(bX, pX, pX + pW*2/6) || Tools.isFloatBetween(bX + bW, pX, pX + pW*2/6))
+                  {
+                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory()
+                              .getBCoefficient()));
+                  }
+                  else
+                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.75F, 1.0F), this.theBall.getTrajectory()
+                              .getBCoefficient()));
             }
         }
         else

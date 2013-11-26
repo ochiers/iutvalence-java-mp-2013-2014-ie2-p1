@@ -25,6 +25,9 @@ public class Paddle extends GameComponents
      */
     public static final Position DEFAULT_TOP_LEFT_CORNER_POSITION = new Position(50, 50);
 
+    public int sens;
+    
+    
     /**
      * Paddle width
      */
