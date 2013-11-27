@@ -9,6 +9,12 @@ public class GameComponents
 {
 
     /**
+     * The collision box associated with this component
+     * It's used to determinate collisions
+     */
+    protected CollisionBox collisionBox;
+    
+    /**
      * Create a new component at position pos
      * @param pos The position of this component
      */
@@ -28,13 +34,6 @@ public class GameComponents
     {
         this.collisionBox = new CollisionBox(pos,w,h);
     }
-    
-    /**
-     * The collision box associated with this component
-     * It's used to determinate collisions
-     */
-    protected CollisionBox collisionBox;
-    
     
     /**
      * Return the Collision box associated to this component

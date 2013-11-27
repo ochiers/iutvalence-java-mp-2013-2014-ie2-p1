@@ -7,10 +7,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public class Player
 {
-    /**
-     * The unique identifiant of the player
-     */
-    long id;
     
     /**
      *The pseudo of the player 
@@ -20,30 +16,27 @@ public class Player
     /**
      *The score of the player 
      */
-    long score;
+    int score;
+    
+    /**
+     *The number of game of the player 
+     */
+    int gameNumber;
     
     /**
      * Define an unknown player, his id is 1 by default
      */
     Player()
     {
-        this.id = 1;
         this.pseudo = "Unknown";
         this.score = 0;
         
     }
     
-    Player(String name, long id)
+    Player(String name)
     {
-        this.id = id;
         this.pseudo = name;
         this.score = 0;
-    }
-    
-    private void updateScore(long id, long score)
-    {
-        //Connection 
-    }
-    
+    }   
     
 }

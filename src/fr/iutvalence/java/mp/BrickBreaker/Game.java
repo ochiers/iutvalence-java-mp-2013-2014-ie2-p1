@@ -118,7 +118,7 @@ public class Game implements UserPolling
     {
         super();
 
-        int yPositionBricks = Brick.DEFAULT_HEIGHT;
+        int yPositionBricks = 150;
         this.stopGame = false;
         this.gamePaused = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
