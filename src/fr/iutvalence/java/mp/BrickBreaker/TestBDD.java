@@ -1,5 +1,10 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+/**
+ * This class is used to test DataBanks
+ * @author soulierc
+ *
+ */
 public class TestBDD
 {
 
@@ -12,7 +17,7 @@ public class TestBDD
        
         try
         {
-            stat.loadPlayer();
+            stat.loadPlayers();
             
             for(int i =0; i < stat.getListe().size(); i++)
             {
@@ -22,6 +27,9 @@ public class TestBDD
             
             stat.updateScore("moi", 1487523345);
             stat.updateNumberGame("lui");
+            System.out.println("Le meilleur joueur est "  + stat.bestScore().getPseudo());
+            System.out.println("Le pire joueur est "  + stat.worstScore().getPseudo());
+            
             //stat.savePlayers(); // It works
         }
         catch (ImpossibleDataAccess e)
@@ -29,16 +37,17 @@ public class TestBDD
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        catch (AlreadyExists e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        System.out.println("Nouveaux players : ");
+        catch (AlreadyExists e){}
+        
+        /*System.out.println("Nouveaux players : ");
         for(int i =0; i < stat.getListe().size(); i++)
         {
             System.out.println(stat.getListe().get(i));
-        }
+        }*/
+        
+        
+        
+        
      }
     
 }
