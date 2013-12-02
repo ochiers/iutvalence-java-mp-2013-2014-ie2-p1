@@ -12,16 +12,16 @@ import java.util.List;
 
 
 /**
+ * This class use files and lists in order to manages players
  * @author soulierc
- *
  */
 public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
 {
 
-    /**
+    /**This method load player from a file
      * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayerByList#loadPlayer(java.lang.String)
      */
-    public void loadPlayer() throws ImpossibleDataAccess
+    public void loadPlayers() throws ImpossibleDataAccess
     {
         
         DataInputStream in;
@@ -34,16 +34,15 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
             {
                 Player res = new Player();
                 str = player.split(" ");
-                res.pseudo = str[0];
-                res.score = Integer.parseInt(str[1]);
-                res.gameNumber = Integer.parseInt(str[2]);
+                res.setPseudo(str[0]);
+                res.setScore(Integer.parseInt(str[1]));
+                res.setGameNumber(Integer.parseInt(str[2]));
                 this.addPlayer(res);
             }
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ImpossibleDataAccess();
         }
         catch (AlreadyExists e)
         {
@@ -54,6 +53,10 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
         
     }
     
+    /**
+     * Players are stocked into a file
+     * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayerByList#savePlayers()
+     */
     public void savePlayers()
     {
         DataOutputStream out;
@@ -65,7 +68,7 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
             
             for(int i =0;   i < listToSave.size();   i++)
             {
-                str = listToSave.get(i).pseudo + " " + listToSave.get(i).score + " " + listToSave.get(i).gameNumber + "\n";
+                str = listToSave.get(i).getPseudo() + " " + listToSave.get(i).getScore() + " " + listToSave.get(i).getGameNumber() + "\n";
                 out.writeBytes(str);
             }
            out.flush();
@@ -76,9 +79,6 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-        
-        
         
     }
     

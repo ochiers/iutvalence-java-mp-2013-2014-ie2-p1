@@ -11,20 +11,20 @@ public class Player
     /**
      *The pseudo of the player 
      */
-    String pseudo;
+    private String pseudo;
     
     /**
      *The score of the player 
      */
-    int score;
+    private int score;
     
     /**
      *The number of game of the player 
      */
-    int gameNumber;
+    private int gameNumber;
     
     /**
-     * Define an unknown player, his id is 1 by default
+     * Define an unknown player
      */
     Player()
     {
@@ -43,4 +43,44 @@ public class Player
         return "Pseudo : " + this.pseudo + ", score : " + this.score + ", nbGame : " + this.gameNumber;
                 
     }
+
+    public String getPseudo()
+    {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo)
+    {
+        if(!pseudo.equals(""))
+        this.pseudo = pseudo;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int score)
+    {
+        if(score >= 0)
+        this.score = score;
+    }
+
+    public int getGameNumber()
+    {
+        return gameNumber;
+    }
+
+    public void setGameNumber()
+    {
+        this.gameNumber++;
+    }
+
+    public void setGameNumber(int a)
+    {
+        this.gameNumber = a;
+        
+    }
+    
+    
 }
