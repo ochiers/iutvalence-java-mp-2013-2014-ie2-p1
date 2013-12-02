@@ -318,8 +318,6 @@ public class Game implements UserPolling
                     this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
-                
-                
                 /* La paddle va vers la droite */
                 if (this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() > 0)
                 {
