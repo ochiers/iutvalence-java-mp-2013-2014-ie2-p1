@@ -106,6 +106,8 @@ public class Game implements UserPolling
      * Used to stop the game
      */
     private boolean stopGame;
+    
+    private Position lastPaddlePosition;
 
     /**
      * This is the procedure where the game find its start It's the
@@ -309,32 +311,50 @@ public class Game implements UserPolling
      */
     private void manageCollisionWithPaddle()
     {
-        if (this.theBall.getCollisionBox().getBox().getY() + Ball.DEFAULT_SIZE <= this.thePaddle
+        if (this.theBall.getCollisionBox().getBox().getY() + this.theBall.getCollisionBox().getBox().getHeight() <= this.thePaddle
                 .getCollisionBox().getBox().getY())
         {
             Rectangle2D.Float dest = this.theBall.getCollisionBox().getRectangleFromIntersectionWithOtherCollisionBox(
                     this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
-                float bX = theBall.getCollisionBox().getBox().x;
-                float bW = theBall.getCollisionBox().getBox().width;
+                if(Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                        (float)this.thePaddle.getCollisionBox().getBox().getX(), 
+                        (float)this.thePaddle.getCollisionBox().getBox().getX()+((float)this.thePaddle.getCollisionBox().getBox().getWidth())*1/3) 
+                        || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
+                                (float)(this.thePaddle.getCollisionBox().getBox().getX()), 
+                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*1/3))))
+                {
+                    if(this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() < 0)
+                    {
+                        this.theBall.getTrajectory().reverseACoefficient();
+                    }
+                    else
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                }
+                else if(Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                        (float)this.thePaddle.getCollisionBox().getBox().getX()+((float)this.thePaddle.getCollisionBox().getBox().getWidth())*2/3, 
+                        (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)this.thePaddle.getCollisionBox().getBox().getWidth()) 
+                        || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
+                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
+                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()))))
+                {
+                    if(this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() > 0)
+                    {
+                        this.theBall.getTrajectory().reverseACoefficient();
+                    }
+                    else
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                }
+                else
+                {
+                    this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.5F, 1F), -1*this.theBall.getTrajectory().getBCoefficient()));
+                }
                 
-                float pX = thePaddle.getCollisionBox().getBox().x;
-                float pW = thePaddle.getCollisionBox().getBox().width;
-                
-                  if(Tools.isFloatBetween(bX, pX, pX + pW*1/6 ) || Tools.isFloatBetween(bX + bW, pX, pX + pW*1/6 ))  
-                  {
-                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory()
-                              .getBCoefficient()));
-                  }
-                  else if(Tools.isFloatBetween(bX, pX, pX + pW*2/6) || Tools.isFloatBetween(bX + bW, pX, pX + pW*2/6))
-                  {
-                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory()
-                              .getBCoefficient()));
-                  }
-                  else
-                      this.theBall.setTrajectory(new Trajectory(-1 * Tools.chooseRandomBetwwen(0.75F, 1.0F), this.theBall.getTrajectory()
-                              .getBCoefficient()));
             }
         }
         else
@@ -373,6 +393,8 @@ public class Game implements UserPolling
      */
     public void moveThePaddle(int posX)
     {
+        this.lastPaddlePosition = new Position((float)this.thePaddle.getCollisionBox().getBox().getX(),(float)this.thePaddle.getCollisionBox().getBox().getY());
+        
         if(posX < Game.DEFAULT_MAP_WIDTH - this.thePaddle.getWidth()/2 && posX - this.thePaddle.getWidth()/2>= 0)
             this.thePaddle.setTopLeftCornerPosition(new Position(posX - this.thePaddle.getWidth()/2, this.thePaddle.getCollisionBox().getBox().y));
     }
