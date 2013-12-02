@@ -311,6 +311,7 @@ public class Game implements UserPolling
      */
     private void manageCollisionWithPaddle()
     {
+        
         if (this.theBall.getCollisionBox().getBox().getY() + this.theBall.getCollisionBox().getBox().getHeight() <= this.thePaddle
                 .getCollisionBox().getBox().getY())
         {
