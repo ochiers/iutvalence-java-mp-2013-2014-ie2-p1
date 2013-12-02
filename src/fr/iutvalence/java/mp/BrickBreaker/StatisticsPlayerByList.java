@@ -1,25 +1,43 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author soulierc
  *
  */
+
+
 public class StatisticsPlayerByList implements StatisticsPlayer
 {
 
     /**
      * 
      */
-    List liste;
+    private List<Player> liste;
+    
+    
+    public StatisticsPlayerByList()
+    {
+        super();
+        this.liste = new ArrayList<Player>();
+    }
+
+    public List<Player> getListe()
+    {
+        return this.liste;
+    }
     
     /**
      * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayer#addPlayer(fr.iutvalence.java.mp.BrickBreaker.Player)
      */
     public void addPlayer(Player player) throws ImpossibleDataAccess, AlreadyExists
     {
+        if(!isPlayerAlreadyExists(player))
         this.liste.add(player);
+        else
+            throw new AlreadyExists();
     }
 
     /**
@@ -55,11 +73,33 @@ public class StatisticsPlayerByList implements StatisticsPlayer
     }
 
     /**
-     * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayer#loadPlayer(java.lang.String)
+     * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayer#loadPlayer()
      */
-    public void loadPlayer(String pseudo) throws ImpossibleDataAccess
+    public void loadPlayer() throws ImpossibleDataAccess
     {
         
+    }
+    
+    /**
+     * @throws ImpossibleDataAccess
+     */
+    public void savePlayers() throws ImpossibleDataAccess
+    {
+        
+    }
+
+    @Override
+    public boolean isPlayerAlreadyExists(Player p)
+    {
+        boolean res = false;
+        
+        for(int i = 0; i < this.liste.size(); i++)
+        {
+            if(this.liste.get(i).pseudo.equals(p.pseudo))
+                res= res || true;
+        }
+        
+        return res;
     }
 
 }

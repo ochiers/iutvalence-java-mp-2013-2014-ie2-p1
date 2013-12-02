@@ -30,13 +30,17 @@ public class Player
     {
         this.pseudo = "Unknown";
         this.score = 0;
-        
     }
     
     Player(String name)
     {
         this.pseudo = name;
         this.score = 0;
-    }   
+    }
     
+    public String toString()
+    {
+        return "Pseudo : " + this.pseudo + ", score : " + this.score + ", nbGame : " + this.gameNumber;
+                
+    }
 }

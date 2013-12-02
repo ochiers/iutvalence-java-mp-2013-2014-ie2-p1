@@ -22,5 +22,14 @@ public interface StatisticsPlayer
      * @param pseudo
      * @return
      */
-    public void loadPlayer(String pseudo) throws ImpossibleDataAccess;
+    public void loadPlayer() throws ImpossibleDataAccess;
+    
+    
+    /**
+     * @throws ImpossibleDataAccess
+     */
+    public void savePlayers() throws ImpossibleDataAccess;
+    
+    
+    public boolean isPlayerAlreadyExists(Player p);
 }
