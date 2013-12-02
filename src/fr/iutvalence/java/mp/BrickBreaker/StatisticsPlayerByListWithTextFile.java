@@ -39,6 +39,7 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
                 res.setGameNumber(Integer.parseInt(str[2]));
                 this.addPlayer(res);
             }
+            in.close();
         }
         catch (IOException e)
         {
@@ -57,7 +58,7 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
      * Players are stocked into a file
      * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayerByList#savePlayers()
      */
-    public void savePlayers()
+    public void savePlayers() throws ImpossibleDataAccess
     {
         DataOutputStream out;
         List<Player> listToSave = this.getListe();
@@ -76,8 +77,7 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ImpossibleDataAccess();
         }
         
     }

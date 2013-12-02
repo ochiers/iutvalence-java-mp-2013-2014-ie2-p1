@@ -10,6 +10,8 @@ public interface StatisticsPlayer
     
     /** The method who added a new pseudo of a new player in the list of player
      * @param player The played who will be added
+     * @throws ImpossibleDataAccess 
+     * @throws AlreadyExists 
      */
     public void addPlayer(Player player) throws ImpossibleDataAccess, AlreadyExists;
     
