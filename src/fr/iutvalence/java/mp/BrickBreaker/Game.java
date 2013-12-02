@@ -24,7 +24,7 @@ public class Game implements UserPolling
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 15;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 1;
 
     /**
      * Maximal number of player's lives
@@ -318,43 +318,41 @@ public class Game implements UserPolling
                     this.thePaddle.getCollisionBox());
             if (dest.getWidth() >= 0 && dest.getHeight() >= 0)
             {
-                if(Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
-                        (float)this.thePaddle.getCollisionBox().getBox().getX(), 
-                        (float)this.thePaddle.getCollisionBox().getBox().getX()+((float)this.thePaddle.getCollisionBox().getBox().getWidth())*1/3) 
-                        || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
-                                (float)(this.thePaddle.getCollisionBox().getBox().getX()), 
-                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*1/3))))
-                {
-                    if(this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() < 0)
-                    {
-                        this.theBall.getTrajectory().reverseACoefficient();
-                    }
-                    else
-                    {
-                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory().getBCoefficient()));
-                    }
-                }
-                else if(Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
-                        (float)this.thePaddle.getCollisionBox().getBox().getX()+((float)this.thePaddle.getCollisionBox().getBox().getWidth())*2/3, 
-                        (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)this.thePaddle.getCollisionBox().getBox().getWidth()) 
-                        || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
-                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
-                                (float)(this.thePaddle.getCollisionBox().getBox().getX())+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()))))
-                {
-                    if(this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() > 0)
-                    {
-                        this.theBall.getTrajectory().reverseACoefficient();
-                    }
-                    else
-                    {
-                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.5F), -1*this.theBall.getTrajectory().getBCoefficient()));
-                    }
-                }
-                else
-                {
-                    this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.5F, 1F), -1*this.theBall.getTrajectory().getBCoefficient()));
-                }
                 
+                
+                /* La paddle va vers la droite */
+                if (this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() > 0)
+                {
+                    if( this.theBall.getTrajectory().getBCoefficient() < 0 && Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                            (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
+                            (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())) 
+                            || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()))))
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*this.theBall.getTrajectory().getACoefficient(), -1*this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                    else
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.8F), this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                }
+                else /* la paddle va vers la gauche */
+                {
+                    if( this.theBall.getTrajectory().getBCoefficient() > 0 && Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                            (float)this.thePaddle.getCollisionBox().getBox().getX(), 
+                            (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())*1/3) 
+                            || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX(), 
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())*1/3)))
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*this.theBall.getTrajectory().getACoefficient(), -1*this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                    else
+                    {
+                        this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.8F), this.theBall.getTrajectory().getBCoefficient()));
+                    }
+                }
             }
         }
         else

@@ -120,7 +120,7 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayVictory()
     {
-        this.getGraphics().drawImage(this.images[3],0,0,window.getContentPane().getSize().width,window.getContentPane().getSize().height,null);
+        this.getGraphics().drawImage(this.images[3],0,0, window.getContentPane().getSize().width, window.getContentPane().getSize().height, null);
     }
     
     /**
@@ -128,7 +128,7 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayLoss()
     {
-        this.getGraphics().drawImage(this.images[4],0,0,null);
+        this.getGraphics().drawImage(this.images[4],0,0, window.getContentPane().getSize().width, window.getContentPane().getSize().height, null);
     }
     
     /**
