@@ -23,13 +23,13 @@ public class Ball extends GameComponents
     /**
      * Creates a new ball at new position and set a new trajectory
      * 
-     * @param pos The initial position of the ball
-     * @param traj The initial trajectory of the ball
+     * @param position The initial position of the ball
+     * @param trajectory The initial trajectory of the ball
      */
-    public Ball(Position pos, Trajectory traj)
+    public Ball(Position position, Trajectory trajectory)
     {
-        super(pos, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
-        this.trajectory = traj;
+        super(position, Ball.DEFAULT_SIZE, Ball.DEFAULT_SIZE);
+        this.trajectory = trajectory;
     }
     
     /**
@@ -41,8 +41,6 @@ public class Ball extends GameComponents
         return this.collisionBox;
     }
     
-    
-    // TODO (fix) finish writing comment
     /**
      * Update the ball's position and set a new CollisionBox according to the
      * new position
@@ -88,8 +86,4 @@ public class Ball extends GameComponents
         Position temp = new Position((float)this.collisionBox.getBox().getX(),(float)this.collisionBox.getBox().getY());
         return "{" + temp.toString() + ", " + this.trajectory.toString() + "}";
     }
-
-    
-
-
 }

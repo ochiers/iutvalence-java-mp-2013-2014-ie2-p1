@@ -29,11 +29,17 @@ public class ConsoleDisplay implements Display
         
     }
     
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayVictory()
+     */
     public void displayVictory()
     {
         System.out.println("Not bad, you win !");
     }
     
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayLoss()
+     */
     public void displayLoss()
     {
         System.out.println("You loose, you sucks.");
@@ -93,6 +99,7 @@ public class ConsoleDisplay implements Display
         return res;
     }
     
+    // TODO (fix) finish writing comment (parameter)
     /**
      * Give a string who represent the ball in the game
      * @return A string representing the ball in the game
@@ -118,6 +125,7 @@ public class ConsoleDisplay implements Display
      * Give a string who represent the paddle in the game
      * @return A string representing the paddle in the game
      */
+    // TODO (fix) finish writing comment (parameter)
     private String stringPaddleInConsole(Paddle p)
     {
         String res = " # ";
@@ -132,8 +140,5 @@ public class ConsoleDisplay implements Display
                 res = res + "   ";
         }
         return res;
-    }
-    
-    
-    
+    }  
 }

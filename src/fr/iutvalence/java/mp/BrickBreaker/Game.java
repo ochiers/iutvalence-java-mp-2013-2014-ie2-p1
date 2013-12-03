@@ -63,8 +63,11 @@ public class Game implements UserPolling
      */
     private Display display;
     
+    // TODO (fix) write comment
+    // TODO (fix) should be public
     public boolean gamePaused;
     
+    // TODO (fix) write comment
     public Display getDisplay()
     {
         return this.display;
@@ -92,6 +95,8 @@ public class Game implements UserPolling
      */
     private Brick[] bricks;
 
+    
+    // TODO (fix) looks like a local variable
     /**
      * This variable is a random number to give another direction to the ball
      */
@@ -106,7 +111,8 @@ public class Game implements UserPolling
      * Used to stop the game
      */
     private boolean stopGame;
-    
+
+    // TODO (fix) write comment
     private Position lastPaddlePosition;
 
     /**
@@ -124,8 +130,7 @@ public class Game implements UserPolling
         this.stopGame = false;
         this.gamePaused = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
-
-        // TODO (fixed)(think about it) why not having a constructor with 2 parameters?
+       
         this.theBall = new Ball(new Position(100, 300), new Trajectory(0.5F,0.5F));
         
         // For the tests, the paddle size is the total game size
@@ -203,7 +208,6 @@ public class Game implements UserPolling
             }
             catch (InterruptedException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -257,7 +261,7 @@ public class Game implements UserPolling
     /**
      * Called when the player lose the game
      */
-    private void onLose()
+    private void onLoose()
     {
         if (this.currentNumberOfBalls == 0)
         {
@@ -356,7 +360,7 @@ public class Game implements UserPolling
         }
         else
         {
-            onLose();
+            onLoose();
         }
     }
 
@@ -405,6 +409,4 @@ public class Game implements UserPolling
         this.gamePaused = !this.gamePaused;
         
     }
-
-
 }

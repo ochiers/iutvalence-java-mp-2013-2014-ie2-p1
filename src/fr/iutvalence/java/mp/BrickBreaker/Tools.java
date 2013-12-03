@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Tools
 {
-    
+    // TODO (fix) write comment
     private static final Random rand = new Random();
     
     

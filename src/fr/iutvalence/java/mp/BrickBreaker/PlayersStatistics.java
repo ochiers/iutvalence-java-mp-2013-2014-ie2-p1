@@ -5,45 +5,50 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author soulierc
  *
  */
-public interface StatisticsPlayer
+public interface PlayersStatistics
 {
-    
+ 
+    // TODO (fix) finish writing comment
     /** The method who added a new pseudo of a new player in the list of player
      * @param player The played who will be added
-     * @throws ImpossibleDataAccess 
-     * @throws AlreadyExists 
+     * @throws DataAccessException 
+     * @throws PlayerAlreadyExistsException 
      */
-    public void addPlayer(Player player) throws ImpossibleDataAccess, AlreadyExists;
+    public void addPlayer(Player player) throws DataAccessException, PlayerAlreadyExistsException;
     
+    // TODO (fix) finish writing comment
     /** The method who update the score of a player
      * @param pseudo The player's pseudo
      * @param score the best score of the player
      * @return true if the score has been updated, false however
-     * @throws ImpossibleDataAccess 
+     * @throws DataAccessException 
      */
-    public boolean updateScore(String pseudo, int score) throws ImpossibleDataAccess;
+    public boolean updateScore(String pseudo, int score) throws DataAccessException;
     
+    // TODO (fix) finish writing comment
     /** 
      *This method update the number of game played by a player
      * @param pseudo The player's pseudo
      * @return true if the number of game has been updated, false however
-     * @throws ImpossibleDataAccess 
+     * @throws DataAccessException 
      */
-    public boolean updateNumberGame(String pseudo) throws ImpossibleDataAccess;
+    public boolean updateNumberGame(String pseudo) throws DataAccessException;
     
+    // TODO (fix) finish writing comment
     /** 
      * This method load players into an "internal structure"
      * in order to manage more effectively the data
-     * @throws ImpossibleDataAccess 
+     * @throws DataAccessException 
      */
-    public void loadPlayers() throws ImpossibleDataAccess;
+    public void loadPlayers() throws DataAccessException;
     
     
+    // TODO (fix) finish writing comment
     /**
      * This method stock all players loaded to an "external structure"
-     * @throws ImpossibleDataAccess
+     * @throws DataAccessException
      */
-    public void savePlayers() throws ImpossibleDataAccess;
+    public void savePlayers() throws DataAccessException;
     
     
     /**
@@ -52,7 +57,6 @@ public interface StatisticsPlayer
      * @return true if player exist, false however
      */
     public boolean isPlayerAlreadyExists(Player p);
-    
     
     
     /**

@@ -25,17 +25,17 @@ public class Paddle extends GameComponents
      */
     public static final Position DEFAULT_TOP_LEFT_CORNER_POSITION = new Position(50, 50);
 
+    // TODO (fix) write comment
+    // TODO (fix) rename field
+    // TODO (fix) field should be private
     public int sens;
-    
     
     /**
      * Paddle width
      */
-    // TODO (think about it) this feld seems redundant with the collision box
+    // TODO (think about it) this field seems redundant with the collision box
     // (the information can surely be retrieved using the collision box)
     private int width;
-    
-    
     
     /**
      * Create a new paddle and the CollisionBox associated at a given position
@@ -52,6 +52,8 @@ public class Paddle extends GameComponents
         this.width = width;
     }
 
+    
+    // TODO (fix) remove this (inherited!)
     /**
      * Return the CollisionBox associated with this paddle
      * @return The paddle's CollisionBox
@@ -103,8 +105,5 @@ public class Paddle extends GameComponents
         Position pos = new Position((float)this.collisionBox.getBox().getX(),(float)this.collisionBox.getBox().getY());
         return "{" + pos.toString() + ", size : " + this.width + "}";
     }
-
-    
-
 
 }

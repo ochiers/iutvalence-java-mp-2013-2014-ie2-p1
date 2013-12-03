@@ -14,9 +14,8 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
      * @param args
      */
     public static void main(String[] args)
-    {
-        
+    {          
+        // TODO (fix) this is a sequential execution
         new ThreadMovePaddleByMouse().run();
-        
     }
 }

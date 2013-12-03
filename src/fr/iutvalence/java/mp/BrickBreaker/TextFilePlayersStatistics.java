@@ -15,13 +15,15 @@ import java.util.List;
  * This class use files and lists in order to manages players
  * @author soulierc
  */
-public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
+public class TextFilePlayersStatistics extends ListPlayersStatistics
 {
 
-    /**This method load player from a file
-     * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayerByList#loadPlayer(java.lang.String)
+    // TODO (fix) fix comment
+    /**
+     * This method load player from a file
+     * @see fr.iutvalence.java.mp.BrickBreaker.ListPlayersStatistics#loadPlayer(java.lang.String)
      */
-    public void loadPlayers() throws ImpossibleDataAccess
+    public void loadPlayers() throws DataAccessException
     {
         
         DataInputStream in;
@@ -43,11 +45,10 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
         }
         catch (IOException e)
         {
-            throw new ImpossibleDataAccess();
+            throw new DataAccessException();
         }
-        catch (AlreadyExists e)
+        catch (PlayerAlreadyExistsException e)
         {
-            // TODO Auto-generated catch block
             System.err.println("Abording datas players loading");
             e.printStackTrace();
         }
@@ -56,12 +57,12 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
     
     /**
      * Players are stocked into a file
-     * @see fr.iutvalence.java.mp.BrickBreaker.StatisticsPlayerByList#savePlayers()
+     * @see fr.iutvalence.java.mp.BrickBreaker.ListPlayersStatistics#savePlayers()
      */
-    public void savePlayers() throws ImpossibleDataAccess
+    public void savePlayers() throws DataAccessException
     {
         DataOutputStream out;
-        List<Player> listToSave = this.getListe();
+        List<Player> listToSave = this.getList();
         try
         {
             out = new DataOutputStream(new FileOutputStream(new File("players.stats")));
@@ -77,7 +78,7 @@ public class StatisticsPlayerByListWithTextFile extends StatisticsPlayerByList
         }
         catch (IOException e)
         {
-            throw new ImpossibleDataAccess();
+            throw new DataAccessException();
         }
         
     }

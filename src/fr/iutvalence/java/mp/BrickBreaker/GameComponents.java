@@ -5,6 +5,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author soulierc
  *
  */
+// TODO (fix) rename to GameComponent
 public class GameComponents
 {
 

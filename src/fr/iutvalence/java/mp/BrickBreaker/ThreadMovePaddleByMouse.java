@@ -6,21 +6,24 @@ import java.awt.event.MouseMotionListener;
 
 public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListener, MouseListener
 {
-
+    // TODO (fix) This class should not depend on Game but on the service provided by Game
     /**
      * The game played in this thread
      */
     private Game theGame;
     
+    // TODO (fix) This class should not depend on a display but here be the display
     /**
      * The display for the game
      */
     private GUIDisplay d;
     
-    
+    /**
+     * @see java.lang.Thread#run()
+     */
     public void run()
     {
-        
+        // TODO (fix) the game should be instanciated in the Main
         this.theGame = new Game(new GUIDisplay());
         
         this.d = (GUIDisplay)(this.theGame.getDisplay());

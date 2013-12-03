@@ -39,11 +39,7 @@ public class Brick extends GameComponents
      * Return the CollisionBox associated with this brick
      * @return The brick's CollisionBox
      */
-    // TODO (think about it)(fixed) it is better the same names for similar methods across
-    // objects that share some behaviour. Ball, Brick and Paddle share the fact
-    // that they have a collision box. so, there is no reason not to name the field
-   // collisionBox and the getter getCollisionBox. You should also think about having 
-    // common superclass.
+    // TODO (fix) remove this (inherited!)
     public CollisionBox getCollisionBox()
     {
         return this.collisionBox;
