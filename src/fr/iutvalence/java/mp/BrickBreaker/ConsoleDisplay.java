@@ -99,9 +99,10 @@ public class ConsoleDisplay implements Display
         return res;
     }
     
-    // TODO (fix) finish writing comment (parameter)
+    // TODO (fixed) finish writing comment (parameter)
     /**
      * Give a string who represent the ball in the game
+     * @param b The ball who is printed in the console
      * @return A string representing the ball in the game
      */
     private String stringBallInConsole(Ball b)
@@ -123,9 +124,10 @@ public class ConsoleDisplay implements Display
 
     /**
      * Give a string who represent the paddle in the game
+     * @param p  The paddle who is printed in the console
      * @return A string representing the paddle in the game
      */
-    // TODO (fix) finish writing comment (parameter)
+    // TODO (fixed) finish writing comment (parameter)
     private String stringPaddleInConsole(Paddle p)
     {
         String res = " # ";

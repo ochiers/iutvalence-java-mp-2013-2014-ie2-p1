@@ -21,8 +21,8 @@ public class Player
     /**
      *The number of game of the player 
      */
-    // TODO (fix) rename field
-    private int gameNumber;
+    // TODO (fixed) rename field
+    private int numberOfGamesPlayed;
     
     /**
      * Define an unknown player
@@ -33,7 +33,11 @@ public class Player
         this.score = 0;
     }
     
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Create a new player with a pseudo specified and, score and number of game played = 0
+     * @param name The pseudo of the player
+     */
     public Player(String name)
     {
         this.pseudo = name;
@@ -46,55 +50,79 @@ public class Player
      */
     public String toString()
     {
-        return "Pseudo : " + this.pseudo + ", score : " + this.score + ", nbGame : " + this.gameNumber;
+        return "Pseudo : " + this.pseudo + ", score : " + this.score + ", nbGame : " + this.numberOfGamesPlayed;
                 
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Get the pseudo of this player
+     * @return The player's pseudo
+     */
     public String getPseudo()
     {
         return pseudo;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Set a new pseudo for this player
+     * @param pseudo The new player's pseudo, if is empty : nothing is done
+     */
     public void setPseudo(String pseudo)
     {
         if(!pseudo.equals(""))
         this.pseudo = pseudo;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /** Get the score of this player
+     * @return The player's score
+     */
     public int getScore()
     {
         return score;
     }
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Set the score of this player
+     * @param score The new player's score, if is negative : nothing is done
+     */
     public void setScore(int score)
     {
         if(score >= 0)
         this.score = score;
     }
 
-    // TODO (fix) write comment
-    // TODO (fix) rename method
+    // TODO (fixed) write comment
+    // TODO (fixed) rename method
+    /** Get the number of games played by this player
+     * @return The player's games played
+     */
     public int getGameNumber()
     {
-        return gameNumber;
+        return numberOfGamesPlayed;
     }
 
-    // TODO (fix) write comment
-    // TODO (fix) rename method
-    public void setGameNumber()
+    // TODO (fixed) write comment
+    // TODO (fixed) rename method
+    /**
+     * Increments the number of games played by this player
+     */
+    public void setNumberOfGamesPlayed()
     {
-        this.gameNumber++;
+        this.numberOfGamesPlayed++;
     }
 
-    // TODO (fix) write comment
-    // TODO (fix) rename method
-    public void setGameNumber(int a)
+    // TODO (fixed) write comment
+    // TODO (fixed) rename method
+    /** Set the number of games played by this player
+     * @param a The new number of games played by this player
+     */
+    public void setNumberOfGamesPlayed(int a)
     {
-        this.gameNumber = a;      
+        this.numberOfGamesPlayed = a;      
     }
        
 }

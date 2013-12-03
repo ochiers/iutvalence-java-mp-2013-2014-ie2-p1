@@ -7,7 +7,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author ochiers soulierc
  * 
  */
-public class Brick extends GameComponents
+public class Brick extends GameComponent
 {
     /**
      * Width size of the brick
@@ -33,16 +33,6 @@ public class Brick extends GameComponents
     {
         super(position,DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.state = BrickState.NORMAL_STATE;
-    }
-    
-    /**
-     * Return the CollisionBox associated with this brick
-     * @return The brick's CollisionBox
-     */
-    // TODO (fix) remove this (inherited!)
-    public CollisionBox getCollisionBox()
-    {
-        return this.collisionBox;
     }
 
     /**

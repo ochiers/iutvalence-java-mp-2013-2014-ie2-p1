@@ -8,8 +8,8 @@ package fr.iutvalence.java.mp.BrickBreaker;
 public interface PlayersStatistics
 {
  
-    // TODO (fix) finish writing comment
-    /** The method who added a new pseudo of a new player in the list of player
+    // TODO (fixed) finish writing comment
+    /** The method who add a new player of player
      * @param player The played who will be added
      * @throws DataAccessException 
      * @throws PlayerAlreadyExistsException 

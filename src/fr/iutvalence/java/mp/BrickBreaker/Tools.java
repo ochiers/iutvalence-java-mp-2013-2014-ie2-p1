@@ -7,7 +7,10 @@ import java.util.Random;
  */
 public class Tools
 {
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * The Random used to give us random numbers for tools
+     */
     private static final Random rand = new Random();
     
     

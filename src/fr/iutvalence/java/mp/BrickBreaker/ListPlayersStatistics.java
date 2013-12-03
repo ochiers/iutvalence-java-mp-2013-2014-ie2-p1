@@ -13,10 +13,16 @@ import java.util.List;
 public class ListPlayersStatistics implements PlayersStatistics
 {
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * The list who contains all players loaded of the game
+     */
     private List<Player> list;
     
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Build a new List of players
+     */
     public ListPlayersStatistics()
     {
         super();
@@ -73,7 +79,7 @@ public class ListPlayersStatistics implements PlayersStatistics
             Player p = (Player)(this.list.get(i));
             if(p.getPseudo().equals(pseudo))
             {
-                p.setGameNumber();
+                p.setNumberOfGamesPlayed();
                 res = true;
                 break;
             }

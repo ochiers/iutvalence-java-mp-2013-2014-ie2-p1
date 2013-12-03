@@ -18,9 +18,9 @@ import java.util.List;
 public class TextFilePlayersStatistics extends ListPlayersStatistics
 {
 
-    // TODO (fix) fix comment
+    // TODO (fixed) fix comment
     /**
-     * This method load player from a file
+     * This method load player from a file and put them into a List
      * @see fr.iutvalence.java.mp.BrickBreaker.ListPlayersStatistics#loadPlayer(java.lang.String)
      */
     public void loadPlayers() throws DataAccessException
@@ -38,7 +38,7 @@ public class TextFilePlayersStatistics extends ListPlayersStatistics
                 str = player.split(" ");
                 res.setPseudo(str[0]);
                 res.setScore(Integer.parseInt(str[1]));
-                res.setGameNumber(Integer.parseInt(str[2]));
+                res.setNumberOfGamesPlayed(Integer.parseInt(str[2]));
                 this.addPlayer(res);
             }
             in.close();

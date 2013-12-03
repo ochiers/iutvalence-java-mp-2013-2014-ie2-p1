@@ -5,8 +5,8 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * @author soulierc
  *
  */
-// TODO (fix) rename to GameComponent
-public class GameComponents
+// TODO (fixed) rename to GameComponent
+public class GameComponent
 {
 
     /**
@@ -19,7 +19,7 @@ public class GameComponents
      * Create a new component at position pos
      * @param pos The position of this component
      */
-    public GameComponents(Position pos)
+    public GameComponent(Position pos)
     {
         this.collisionBox = new CollisionBox(pos,0,0);
     }
@@ -31,7 +31,7 @@ public class GameComponents
      * @param w     The width of this component
      * @param h     The height of this component
      */
-    public GameComponents(Position pos, int w, int h)
+    public GameComponent(Position pos, int w, int h)
     {
         this.collisionBox = new CollisionBox(pos,w,h);
     }

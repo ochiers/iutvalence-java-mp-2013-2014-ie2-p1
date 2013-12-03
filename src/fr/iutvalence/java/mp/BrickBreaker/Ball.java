@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
  * 
  * @author ochiers soulierc
  **/
-public class Ball extends GameComponents
+public class Ball extends GameComponent
 {
 
     /**

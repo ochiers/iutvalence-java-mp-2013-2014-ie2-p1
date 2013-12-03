@@ -14,9 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-// TODO (fix) finish writing comment
+// TODO (fixed) finish writing comment
 /**
- * 
+ * This class is used to display the game by graphics
  * @author soulierc
  * 
  */
@@ -39,7 +39,10 @@ public class GUIDisplay extends JPanel implements Display
      */
     private float yRatioGeneralDisplay;
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * The window where the game is displayed
+     */
     private JFrame window;
 
     /**
@@ -154,22 +157,23 @@ public class GUIDisplay extends JPanel implements Display
         g.fillRect(xGame, yGame, wGame, hGame);
 
         // On repaint of all game components
-        paintBricks(g);
-        paintBall(g);
-        paintPaddle(g);
+        paintBricks();
+        paintBall();
+        paintPaddle();
     }
 
-    // TODO (fix) finish writing comment
+    // TODO (fixed) finish writing comment
     /**
-     * @param g
+     * Method who paint the tab of bricks in the window
      */
-    private void paintBricks(Graphics g)
+    private void paintBricks()
     {
         int xBrick;
         int yBrick;
         int wBrick;
         int hBrick;
-
+        Graphics g  = this.getGraphics();
+        
         g.setColor(Color.blue);
         for (int i = 0; i < this.bricks.length; i++)
         {
@@ -199,10 +203,15 @@ public class GUIDisplay extends JPanel implements Display
         }
     }
 
-    // TODO (fix) write comment
-    private void paintBall(Graphics g)
+    // TODO (fixed) write comment
+    /**
+     * Method who paint the ball in the window
+     */
+    private void paintBall()
     {
 
+        Graphics g  = this.getGraphics();
+        
         int xball = (int) ((this.theBall.getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
         int yball = (int) ((this.theBall.getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);
         int tball = (int) (theBall.getCollisionBox().getBox().width * this.xRatioGeneralDisplay);
@@ -211,10 +220,15 @@ public class GUIDisplay extends JPanel implements Display
         g.fillOval(xball, yball, tball, tball);
     }
 
-    // TODO (fix) write comment
-    private void paintPaddle(Graphics g)
+    // TODO (fixed) write comment
+    /**
+     * Method who paint the paddle in the window
+     */
+    private void paintPaddle()
     {
 
+        Graphics g  = this.getGraphics();
+        
         int xPad = (int) ((this.thePaddle.getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
         int yPad = (int) ((this.thePaddle.getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);
         int wPad = (int) (this.thePaddle.getWidth() * this.xRatioGeneralDisplay);

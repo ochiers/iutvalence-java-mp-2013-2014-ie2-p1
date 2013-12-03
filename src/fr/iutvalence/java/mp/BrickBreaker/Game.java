@@ -63,11 +63,17 @@ public class Game implements UserPolling
      */
     private Display display;
     
-    // TODO (fix) write comment
-    // TODO (fix) should be public
+    // TODO (fixed) write comment
+    /**
+     * Indicate if the game is paused or not
+     */
     public boolean gamePaused;
     
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * Get the display object used to display the game
+     * @return The display of the game
+     */
     public Display getDisplay()
     {
         return this.display;
@@ -112,7 +118,10 @@ public class Game implements UserPolling
      */
     private boolean stopGame;
 
-    // TODO (fix) write comment
+    // TODO (fixed) write comment
+    /**
+     * The last position of the paddle, it's used to determinate in which direction the paddle is going
+     */
     private Position lastPaddlePosition;
 
     /**

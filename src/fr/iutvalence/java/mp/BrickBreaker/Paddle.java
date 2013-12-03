@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
  * @author ochiers soulierc
  * 
  */
-public class Paddle extends GameComponents
+public class Paddle extends GameComponent
 {
     /**
      * Paddle width
@@ -25,18 +25,7 @@ public class Paddle extends GameComponents
      */
     public static final Position DEFAULT_TOP_LEFT_CORNER_POSITION = new Position(50, 50);
 
-    // TODO (fix) write comment
-    // TODO (fix) rename field
-    // TODO (fix) field should be private
-    public int sens;
-    
-    /**
-     * Paddle width
-     */
-    // TODO (think about it) this field seems redundant with the collision box
-    // (the information can surely be retrieved using the collision box)
-    private int width;
-    
+        
     /**
      * Create a new paddle and the CollisionBox associated at a given position
      * and with the given width size
@@ -49,7 +38,7 @@ public class Paddle extends GameComponents
     public Paddle(Position pos, int width)
     {
         super(pos,width,Paddle.DEFAULT_HEIGHT);
-        this.width = width;
+        this.setWidth(width);
     }
 
     
@@ -68,9 +57,9 @@ public class Paddle extends GameComponents
      * 
      * @return give the size of paddle
      */
-    public int getWidth()
+    public float getWidth()
     {
-        return this.width;
+        return this.getCollisionBox().getBox().width;
     }
 
     /**
@@ -81,7 +70,7 @@ public class Paddle extends GameComponents
      */
     public void setWidth(int width)
     {
-        this.width = width;
+        this.getCollisionBox().getBox().width = width;
     }
 
     /**
@@ -91,7 +80,7 @@ public class Paddle extends GameComponents
      */
     public void setTopLeftCornerPosition(Position newPos)
     {
-        this.collisionBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.width, Paddle.DEFAULT_HEIGHT));
+        this.collisionBox.updateBox(new Rectangle2D.Float(newPos.getX(), newPos.getY(), this.getWidth(), Paddle.DEFAULT_HEIGHT));
     }
 
     /**
@@ -103,7 +92,7 @@ public class Paddle extends GameComponents
     public String toString()
     {
         Position pos = new Position((float)this.collisionBox.getBox().getX(),(float)this.collisionBox.getBox().getY());
-        return "{" + pos.toString() + ", size : " + this.width + "}";
+        return "{" + pos.toString() + ", size : " + this.getWidth() + "}";
     }
 
 }
