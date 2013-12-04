@@ -86,6 +86,7 @@ public class GUIDisplay extends JPanel implements Display
         this.window.setContentPane(this);
 
         this.xRatioGeneralDisplay = (float) window.getContentPane().getSize().width / (float) Game.DEFAULT_MAP_WIDTH;
+        //System.out.println(xRatioGeneralDisplay);
         this.yRatioGeneralDisplay = (float) window.getContentPane().getSize().height / (float) Game.DEFAULT_MAP_HEIGHT;
 
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,7 +118,10 @@ public class GUIDisplay extends JPanel implements Display
      */
     public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
     {
+        if(this.thePaddle == null)
         this.thePaddle = thePaddle;
+        
+        
         this.theBall = theBall;
         this.bricks = bricks;
         this.repaint();
@@ -157,22 +161,21 @@ public class GUIDisplay extends JPanel implements Display
         g.fillRect(xGame, yGame, wGame, hGame);
 
         // On repaint of all game components
-        paintBricks();
-        paintBall();
-        paintPaddle();
+        if (bricks != null) paintBricks(g);
+        if (theBall != null) paintBall(g);
+        if (thePaddle != null) paintPaddle(g);
     }
 
     // TODO (fixed) finish writing comment
     /**
      * Method who paint the tab of bricks in the window
      */
-    private void paintBricks()
+    private void paintBricks(Graphics g)
     {
         int xBrick;
         int yBrick;
         int wBrick;
         int hBrick;
-        Graphics g  = this.getGraphics();
         
         g.setColor(Color.blue);
         for (int i = 0; i < this.bricks.length; i++)
@@ -207,14 +210,19 @@ public class GUIDisplay extends JPanel implements Display
     /**
      * Method who paint the ball in the window
      */
-    private void paintBall()
+    private void paintBall(Graphics g)
     {
 
-        Graphics g  = this.getGraphics();
         
-        int xball = (int) ((this.theBall.getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
+        //System.out.println(this.theBall.getCollisionBox().getBox().x);
+        
+        if (this.theBall == null) System.out.println("theBall is null");
+        if (this.theBall.getCollisionBox() == null) System.out.println("theBall.getCollisionBox() is null");
+        if (this.theBall.getCollisionBox().getBox() == null) System.out.println("theBall.getCollisionBox().getBox() is null");
+        int xball = (int) ((this.theBall.getCollisionBox().getBox().getX()) * this.xRatioGeneralDisplay);
+                
         int yball = (int) ((this.theBall.getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);
-        int tball = (int) (theBall.getCollisionBox().getBox().width * this.xRatioGeneralDisplay);
+        int tball = (int) (this.theBall.getCollisionBox().getBox().width * this.xRatioGeneralDisplay);
 
         g.setColor(Color.red);
         g.fillOval(xball, yball, tball, tball);
@@ -224,10 +232,9 @@ public class GUIDisplay extends JPanel implements Display
     /**
      * Method who paint the paddle in the window
      */
-    private void paintPaddle()
+    private void paintPaddle(Graphics g)
     {
 
-        Graphics g  = this.getGraphics();
         
         int xPad = (int) ((this.thePaddle.getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
         int yPad = (int) ((this.thePaddle.getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);

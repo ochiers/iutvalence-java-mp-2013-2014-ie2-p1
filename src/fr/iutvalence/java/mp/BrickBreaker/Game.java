@@ -67,7 +67,7 @@ public class Game implements UserPolling
     /**
      * Indicate if the game is paused or not
      */
-    public boolean gamePaused;
+    private boolean gamePaused;
     
     // TODO (fixed) write comment
     /**
@@ -143,7 +143,7 @@ public class Game implements UserPolling
         this.theBall = new Ball(new Position(100, 300), new Trajectory(0.5F,0.5F));
         
         // For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.1F*Game.DEFAULT_MAP_WIDTH));
+        this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.2F*Game.DEFAULT_MAP_WIDTH));
 
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
@@ -335,12 +335,12 @@ public class Game implements UserPolling
                 /* La paddle va vers la droite */
                 if (this.thePaddle.getCollisionBox().getBox().getX() - this.lastPaddlePosition.getX() > 0)
                 {
-                    if( this.theBall.getTrajectory().getBCoefficient() < 0 && Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                    if( this.theBall.getTrajectory().getBCoefficient() < 0 && (Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
                             (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
                             (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())) 
                             || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
                                     (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()*2/3), 
-                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth()))))
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())))))
                     {
                         this.theBall.setTrajectory(new Trajectory(-1*this.theBall.getTrajectory().getACoefficient(), -1*this.theBall.getTrajectory().getBCoefficient()));
                     }
@@ -348,15 +348,16 @@ public class Game implements UserPolling
                     {
                         this.theBall.setTrajectory(new Trajectory(-1*Tools.chooseRandomBetwwen(0.2F, 0.8F), this.theBall.getTrajectory().getBCoefficient()));
                     }
+
                 }
                 else /* la paddle va vers la gauche */
                 {
-                    if( this.theBall.getTrajectory().getBCoefficient() > 0 && Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
+                    if( this.theBall.getTrajectory().getBCoefficient() > 0 && (Tools.isFloatBetween((float)this.theBall.getCollisionBox().getBox().getX(), 
                             (float)this.thePaddle.getCollisionBox().getBox().getX(), 
                             (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())*1/3) 
                             || (Tools.isFloatBetween((float)(this.theBall.getCollisionBox().getBox().getX())+(float)(this.theBall.getCollisionBox().getBox().getWidth()), 
                                     (float)this.thePaddle.getCollisionBox().getBox().getX(), 
-                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())*1/3)))
+                                    (float)this.thePaddle.getCollisionBox().getBox().getX()+(float)(this.thePaddle.getCollisionBox().getBox().getWidth())*1/3))))
                     {
                         this.theBall.setTrajectory(new Trajectory(-1*this.theBall.getTrajectory().getACoefficient(), -1*this.theBall.getTrajectory().getBCoefficient()));
                     }
@@ -397,7 +398,16 @@ public class Game implements UserPolling
         return thereIsCollision;
     }
 
-
+/**
+ * 
+ * @return
+ */
+public boolean isGamePaused()
+{
+    return this.gamePaused;
+}
+    
+    
     /**
      * @see fr.iutvalence.java.mp.BrickBreaker.UserPolling#moveThePaddle(int)
      */

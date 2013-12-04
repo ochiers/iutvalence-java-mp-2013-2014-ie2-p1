@@ -51,6 +51,7 @@ public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListen
     @Override
     public void mouseClicked(MouseEvent e)
     {
+        if(this.theGame.isGamePaused())
         this.theGame.pauseOrRestartGame();
         
     }
@@ -59,14 +60,14 @@ public class ThreadMovePaddleByMouse extends Thread implements MouseMotionListen
     @Override
     public void mouseEntered(MouseEvent e)
     {
-        this.theGame.pauseOrRestartGame();
+       // this.theGame.pauseOrRestartGame();
     }
 
 
     @Override
     public void mouseExited(MouseEvent e)
     {
-        this.theGame.pauseOrRestartGame();
+       // this.theGame.pauseOrRestartGame();
     }
 
 
