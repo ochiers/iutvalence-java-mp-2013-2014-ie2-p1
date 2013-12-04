@@ -16,6 +16,15 @@ public interface UserPolling
          */
         public void moveThePaddle(int posX);
         
-        // TODO (fix) write comment
+        // TODO (fixed) write comment
+        /**
+         * Pause or restart the game depending on his state
+         */
         public void pauseOrRestartGame();
+        
+        /**
+         * Return the state of the game
+         * @return True if the game is paused, false however
+         */
+        public boolean isGamePaused();
 }

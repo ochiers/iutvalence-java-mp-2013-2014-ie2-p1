@@ -9,6 +9,9 @@ import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -20,7 +23,7 @@ import javax.swing.JPanel;
  * @author soulierc
  * 
  */
-public class GUIDisplay extends JPanel implements Display
+public class GUIDisplay extends JPanel implements Display, MouseMotionListener, MouseListener
 {
 
     /**
@@ -60,6 +63,14 @@ public class GUIDisplay extends JPanel implements Display
      * 
      */
     private Brick[] bricks;
+    
+    private UserPolling movesPaddleNotify;
+
+    public void setMovesPaddleNotify(UserPolling movesPaddleNotify)
+    {
+        this.movesPaddleNotify = movesPaddleNotify;
+        
+    }
 
     /**
      * Initialize the display
@@ -109,6 +120,9 @@ public class GUIDisplay extends JPanel implements Display
         {
             e.printStackTrace();
         }
+        
+        this.addMouseMotionListener(this);
+        this.addMouseListener(this);
     }
 
     /**
@@ -243,5 +257,57 @@ public class GUIDisplay extends JPanel implements Display
 
         g.setColor(Color.green);
         g.fillRect(xPad, yPad, wPad, hPad);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e)
+    {
+        // TODO Auto-generated method stub
+         
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
+        this.movesPaddleNotify.moveThePaddle(e.getX());
+    }
+
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+       // if(this.movePaddle.isGamePaused())
+        this.movesPaddleNotify.pauseOrRestartGame();
+        
+    }
+
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    {
+       // this.theGame.pauseOrRestartGame();
+    }
+
+
+    @Override
+    public void mouseExited(MouseEvent e)
+    {
+       // this.theGame.pauseOrRestartGame();
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

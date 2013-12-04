@@ -26,4 +26,6 @@ public interface Display
      */
     public void displayLoss();
     
+    
+    public void setMovesPaddleNotify(UserPolling movesPaddleNotify);
 }

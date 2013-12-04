@@ -142,5 +142,12 @@ public class ConsoleDisplay implements Display
                 res = res + "   ";
         }
         return res;
+    }
+
+    @Override
+    public void setMovesPaddleNotify(UserPolling movesPaddleNotify)
+    {
+        // TODO Auto-generated method stub
+        
     }  
 }

@@ -124,6 +124,10 @@ public class Game implements UserPolling
      */
     private Position lastPaddlePosition;
 
+    
+    private Player thePlayer;
+    
+    
     /**
      * This is the procedure where the game find its start It's the
      * initialization of the game : a new paddle, a new ball and a new tab of
@@ -131,7 +135,7 @@ public class Game implements UserPolling
      * 
      * @param display The display of the game.
      */
-    public Game(Display display)
+    public Game(Display display, Player thePlayer)
     {
         super();
 
@@ -153,6 +157,8 @@ public class Game implements UserPolling
         this.rand = new Random();
         this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
         this.display = display;
+        this.display.setMovesPaddleNotify(this);
+        this.thePlayer = thePlayer;
     }
 
 
@@ -164,7 +170,7 @@ public class Game implements UserPolling
     {
         boolean thereWasAcollision = false;
         int collisionSide = 0;
-        
+        this.thePlayer.setNumberOfGamesPlayed();
         while (!this.stopGame)
         {
            this.display.displayGameState(this.bricks, this.thePaddle, this.theBall);
@@ -210,7 +216,6 @@ public class Game implements UserPolling
                     }
                 }
             }
-
             try
             {
                 Thread.sleep(3);
@@ -238,6 +243,7 @@ public class Game implements UserPolling
             this.bricks[indexOfBrick].manageBrickStateAfterCollision();
             if( this.bricks[indexOfBrick].getState() == BrickState.DESTROYED_STATE)
                 this.currentNumberOfBricks--;
+                this.thePlayer.setScore(this.thePlayer.getScore() + 1000);
             
             if(!thereWasAcollision)
             {
@@ -398,14 +404,14 @@ public class Game implements UserPolling
         return thereIsCollision;
     }
 
-/**
- * 
- * @return
- */
-public boolean isGamePaused()
-{
-    return this.gamePaused;
-}
+
+    /**
+     * @see fr.iutvalence.java.mp.BrickBreaker.UserPolling#isGamePaused()
+     */
+    public boolean isGamePaused()
+    {
+        return this.gamePaused;
+    }
     
     
     /**

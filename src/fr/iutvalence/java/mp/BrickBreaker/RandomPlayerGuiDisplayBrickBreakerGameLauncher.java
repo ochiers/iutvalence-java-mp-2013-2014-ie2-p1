@@ -15,7 +15,24 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
      */
     public static void main(String[] args)
     {          
-        // TODO (fix) this is a sequential execution
-        new ThreadMovePaddleByMouse().run();
+        
+        ListPlayersStatistics stats = new TextFilePlayersStatistics();
+
+        try
+        {
+            stats.loadPlayers();
+        }
+        catch (DataAccessException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+                
+        Game theGame = new Game(new GUIDisplay(), stats.getList().get(0));
+                
+        theGame.play();
+        
+        System.out.println(stats.getList().get(0).getScore());
+        
     }
 }
