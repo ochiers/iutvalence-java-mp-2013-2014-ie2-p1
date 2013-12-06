@@ -6,9 +6,25 @@ import java.util.List;
 
 public class ListLevel implements LevelLoading
 {
+    private List<Level> list;
     
-    public void addLevel(Brick[] brick) throws DataAccessException, LevelAlreadyExistsException
+    public ListLevel()
     {
+        super();
+        this.list = new ArrayList<Level>();
+    }
+
+    public List<Level> getList()
+    {
+        return this.list;
+    }
+    
+    public void addLevel(Level level) throws DataAccessException, LevelAlreadyExistsException
+    {
+        if(!isLevelAlreadyExists(level.getNameLevel()))
+            this.list.add(level);
+            else
+                throw new LevelAlreadyExistsException();
         
     }
     
@@ -21,5 +37,20 @@ public class ListLevel implements LevelLoading
     {
         
     }
+
+    public boolean isLevelAlreadyExists(String name)
+    {
+        boolean res = false;
+        
+        for(int i = 0; i < this.list.size(); i++)
+        {
+            if(this.list.get(i).getNameLevel().equals(name))
+                res= res || true;
+        }
+        return res;
+    }
+
+
+
     
 }

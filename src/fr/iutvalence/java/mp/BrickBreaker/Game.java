@@ -24,7 +24,7 @@ public class Game implements UserPolling
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 28;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 40;
 
     /**
      * Maximal number of player's lives
@@ -152,7 +152,7 @@ public class Game implements UserPolling
         this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
         for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
         {
-            this.bricks[i] = new Brick(new Position(i * Brick.DEFAULT_WIDTH, yPositionBricks));
+            this.bricks[i] = new Brick(new Position(i * Brick.DEFAULT_WIDTH, yPositionBricks), BrickState.NORMAL_STATE);
         }
         this.rand = new Random();
         this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;

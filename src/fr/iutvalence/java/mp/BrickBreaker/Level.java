@@ -12,6 +12,12 @@ public class Level
     private String nameLevel;
 
     private Brick[] brickTab;
+    
+    public Level()
+    {
+        this.idLevel = 0;
+        this.nameLevel = "Unknown";        
+    }
 
     public Level(int id, String name, Brick[] bricks) 
     {
@@ -49,6 +55,11 @@ public class Level
     {
         this.brickTab = brickTab;
     }
+
+    /*public String[] split(String string)
+    {
+        return null;
+    }*/
     
     
 
