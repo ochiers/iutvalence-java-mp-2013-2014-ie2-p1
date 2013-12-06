@@ -28,11 +28,12 @@ public class Brick extends GameComponent
      * Creates a new Brick, at a given position
      * 
      * @param position The position of the top left corner of the brick
+     * @param state The initial state of a brick
      */
-    public Brick(Position position)
+    public Brick(Position position, BrickState state)
     {
         super(position,DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        this.state = BrickState.NORMAL_STATE;
+        this.state = state;
     }
 
     /**

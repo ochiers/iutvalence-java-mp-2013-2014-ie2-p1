@@ -24,7 +24,7 @@ public class Game implements UserPolling
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 1;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 28;
 
     /**
      * Maximal number of player's lives
