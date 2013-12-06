@@ -7,7 +7,6 @@ package fr.iutvalence.java.mp.BrickBreaker;
  */
 public interface Display
 {
-    
     /**
      * displays game state (bricks, ball, paddle)
      * @param bricks an array of bricks
@@ -25,6 +24,12 @@ public interface Display
      * Display the loss of the game 
      */
     public void displayLoss();
+    
+    
+    /**
+     * Display the loss of the game 
+     */
+    public void displayMenu();
     
     
     public void setMovesPaddleNotify(UserPolling movesPaddleNotify);
