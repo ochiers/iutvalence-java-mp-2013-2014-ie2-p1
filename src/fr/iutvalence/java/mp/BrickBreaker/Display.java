@@ -33,4 +33,4 @@ public interface Display
     
     
     public void setMovesPaddleNotify(UserPolling movesPaddleNotify);
-}
+} 

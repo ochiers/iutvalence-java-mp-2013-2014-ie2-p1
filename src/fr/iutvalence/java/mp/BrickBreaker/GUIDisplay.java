@@ -344,7 +344,7 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         this.getGraphics().fillRect(0, 0, 400, 400);
         this.updateUI();
     }
-
+ 
     @Override
     public void actionPerformed(ActionEvent arg0)
     {
