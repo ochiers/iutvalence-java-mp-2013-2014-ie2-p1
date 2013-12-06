@@ -149,5 +149,12 @@ public class ConsoleDisplay implements Display
     {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public void displayMenu()
+    {
+        // TODO Auto-generated method stub
+        
     }  
 }

@@ -9,11 +9,14 @@ import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -23,7 +26,7 @@ import javax.swing.JPanel;
  * @author soulierc
  * 
  */
-public class GUIDisplay extends JPanel implements Display, MouseMotionListener, MouseListener
+public class GUIDisplay extends JPanel implements Display, MouseMotionListener, MouseListener, ActionListener
 {
 
     /**
@@ -64,7 +67,10 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      */
     private Brick[] bricks;
     
+    
     private UserPolling movesPaddleNotify;
+    
+    public String state;
 
     public void setMovesPaddleNotify(UserPolling movesPaddleNotify)
     {
@@ -77,6 +83,7 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      */
     public GUIDisplay()
     {
+        this.state = "builded";
         this.images = new Image[7];
         this.window = new JFrame();
         /* ---------- Hide the cursor ---------- */
@@ -96,9 +103,9 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         this.window.setResizable(false);
         this.window.setContentPane(this);
 
-        this.xRatioGeneralDisplay = (float) window.getContentPane().getSize().width / (float) Game.DEFAULT_MAP_WIDTH;
+        this.xRatioGeneralDisplay = (float) this.window.getContentPane().getSize().width / (float) Game.DEFAULT_MAP_WIDTH;
         //System.out.println(xRatioGeneralDisplay);
-        this.yRatioGeneralDisplay = (float) window.getContentPane().getSize().height / (float) Game.DEFAULT_MAP_HEIGHT;
+        this.yRatioGeneralDisplay = (float) this.window.getContentPane().getSize().height / (float) Game.DEFAULT_MAP_HEIGHT;
 
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setVisible(true);
@@ -146,8 +153,8 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      */
     public void displayVictory()
     {
-        this.getGraphics().drawImage(this.images[3], 0, 0, window.getContentPane().getSize().width,
-                window.getContentPane().getSize().height, null);
+        this.getGraphics().drawImage(this.images[3], 0, 0, this.window.getContentPane().getSize().width,
+                this.window.getContentPane().getSize().height, null);
     }
 
     /**
@@ -155,8 +162,8 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      */
     public void displayLoss()
     {
-        this.getGraphics().drawImage(this.images[4], 0, 0, window.getContentPane().getSize().width,
-                window.getContentPane().getSize().height, null);
+        this.getGraphics().drawImage(this.images[4], 0, 0, this.window.getContentPane().getSize().width,
+                this.window.getContentPane().getSize().height, null);
     }
 
     /**
@@ -175,9 +182,9 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         g.fillRect(xGame, yGame, wGame, hGame);
 
         // On repaint of all game components
-        if (bricks != null) paintBricks(g);
-        if (theBall != null) paintBall(g);
-        if (thePaddle != null) paintPaddle(g);
+        if (this.bricks != null) paintBricks(g);
+        if (this.theBall != null) paintBall(g);
+        if (this.thePaddle != null) paintPaddle(g);
     }
 
     // TODO (fixed) finish writing comment
@@ -259,16 +266,11 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         g.fillRect(xPad, yPad, wPad, hPad);
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e)
-    {
-        // TODO Auto-generated method stub
-         
-    }
 
     @Override
     public void mouseMoved(MouseEvent e)
     {
+        if(this.movesPaddleNotify != null)
         this.movesPaddleNotify.moveThePaddle(e.getX());
     }
 
@@ -277,6 +279,7 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
     public void mouseClicked(MouseEvent e)
     {
        // if(this.movePaddle.isGamePaused())
+        if(this.movesPaddleNotify != null)
         this.movesPaddleNotify.pauseOrRestartGame();
         
     }
@@ -297,17 +300,68 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
 
 
     @Override
-    public void mousePressed(MouseEvent e)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
+    public void mousePressed(MouseEvent e){}
 
     @Override
-    public void mouseReleased(MouseEvent e)
+    public void mouseReleased(MouseEvent e){}
+
+    @Override
+    public void mouseDragged(MouseEvent e){}
+
+    public void init()
     {
-        // TODO Auto-generated method stub
+        this.window.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+        this.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+        this.window.setResizable(false);
+        this.window.setContentPane(this);
+
+        this.xRatioGeneralDisplay = (float) this.window.getContentPane().getSize().width / (float) Game.DEFAULT_MAP_WIDTH;
+        this.yRatioGeneralDisplay = (float) this.window.getContentPane().getSize().height / (float) Game.DEFAULT_MAP_HEIGHT;
+
+        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.window.setVisible(true);
+        
+        this.removeAll();
+    }
+
+    @Override
+    public void displayMenu()
+    {
+        this.state = "Menu";
+        JButton newGame = new JButton("New game");
+        newGame.addActionListener(this);
+        newGame.setName("bt_newGame");
+        this.add(newGame);
+         
+        JButton exit = new JButton("Exit");
+        exit.addActionListener(this);
+        exit.setName("bt_exit");
+        this.add(exit);
+        
+        this.window.setTitle("Menu");
+        this.window.setSize(300, 300);
+
+        this.getGraphics().fillRect(0, 0, 400, 400);
+        this.updateUI();
+    }
+ 
+    @Override
+    public void actionPerformed(ActionEvent arg0)
+    {
+        if((arg0.getSource()) instanceof JButton)
+        {
+            JButton b = (JButton) arg0.getSource();
+            
+            if(b.getName().equals("bt_newGame"))
+            {
+                this.state = "newGame";
+            }
+            else if(b.getName().equals("bt_exit"))
+            {
+                this.state = "closed";
+                this.window.dispose();
+            }
+        }    
         
     }
 }

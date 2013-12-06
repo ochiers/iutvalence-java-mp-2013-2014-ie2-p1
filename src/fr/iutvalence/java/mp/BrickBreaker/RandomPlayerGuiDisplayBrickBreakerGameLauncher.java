@@ -4,7 +4,7 @@ package fr.iutvalence.java.mp.BrickBreaker;
  * Main class, the program start here and use the other classes
  * 
  * @author ochiers
- * 
+ *  
  */
 public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
 {
@@ -17,7 +17,7 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
     {          
         
         ListPlayersStatistics stats = new TextFilePlayersStatistics();
-
+        
         try
         {
             stats.loadPlayers();
@@ -27,12 +27,38 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-                
-        Game theGame = new Game(new GUIDisplay(), stats.getList().get(0));
-                
-        theGame.play();
         
-        System.out.println(stats.getList().get(0).getScore());
+        if(args[0].equals("GUI"))
+        {
+            GUIDisplay display = new GUIDisplay();
+            display.displayMenu();
+            
+            if(display.state == null)System.out.println("1");
+            
+            while(!display.state.equals("closed"))
+            {
+                if(display.state.equals("newGame"))
+                {
+                    display.init();
+                    Game theGame = new Game(display, stats.getList().get(0));
+                    theGame.play();
+                    
+                    try{Thread.sleep(1000);}
+                    catch (InterruptedException e){e.printStackTrace();}
+                    
+                    display.displayMenu();
+                }
+              }
+        }
+        try
+        {
+            stats.savePlayers();
+        }
+        catch (DataAccessException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
     }
 }
