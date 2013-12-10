@@ -1,5 +1,8 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ochiers
  *
@@ -11,19 +14,30 @@ public class Level
 
     private String nameLevel;
 
-    private Brick[] brickTab;
+    private List<Brick> brickTab;
     
+    public List<Brick> getBrickTab()
+    {
+        return brickTab;
+    }
+
+    public void setBrickTab(List<Brick> brickTab)
+    {
+        this.brickTab = brickTab;
+    }
+
     public Level()
     {
         this.idLevel = 0;
         this.nameLevel = "Unknown";        
+        this.brickTab = new ArrayList<Brick>();
     }
 
-    public Level(int id, String name, Brick[] bricks) 
+    public Level(int id, String name) 
     {
         this.idLevel = id;
         this.nameLevel = name;
-        this.brickTab = bricks;        
+        this.brickTab = new ArrayList<Brick>();
     }
 
     public int getIdLevel()
@@ -44,16 +58,6 @@ public class Level
     public void setNameLevel(String nameLevel)
     {
         this.nameLevel = nameLevel;
-    }
-
-    public Brick[] getBrickTab()
-    {
-        return this.brickTab;
-    }
-
-    public void setBrickTab(Brick[] brickTab)
-    {
-        this.brickTab = brickTab;
     }
 
     /*public String[] split(String string)

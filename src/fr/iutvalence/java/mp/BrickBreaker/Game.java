@@ -1,6 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,12 +25,12 @@ public class Game implements UserPolling
      * This number is the number of bricks in the level, But it's a temp
      * constant because this number can change depending on the level
      */
-    public static final int DEFAULT_NUMBER_OF_BRICKS = 40;
+    public static final int DEFAULT_NUMBER_OF_BRICKS = 1;
 
     /**
      * Maximal number of player's lives
      */
-    private static final int MAXIMAL_LIVES = 3;
+    private static final int MAXIMAL_LIVES = 2;
 
     /**
      * Paddle initial position
@@ -99,7 +100,7 @@ public class Game implements UserPolling
      * state
      * 
      */
-    private Brick[] bricks;
+    private List<Brick> bricks;
 
     
     // TODO (fix) looks like a local variable
@@ -125,6 +126,13 @@ public class Game implements UserPolling
     private Position lastPaddlePosition;
 
     
+    /**
+     * 
+     */
+    private List<Level> listOfLevels;
+    
+    private int nextLevel;
+    
     private Player thePlayer;
     
     
@@ -135,33 +143,32 @@ public class Game implements UserPolling
      * 
      * @param display The display of the game.
      */
-    public Game(Display display, Player thePlayer)
+    public Game(Display display, Player thePlayer, List<Level> levelList)
     {
         super();
-
-        int yPositionBricks = 150;
-        this.stopGame = false;
+        this.listOfLevels = levelList;
+        this.stopGame = false;        
+        this.rand = new Random();
         this.gamePaused = false;
         this.currentNumberOfBalls = Game.MAXIMAL_LIVES;
-       
         this.theBall = new Ball(new Position(100, 300), new Trajectory(0.5F,0.5F));
-        
-        // For the tests, the paddle size is the total game size
-        this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.2F*Game.DEFAULT_MAP_WIDTH));
-
-        this.bricks = new Brick[Game.DEFAULT_NUMBER_OF_BRICKS];
-        for (int i = 0; i < Game.DEFAULT_NUMBER_OF_BRICKS; i++)
-        {
-            this.bricks[i] = new Brick(new Position(i * Brick.DEFAULT_WIDTH, yPositionBricks), BrickState.NORMAL_STATE);
-        }
-        this.rand = new Random();
-        this.currentNumberOfBricks = Game.DEFAULT_NUMBER_OF_BRICKS;
+        this.thePaddle = new Paddle(new Position(0, 0.75F*Game.DEFAULT_MAP_HEIGHT), (int)(0.1F*Game.DEFAULT_MAP_WIDTH));
         this.display = display;
         this.display.setMovesPaddleNotify(this);
         this.thePlayer = thePlayer;
+        
+        loadNextLevel();
+
     }
 
-
+    private void loadNextLevel()
+    {
+        this.bricks = this.listOfLevels.get(this.nextLevel).getBrickTab();
+        System.out.println(this.listOfLevels.get(this.nextLevel).getBrickTab().get(1).toString());
+        this.currentNumberOfBricks = this.bricks.size();
+        this.nextLevel++;
+    }
+    
     /**
      * Main loop of the game, at each loop, the ball move and the collision are tested
      * 
@@ -194,7 +201,12 @@ public class Game implements UserPolling
             this.theBall.updatePosition(temp.translate(
                     this.theBall.getTrajectory().getBCoefficient(), this.theBall.getTrajectory().getACoefficient()));
 
-            if (this.currentNumberOfBalls != 0 && this.currentNumberOfBricks == 0)
+            if(this.currentNumberOfBricks == 0)
+            {
+                loadNextLevel();
+            }
+            
+            if (this.currentNumberOfBalls != 0 && this.nextLevel == this.listOfLevels.size()+1)
             {
                 onVictory();
             }
@@ -202,11 +214,11 @@ public class Game implements UserPolling
             thereWasAcollision = false;
             if (!this.stopGame)
             {
-                for (int j = 0; j < Game.DEFAULT_NUMBER_OF_BRICKS; j++)
+                for (int j = 0; j < this.bricks.size(); j++)
                 {
-                    if (this.bricks[j].getState() != BrickState.DESTROYED_STATE)
+                    if (this.bricks.get(j).getState() != BrickState.DESTROYED_STATE)
                     {
-                        collisionSide = isBallInCollisionWithBrick(this.bricks[j]);
+                        collisionSide = isBallInCollisionWithBrick(this.bricks.get(j));
                        
                         if(collisionSide != NO_SIDE_COLLISION)
                         {
@@ -240,8 +252,8 @@ public class Game implements UserPolling
      */
     private void onCollisionWithBrick(boolean thereWasAcollision, int indexOfBrick, int collisionSide)
     {
-            this.bricks[indexOfBrick].manageBrickStateAfterCollision();
-            if( this.bricks[indexOfBrick].getState() == BrickState.DESTROYED_STATE)
+            this.bricks.get(indexOfBrick).manageBrickStateAfterCollision();
+            if( this.bricks.get(indexOfBrick).getState() == BrickState.DESTROYED_STATE)
                 this.currentNumberOfBricks--;
                 this.thePlayer.setScore(this.thePlayer.getScore() + 1000);
             

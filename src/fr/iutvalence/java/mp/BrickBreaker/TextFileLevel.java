@@ -10,22 +10,37 @@ import java.util.List;
 
 public class TextFileLevel extends ListLevel
 {
-    public void loadLevel() throws DataAccessException
+    public void loadLevels() throws DataAccessException
     {
         
         DataInputStream in;
         try
         {
             in = new DataInputStream(new FileInputStream(new File("levels.level")));        
-            String id;
+            String level;
             String str[] = new String[3];
-            while((id = in.readLine()) != null)
+            String str2[] = new String[500];
+            while((level = in.readLine()) != null)
             {
                 Level res = new Level();
-                str = id.split(" ");
+                str = level.split(" ");
                 res.setIdLevel(Integer.parseInt(str[0]));
                 res.setNameLevel(str[1]);
-                //res.setBrickTab((Bricks[])(str[2]));
+                str2 = str[2].split("\\|");
+                
+                
+                for(int i=0; i < str2.length; i++)
+                {
+                    String brick[] = new String[3];
+                    brick = str2[i].split(",");                    
+                    Position tempPos = new Position(Float.parseFloat(brick[0])*Brick.DEFAULT_WIDTH,Float.parseFloat(brick[1])*Brick.DEFAULT_HEIGHT);
+                    if(brick[2].equals("NORMAL_STATE"))
+                        res.getBrickTab().add(new Brick(tempPos, BrickState.NORMAL_STATE));
+                    else if (brick[2].equals("TOUCHED_STATE"))
+                        res.getBrickTab().add(new Brick(tempPos, BrickState.TOUCHED_STATE)); 
+                    else
+                        res.getBrickTab().add(new Brick(tempPos, BrickState.DAMAGED_STATE));
+                }
                 this.addLevel(res);
             }
             in.close();
@@ -42,6 +57,9 @@ public class TextFileLevel extends ListLevel
         
     }
     
+    /**Don't work
+     * @throws DataAccessException
+     */
     public void saveLevels() throws DataAccessException
     {
         DataOutputStream out;
@@ -53,7 +71,7 @@ public class TextFileLevel extends ListLevel
             
             for(int i =0;   i < listToSave.size();   i++)
             {
-                str = listToSave.get(i).getIdLevel() + " " + listToSave.get(i).getNameLevel() + " " + listToSave.get(i).getBrickTab() + "\n";
+                //str = listToSave.get(i).getIdLevel() + " " + listToSave.get(i).getNameLevel() + " " + listToSave.get(i).getBrickTab() + "\n";
                 out.writeBytes(str);
             }
            out.flush();

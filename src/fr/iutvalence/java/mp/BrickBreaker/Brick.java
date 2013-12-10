@@ -36,6 +36,7 @@ public class Brick extends GameComponent
         this.state = state;
     }
 
+
     /**
      * Returns a description of the brick as an ASCII string whose format is "{Position : Brick's position,
      *  state : Brick's state"}"

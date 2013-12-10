@@ -1,5 +1,7 @@
 package fr.iutvalence.java.mp.BrickBreaker;
 
+import java.util.List;
+
 /**
  * Define the interfqce that is used to display the game.
  * @author ochiers
@@ -13,7 +15,7 @@ public interface Display
      * @param thePaddle a paddle
      * @param theBall a ball
      */ 
-    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall);
+    public void displayGameState(List<Brick> bricks, Paddle thePaddle, Ball theBall);
       
     /**
      * Display the victory of the game 

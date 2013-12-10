@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -65,7 +66,7 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      * The bricks displayed
      * 
      */
-    private Brick[] bricks;
+    private List<Brick> bricks;
     
     
     private UserPolling movesPaddleNotify;
@@ -128,8 +129,6 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
             e.printStackTrace();
         }
         
-        this.addMouseMotionListener(this);
-        this.addMouseListener(this);
     }
 
     /**
@@ -137,12 +136,10 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
      *      fr.iutvalence.java.mp.BrickBreaker.Paddle,
      *      fr.iutvalence.java.mp.BrickBreaker.Ball)
      */
-    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    public void displayGameState(List<Brick> bricks, Paddle thePaddle, Ball theBall)
     {
-        if(this.thePaddle == null)
+        
         this.thePaddle = thePaddle;
-        
-        
         this.theBall = theBall;
         this.bricks = bricks;
         this.repaint();
@@ -199,16 +196,16 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         int hBrick;
         
         g.setColor(Color.blue);
-        for (int i = 0; i < this.bricks.length; i++)
+        for (int i = 0; i < this.bricks.size(); i++)
         {
-            if (this.bricks[i].getState() != BrickState.DESTROYED_STATE)
+            if (this.bricks.get(i).getState() != BrickState.DESTROYED_STATE)
             {
-                xBrick = (int) ((this.bricks[i].getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
-                yBrick = (int) ((this.bricks[i].getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);
+                xBrick = (int) ((this.bricks.get(i).getCollisionBox().getBox().x) * this.xRatioGeneralDisplay);
+                yBrick = (int) ((this.bricks.get(i).getCollisionBox().getBox().y) * this.yRatioGeneralDisplay);
                 wBrick = (int) (Brick.DEFAULT_WIDTH * this.xRatioGeneralDisplay);
                 hBrick = (int) (Brick.DEFAULT_HEIGHT * this.yRatioGeneralDisplay);
 
-                switch (this.bricks[i].getState())
+                switch (this.bricks.get(i).getState())
                 {
                 case DAMAGED_STATE:
                     g.drawImage(this.images[2], xBrick, yBrick, wBrick, hBrick, null);
@@ -308,6 +305,8 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
     @Override
     public void mouseDragged(MouseEvent e){}
 
+ 
+    
     public void init()
     {
         this.window.setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
@@ -322,12 +321,23 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         this.window.setVisible(true);
         
         this.removeAll();
+        
+        this.addMouseMotionListener(this);
+        this.addMouseListener(this);
+        
+        
+        
     }
 
     @Override
     public void displayMenu()
     {
         this.state = "Menu";
+        
+        this.removeMouseMotionListener(this);
+        this.removeMouseListener(this);
+        
+        
         JButton newGame = new JButton("New game");
         newGame.addActionListener(this);
         newGame.setName("bt_newGame");
@@ -341,7 +351,9 @@ public class GUIDisplay extends JPanel implements Display, MouseMotionListener, 
         this.window.setTitle("Menu");
         this.window.setSize(300, 300);
 
+        this.getGraphics().setColor(Color.white);
         this.getGraphics().fillRect(0, 0, 400, 400);
+        this.repaint();
         this.updateUI();
     }
  

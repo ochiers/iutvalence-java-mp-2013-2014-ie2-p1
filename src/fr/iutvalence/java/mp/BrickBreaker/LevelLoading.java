@@ -18,7 +18,7 @@ public interface LevelLoading
     /**
      * @throws DataAccessException
      */
-    public void loadLevel() throws DataAccessException;
+    public void loadLevels() throws DataAccessException;
 
     /**
      * @throws DataAccessException

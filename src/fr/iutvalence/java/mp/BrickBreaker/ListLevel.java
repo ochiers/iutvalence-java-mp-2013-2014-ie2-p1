@@ -28,7 +28,7 @@ public class ListLevel implements LevelLoading
         
     }
     
-    public void loadLevel() throws DataAccessException
+    public void loadLevels() throws DataAccessException
     {
         
     }

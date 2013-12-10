@@ -1,4 +1,6 @@
 package fr.iutvalence.java.mp.BrickBreaker;
+
+import java.util.List;
  
 /**
  * This class is used to display the game in console mod,
@@ -14,7 +16,7 @@ public class ConsoleDisplay implements Display
      * Game state is displayed using an ASCII-art representation
      * @see fr.iutvalence.java.mp.BrickBreaker.Display#displayGameState(fr.iutvalence.java.mp.BrickBreaker.Brick[], fr.iutvalence.java.mp.BrickBreaker.Paddle, fr.iutvalence.java.mp.BrickBreaker.Ball)
      */
-    public void displayGameState(Brick[] bricks, Paddle thePaddle, Ball theBall)
+    public void displayGameState(List<Brick> bricks, Paddle thePaddle, Ball theBall)
     {
             System.out.print(" # ");
             for (int i = 0; i < Game.DEFAULT_MAP_WIDTH; i += Game.DEFAULT_MAP_WIDTH / (2 * Ball.DEFAULT_SIZE))
@@ -55,7 +57,7 @@ public class ConsoleDisplay implements Display
      * @param increment The part of the game who is represented by this string
      * @return A string who represent the state of a part of the game
      */
-    private String buildLineForConsoleDisplay(Brick[] bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
+    private String buildLineForConsoleDisplay(List<Brick> bricks, Paddle thePaddle, Ball theBall, int pos, int increment)
     {
         String res = " # ";
         boolean aBrickIsWritten = false;
@@ -64,12 +66,12 @@ public class ConsoleDisplay implements Display
         {
             if (count < Game.DEFAULT_NUMBER_OF_BRICKS)
             {
-                if (Tools.isFloatBetween((float)bricks[count].getCollisionBox().getBox().getY(), pos, pos + increment)
-                        || Tools.isFloatBetween((float)bricks[count].getCollisionBox().getBox().getY() + Brick.DEFAULT_WIDTH,
+                if (Tools.isFloatBetween((float)bricks.get(count).getCollisionBox().getBox().getY(), pos, pos + increment)
+                        || Tools.isFloatBetween((float)bricks.get(count).getCollisionBox().getBox().getY() + Brick.DEFAULT_WIDTH,
                                 pos, pos + increment))
                 {
                     aBrickIsWritten = true;
-                    if (bricks[count].getState() != BrickState.DESTROYED_STATE)
+                    if (bricks.get(count).getState() != BrickState.DESTROYED_STATE)
                         res += " N ";
                     else
                         res += " X ";

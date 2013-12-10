@@ -17,10 +17,14 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
     {          
         
         ListPlayersStatistics stats = new TextFilePlayersStatistics();
+        TextFileLevel levels = new TextFileLevel ();
+        
+
         
         try
         {
             stats.loadPlayers();
+            levels.loadLevels();
         }
         catch (DataAccessException e)
         {
@@ -40,7 +44,7 @@ public class RandomPlayerGuiDisplayBrickBreakerGameLauncher
                 if(display.state.equals("newGame"))
                 {
                     display.init();
-                    Game theGame = new Game(display, stats.getList().get(0));
+                    Game theGame = new Game(display, stats.getList().get(0), levels.getList());
                     theGame.play();
                     
                     try{Thread.sleep(1000);}
