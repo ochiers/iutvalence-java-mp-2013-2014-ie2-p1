@@ -13,7 +13,7 @@ public class Ball extends GameComponent
     /**
      * Ratio of the size of a ball
      */
-    public final static int DEFAULT_SIZE = 16;
+    public final static int DEFAULT_SIZE = 8;
 
     /**
      * The ball's trajectory

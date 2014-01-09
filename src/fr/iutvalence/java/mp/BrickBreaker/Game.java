@@ -147,6 +147,7 @@ public class Game implements UserPolling
     {
         super();
         this.listOfLevels = levelList;
+        this.nextLevel = 0;
         this.stopGame = false;        
         this.rand = new Random();
         this.gamePaused = false;

@@ -11,6 +11,6 @@ public class LevelAlreadyExistsException extends Exception
      */
     public LevelAlreadyExistsException()
     {
-        System.err.println("Le niveau est déjà éxistant.");
+        System.out.println("Le niveau est déjà éxistant.");
     }
 }

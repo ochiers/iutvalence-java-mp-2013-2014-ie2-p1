@@ -12,12 +12,12 @@ public class Brick extends GameComponent
     /**
      * Width size of the brick
      */
-    public static int DEFAULT_WIDTH = 28;
+    public static int DEFAULT_WIDTH = 84;//28;
 
     /**
      * Height size of the brick
      */
-    public static int DEFAULT_HEIGHT = 16;
+    public static int DEFAULT_HEIGHT = 48; //16;
 
     /**
      * State of the brick (normal, a bit broken, really broken, destroyed)
