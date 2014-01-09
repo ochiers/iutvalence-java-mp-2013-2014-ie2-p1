@@ -102,7 +102,6 @@ public class Game implements UserPolling
      */
     private List<Brick> bricks;
 
-    
     // TODO (fix) looks like a local variable
     /**
      * This variable is a random number to give another direction to the ball
@@ -164,10 +163,14 @@ public class Game implements UserPolling
 
     private void loadNextLevel()
     {
-        this.bricks = this.listOfLevels.get(this.nextLevel).getBrickTab();
-        System.out.println(this.listOfLevels.get(this.nextLevel).getBrickTab().get(1).toString());
-        this.currentNumberOfBricks = this.bricks.size();
-        this.nextLevel++;
+        if(this.nextLevel != this.listOfLevels.size())
+        {
+            this.bricks = this.listOfLevels.get(this.nextLevel).getBrickTab();
+            this.currentNumberOfBricks = this.bricks.size();
+            this.nextLevel++;
+        }
+        else
+            onVictory();
     }
     
     /**
@@ -205,11 +208,6 @@ public class Game implements UserPolling
             if(this.currentNumberOfBricks == 0)
             {
                 loadNextLevel();
-            }
-            
-            if (this.currentNumberOfBalls != 0 && this.nextLevel == this.listOfLevels.size()+1)
-            {
-                onVictory();
             }
             
             thereWasAcollision = false;

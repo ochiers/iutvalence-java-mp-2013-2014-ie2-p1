@@ -66,12 +66,12 @@ public class TextFileLevel extends ListLevel
         List<Level> listToSave = this.getList();
         try
         {
-            out = new DataOutputStream(new FileOutputStream(new File("players.stats")));
+            out = new DataOutputStream(new FileOutputStream(new File("levels.level")));
             String str="";
             
             for(int i =0;   i < listToSave.size();   i++)
             {
-                //str = listToSave.get(i).getIdLevel() + " " + listToSave.get(i).getNameLevel() + " " + listToSave.get(i).getBrickTab() + "\n";
+                str = listToSave.get(i).getIdLevel() + " " + listToSave.get(i).getNameLevel() + " " + listToSave.get(i).getBrickTab() + "\n";
                 out.writeBytes(str);
             }
            out.flush();
